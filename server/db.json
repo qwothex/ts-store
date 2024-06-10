@@ -1,0 +1,40 @@
+{
+  "users": [
+    {
+      "id": "1",
+      "login": "qwothex",
+      "password": "qwe123",
+      "admin": true
+    },
+    {
+      "id": "d8cc",
+      "login": "dima228",
+      "password": "qdwsad"
+    },
+    {
+      "id": "05a3",
+      "login": "1458",
+      "password": "erzferf"
+    },
+    {
+      "id": "f901",
+      "login": "qawsedrf",
+      "password": "erzferf"
+    },
+    {
+      "id": "8973",
+      "login": "qwothex",
+      "password": "qdssssss"
+    },
+    {
+      "id": "4870",
+      "login": "qwothex",
+      "password": "sdfsdfsdf"
+    },
+    {
+      "id": "b923",
+      "login": "qwothex",
+      "password": "vbnvbnvbn"
+    }
+  ]
+}
