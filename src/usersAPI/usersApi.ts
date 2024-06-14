@@ -1,12 +1,16 @@
 import { host } from "."
+import { jwtDecode } from "jwt-decode"
 
-interface createUserProps { (login: string, password: string): {} }
+interface UserProps { (username: string, password: string): {} }
 
-export const createUser: createUserProps = async(login, password) => {
-    await host.post('/users', {login, password})
+export const createUser: UserProps = async(username, password) => {
+    const {data} = await host.post('api/user/registration', {username, password, role: 'ADMIN'})
+    localStorage.setItem('token', data.token)
+    return jwtDecode(data.token)
 }
 
-export const loginUser = async(login : string) => {
-    const data = host.get('/users?login=' + login)
-    return data
+export const loginUser: UserProps = async(username, password) => {
+    const {data} = await host.post('api/user/login', {username, password})
+    localStorage.setItem('token', data.token)
+    return jwtDecode(data.token)
 }

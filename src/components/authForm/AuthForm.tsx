@@ -1,12 +1,13 @@
-import React, {FC, useState, useEffect} from 'react'
-import { NavLink, useActionData, useNavigate } from 'react-router-dom'
+import { AxiosError } from 'axios'
+import React, {FC, useState} from 'react'
+import { NavLink, useNavigate } from 'react-router-dom'
 import { useActions } from '../../hooks/useActions'
 import { createUser, loginUser } from '../../usersAPI/usersApi'
 import './authForm.css'
 
 const AuthForm:FC = () => {
 
-    const {setCurrentUser, setUserAuth} = useActions()
+    const { setUserAuth, setCurrentUser } = useActions()
 
     const navigate = useNavigate()
 
@@ -15,29 +16,29 @@ const AuthForm:FC = () => {
     const [login, setLogin] = useState('')
     const [password, setPassword] = useState('')
     
-    const formSubmitHandler = (e: React.FormEvent<HTMLFormElement>) => {
+    const formSubmitHandler = async(e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         try{
+            let data;
             if(isLoginPath){
-                const data = loginUser(login)
-                data.then(data => data.data.length < 1 ? alert('user does not exist!') : navigate('/'))
+                data = await loginUser(login, password)
             }else{
-                createUser(login, password)
+                data = await createUser(login, password)
             }
-        }catch{
-            alert(Error('something goes wrong!'))
+            setCurrentUser(data)
+            setUserAuth(true)
+            navigate('/', {replace: false})
+        }catch(error: any){
+            alert(error?.message)
         }
-        
     }
-
-    console.log(isLoginPath)
 
     return(
         <div>
             <form onSubmit={formSubmitHandler}>
                     <h3 style={{margin: '0 0 15px 0'}}>{isLoginPath ? 'Sign in' : 'Sing up'}</h3>
-                    <input placeholder='login' type={'text'} value={login} onChange={(e) => setLogin(e.target.value)}/>
-                    <input placeholder='password' type={'text'} value={password} onChange={(e) => setPassword(e.target.value)} />
+                    <input required placeholder='login' type={'text'} value={login} onChange={(e) => setLogin(e.target.value)}/>
+                    <input required placeholder='password' minLength={6} type={'password'} value={password} onChange={(e) => setPassword(e.target.value)} />
                 <div>
                     {isLoginPath ? 
                         <div>
