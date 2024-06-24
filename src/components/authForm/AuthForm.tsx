@@ -1,9 +1,9 @@
-import { AxiosError } from 'axios'
 import React, {FC, useState} from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { useActions } from '../../hooks/useActions'
 import { createUser, loginUser } from '../../usersAPI/usersApi'
 import './authForm.css'
+
 
 const AuthForm:FC = () => {
 
@@ -35,7 +35,7 @@ const AuthForm:FC = () => {
 
     return(
         <div>
-            <form onSubmit={formSubmitHandler}>
+            <form className='authForm' onSubmit={formSubmitHandler}>
                     <h3 style={{margin: '0 0 15px 0'}}>{isLoginPath ? 'Sign in' : 'Sing up'}</h3>
                     <input required placeholder='login' type={'text'} value={login} onChange={(e) => setLogin(e.target.value)}/>
                     <input required placeholder='password' minLength={6} type={'password'} value={password} onChange={(e) => setPassword(e.target.value)} />

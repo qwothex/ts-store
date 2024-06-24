@@ -1,7 +1,8 @@
 import AuthForm from "./components/authForm/AuthForm";
+import Admin from "./pages/Admin";
+import UserPage from "./pages/userPage/UserPage";
 
 export const publicRoutes = [
-    // {path: 'shop', component: }
     {
         path: '/login', 
         Component: AuthForm
@@ -10,4 +11,16 @@ export const publicRoutes = [
         path: '/registration', 
         Component: AuthForm
     }
+]
+
+export const privateRoutes = [
+    ...publicRoutes,
+    {
+        path: '/profile',
+        Component: UserPage
+    },
+    {
+        path: '/admin',
+        Component: Admin
+    },
 ]

@@ -1,11 +1,11 @@
 import React, {FC} from 'react'
 
-const MainPage:FC = () => {
+const Admin:FC = () => {
     return(
         <div>
-            main page
+            ADMIN
         </div>
     )
 }
 
-export default MainPage
+export default Admin
