@@ -1,7 +1,7 @@
 import React, {FC, useState} from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { useActions } from '../../hooks/useActions'
-import { createUser, loginUser } from '../../usersAPI/usersApi'
+import { createUser, loginUser } from '../../API/usersAPI/usersApi'
 import './authForm.css'
 
 

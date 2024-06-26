@@ -2,7 +2,7 @@ import React, { FC, useEffect, useState } from 'react';
 import Router from './components/Router';
 import MainPage from './pages/mainPage/MainPage';
 import NavBar from './components/navBar/NavBar';
-import { check } from './usersAPI/usersApi';
+import { check } from './API/usersAPI/usersApi';
 import { useActions } from './hooks/useActions';
 import {ClipLoader} from 'react-spinners'
 import { useAppSelector } from './hooks/useAppSelector';

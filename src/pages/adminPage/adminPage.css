@@ -1,0 +1,14 @@
+.adminContainer {
+    width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.adminContainer form {
+    display: flex;
+    flex-direction: column;
+}
+
+.adminContainer form input {
+    margin: 5px;
+}

@@ -1,6 +1,6 @@
 import React, {FC, useState} from "react";
 import { useAppSelector } from "../../hooks/useAppSelector";
-import { additionalData } from "../../usersAPI/usersApi";
+import { additionalData } from "../../API/usersAPI/usersApi";
 import "./editProfileForm.css"
 
 const EditProfileForm:FC = () => {
@@ -43,11 +43,11 @@ const EditProfileForm:FC = () => {
                 <span>Name</span>
                 <input placeholder='Josh Doe' value={name} onChange={changeNameHandler} />
                 <span>Bio</span>
-                <textarea value={bio} onChange={changeBioHandler} />
+                <textarea placeholder='About you' value={bio} onChange={changeBioHandler} />
                 <span>Location</span>
-                <input value={location} onChange={changeLocationHandler} />
+                <input placeholder='Ukraine' value={location} onChange={changeLocationHandler} />
                 <span>Telegram</span>
-                <input value={telegram} onChange={changeTelegramHandler} />
+                <input placeholder='@qwothex' value={telegram} onChange={changeTelegramHandler} />
                   <button type="submit">save changes</button>
             </form>
         </div>
