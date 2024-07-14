@@ -1,0 +1,11 @@
+.productPageContainer{
+    padding: 0 200px 0 200px;
+    display: flex;
+    flex-direction: row;
+    
+}
+
+.productPageContainer img {
+    width: 500px;
+    height: 500px;
+}

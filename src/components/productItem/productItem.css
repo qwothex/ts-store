@@ -1,0 +1,46 @@
+.item-card{
+    width: 150px;
+    height: 225px;
+    background-color: rgb(68, 68, 68);
+    margin: 10px;
+    cursor: pointer;
+    padding: 10px;
+    transition: 0.2s;
+}
+
+.item-card:hover{
+    background-color: rgb(82, 82, 82);
+}
+
+.item-card img {
+    min-width: 50%;
+    max-width: 100%;
+    min-height: 65%;
+    max-height: 70%;
+}
+
+.item-card h6{
+    line-height: 1;
+    margin: 5px 0 0 0;
+}
+
+.item-card h6 .title {
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.item-card h6 .title:hover {
+    text-decoration: underline;
+}
+
+.item-card h6 .brand {
+    color: rgb(160, 160, 160);
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.item-card p {
+    margin: 5px 5px 5px 0;
+    font-size: 18px;
+    font-weight: 500;
+}

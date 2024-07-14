@@ -1,6 +1,7 @@
 import AuthForm from "./components/authForm/AuthForm";
 import AdminPage from "./pages/adminPage/AdminPage";
 import MainPage from "./pages/mainPage/MainPage";
+import ProductPage from "./pages/productPage/ProductPage";
 import UserPage from "./pages/userPage/UserPage";
 
 export const publicRoutes = [
@@ -15,6 +16,10 @@ export const publicRoutes = [
     {
         path: '/',
         Component: MainPage
+    },
+    {
+        path: '/product/:id',
+        Component: ProductPage
     }
 ]
 

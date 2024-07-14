@@ -49,12 +49,20 @@ const Admin:FC = () => {
     return(
         <div className='adminContainer'>
             <form onSubmit={formSubmitHandler}>
+                <h1>Create new product</h1>
                 <input type={'text'} placeholder='title' onChange={titleHandler} />
                 <input type={'text'} placeholder='descripion' onChange={descriptionHandler} />
                 <input type={'text'} placeholder='brand' onChange={brandHandler} />
                 <input type={'text'} placeholder='type' onChange={typeHandler} />
-                <input type={'file'} placeholder='image' onChange={imageHandler} />
                 <input type={'number'} placeholder='price' onChange={priceHandler} />
+
+                <input style={{display: 'none'}} type={'file'} id='file_input' placeholder='image' onChange={imageHandler} />
+                <label htmlFor='file_input'>
+                    <div>
+                        <span>Add file {image?.name}</span>
+                    </div>
+                </label>
+
                 <button type='submit'>Create device</button>
             </form>
         </div>

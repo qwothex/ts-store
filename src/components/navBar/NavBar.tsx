@@ -25,6 +25,11 @@ const NavBar:FC = () => {
         localStorage.removeItem('token')
         setUserAuth(false)
         setCurrentUser({})
+        navigate('/')
+    }
+
+    if(dropListEl.current){
+        dropListEl.current!.style.display = "none"
     }
 
     return(

@@ -1,9 +1,13 @@
-import React, {FC, useEffect} from 'react'
+import React, {FC, useEffect, useState} from 'react'
 import './mainPage.css'
-import NavBar from '../../components/navBar/NavBar'
-import { getAllProducts } from '../../API/productsAPI/productAPI'
+import { getAllProducts} from '../../API/productsAPI/productAPI'
 import { useActions } from '../../hooks/useActions'
 import { useAppSelector } from '../../hooks/useAppSelector'
+import ProductItem from '../../components/productItem/ProductItem'
+import { RotateLoader } from 'react-spinners'
+import SideBar from '../../components/sideBar/SideBar'
+import Glider from 'react-glider'
+import "glider-js/glider.min.css";
 
 const MainPage:FC = () => {
 
@@ -11,17 +15,36 @@ const MainPage:FC = () => {
 
     const { setProducts } = useActions()
 
+    const [loading, setLoading] = useState(true)
+
     useEffect(() => {
-        getAllProducts(null, null, 3, 1).then(data => setProducts(data))
+        getAllProducts("", "", 9, 1)
+        .then(data => setProducts(data))
+        .then(data => console.log(data))
+        .then(() => setLoading(false))
     }, [])
 
-    useEffect(() => {
-        console.log(products)
-    }, [products])
+    if(loading){
+        return( 
+        <div style={{width: '100vw', height: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+            <RotateLoader color='white' />
+        </div>
+        )
+    }
 
     return(
-        <div>
-            <NavBar />
+        <div className='mainPage_container'>
+            <SideBar />
+            <div className='items-div'>
+            <Glider
+                slidesToShow={3}
+                slidesToScroll={1}
+                hasArrows
+                draggable
+            >
+               {products.rows.map((el) => <div key={el.id}><ProductItem product={el} /></div>)}
+            </Glider>
+            </div>
         </div>
     )
 }

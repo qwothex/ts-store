@@ -1,5 +1,4 @@
 import { authHost, host } from ".."
-import { jwtDecode } from "jwt-decode"
 
 interface productProps {(product: FormData): {}}
 
@@ -12,5 +11,10 @@ export const getAllProducts = async(type: string | null, brand: string | null, l
     const {data} = await authHost.get('api/product', {params: {
         type, brand, limit, page
     }})
+    return data
+}
+
+export const getOneProduct = async(id: number) => {
+    const {data} = await authHost.get('api/product/' + id)
     return data
 }

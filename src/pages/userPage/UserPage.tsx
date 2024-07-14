@@ -11,7 +11,7 @@ const UserPage:FC = () => {
 
     return(
       <>
-      <button onClick={() => setChanging(!changing)}>Edit profile</button>
+      <button onClick={() => setChanging(!changing)}>{changing ? 'Back to profile' : 'Edit profile'}</button>
         {changing 
           ? 
             <EditProfileForm /> 

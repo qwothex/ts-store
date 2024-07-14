@@ -20,9 +20,9 @@ class ProductController {
     }
 
     async getAll(req, res) {
-        let {brand, type, limit, page} = req.body
+        let {brand, type, limit, page} = req.query
         page = page || 1
-        limit = limit || 9
+        limit = limit || 6
         let offset = page * limit - limit 
         let devices; 
         if(!brand && !type){
@@ -38,6 +38,13 @@ class ProductController {
             devices = await Product.findAndCountAll({where:{type, brand}, limit, offset})
         }
         return res.json(devices)
+    }
+
+    async getOne(req, res) {
+        const {id} = req.params
+        const device = await Product.findOne({where: {id}})
+
+        return res.json(device)
     }
 }
 

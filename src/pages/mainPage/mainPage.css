@@ -1,0 +1,12 @@
+.mainPage_container{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+}
+
+.items-div{
+    width: 595px;
+    background-color: #2b2b2b;
+    padding: 5px 0px 5px 5px;
+    margin-top: 50px;
+}

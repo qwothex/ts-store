@@ -15,10 +15,6 @@ const EditProfileForm:FC = () => {
     const additionalDataHandler = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         additionalData(user.id!, name, bio, location, telegram)
-        setName('')
-        setBio('')
-        setLocation('')
-        setTelegram('')
     }
 
     const changeNameHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
