@@ -1,8 +1,11 @@
 import React, {FC, useEffect, useState} from 'react'
 import { createProduct } from '../../API/productsAPI/productAPI'
 import './adminPage.css'
+import { useNavigate } from 'react-router-dom'
 
 const Admin:FC = () => {
+
+    const navigate = useNavigate()
     
     const [title, setTitle] = useState('')
     const [description, setDescription] = useState('')
@@ -58,9 +61,7 @@ const Admin:FC = () => {
 
                 <input style={{display: 'none'}} type={'file'} id='file_input' placeholder='image' onChange={imageHandler} />
                 <label htmlFor='file_input'>
-                    <div>
-                        <span>Add file {image?.name}</span>
-                    </div>
+                        <span>Add file 500px2 {image?.name}</span>
                 </label>
 
                 <button type='submit'>Create device</button>

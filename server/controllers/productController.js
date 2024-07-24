@@ -18,7 +18,7 @@ class ProductController {
             next(ApiError.badRequest(e.message))
         }
     }
-
+    
     async getAll(req, res) {
         let {brand, type, limit, page} = req.query
         page = page || 1

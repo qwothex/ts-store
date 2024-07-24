@@ -4,6 +4,7 @@ import { check } from './API/usersAPI/usersApi';
 import { useActions } from './hooks/useActions';
 import {RotateLoader} from 'react-spinners'
 import NavBar from './components/navBar/NavBar';
+import Footer from './components/footer/Footer';
 
 
 const App:FC = () => {
@@ -30,6 +31,7 @@ const App:FC = () => {
     <div style={{width: '100vw'}}>
       <NavBar />
       <Router />
+      <Footer />
     </div>
   );
   

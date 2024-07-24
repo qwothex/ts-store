@@ -1,0 +1,53 @@
+.footer{
+    width: 100%;
+    height: 250px;
+    background-color: rgb(82,82,82);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 50px;
+    margin-top: 50px;
+}
+
+.footer__logo{
+    width: 150px;
+    height: 100px;
+    background-color: rgb(82,82,82);
+    background-image: url(../../assets/vn-high-resolution-logo-transparent.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    margin-bottom: 35px;
+}
+
+.footer__social-media{
+    display: flex;
+}
+
+.icon{
+    width: 35px;
+    height: 35px;
+    margin: 5px;
+    border-radius: 50%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    cursor: pointer;
+}
+
+.github{
+    background-image: url(../../assets/github-logo.png);
+}
+
+.telegram{
+    background-image: url(../../assets/telegram-minimal-logo-2F6E632BF2-seeklogo.com.png);
+}
+
+.linkedin{
+    background-image: url(../../assets/linkedInIMG-removebg-preview.png);
+}
+
+.footer__rights{
+    font-size: 16px;
+    color: black
+}
