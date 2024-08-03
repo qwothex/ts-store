@@ -5,13 +5,13 @@ const ApiError = require('../error/ApiError')
 
 class ProductController {
     async create(req, res, next){
-        try{
-            const {title, description, type, brand, price} = req.body
+        try{ 
+            const {title, description, type, brand, price, memory} = req.body
             const {image} = req.files
             let fileName = uuid.v4() + '.jpg'
             image.mv(path.resolve(__dirname, '..', 'static', fileName))
 
-        const product = await Product.create({title, description, price, brand, type, image: fileName})
+        const product = await Product.create({title, description, price, brand, type, memory, image: fileName})
 
         res.json(product)
         }catch(e){
@@ -22,7 +22,7 @@ class ProductController {
     async getAll(req, res) {
         let {brand, type, limit, page} = req.query
         page = page || 1
-        limit = limit || 6
+        limit = limit || 9
         let offset = page * limit - limit 
         let devices; 
         if(!brand && !type){
@@ -44,6 +44,15 @@ class ProductController {
         const {id} = req.params
         const device = await Product.findOne({where: {id}})
 
+        return res.json(device)
+    }
+
+    async addDiscount(req, res){
+        const {id, price} = req.body
+        console.log(id)
+        const device = await Product.findOne({where: {id}})
+        device.discount = price
+        device.save()
         return res.json(device)
     }
 }

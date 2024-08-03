@@ -1,9 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { MyJwtPayload } from '../../types/types'
+import { UserI } from '../../types/types'
+import { useEffect } from 'react'
 
 interface UserState {
     isUserAuth: boolean,
-    user: MyJwtPayload
+    user: UserI
 }
 
 const initialState: UserState = {
@@ -18,8 +19,11 @@ export const userSlice = createSlice({
         setUserAuth: (state, action: PayloadAction<boolean>) => {
             state.isUserAuth = action.payload
         },
-        setCurrentUser: (state, action: PayloadAction<MyJwtPayload>) => {
+        setCurrentUser: (state, action: PayloadAction<UserI>) => {
             state.user = action.payload
+        },
+        setLastViewed: (state, action: PayloadAction<[]>) => {
+            state.user.lastview = action.payload
         }
     }
 })

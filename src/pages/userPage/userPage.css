@@ -1,14 +1,21 @@
 .user_container{
-    background-color: #ffffff;
     display: flex;
     flex-direction: column;
     align-items: center;
+    width: 500px;
+    /* border: 2px solid black; */
+    border-radius: 15px;
+    background-color: #fff;
+    margin: 50px auto 0 auto;
+    padding: 25px;
+    position: relative;
 }
 
 .user_container h3 {
     font-size: 25px;
     font-weight: 500;
     margin: 5px 0 10px 0;
+    text-align: center;
 }
 
 .profile_picture{
@@ -17,4 +24,13 @@
     border-radius: 50%;
     background-color: rgb(255, 115, 0);
     margin: 5px 5px 0 5px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
+.changeLink{
+    text-decoration: underline;
+    margin-left: auto;
+    user-select: none;
 }

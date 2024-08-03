@@ -20,9 +20,12 @@ const ProductItem:FC<ProductItemProps> = (props) => {
                 <img src={process.env.REACT_APP_URL_API || 'http://localhost:5000/' + props.product.image} alt="product image" />
             </div>
             <h6><span className='title'>{props.product.title}</span> <br /> <span className='brand'>{props.product.brand}</span></h6>
-            <p>{currency == 'USD' ? props.product.price + '$' : props.product.price*40 + 'UAH'}</p>
+            {props.product.discount ? 
+                <p>{currency == 'USD' ? <div><span className='previous-price'>{props.product.price}</span><span className='current-price'>{props.product.discount}$</span></div> : props.product.discount*40 + 'UAH'}</p>
+            :
+                <p>{currency == 'USD' ? props.product.price + '$' : props.product.price*40 + 'UAH'}</p>
+            }
         </div>
     )
 }
-
 export default ProductItem

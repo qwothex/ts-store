@@ -8,6 +8,8 @@ export interface productItem {
     type: string
     image: string
     price: number
+    memory: string | null
+    discount: number
 }
 
 interface productProps {

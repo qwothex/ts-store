@@ -6,10 +6,10 @@
     cursor: pointer;
     padding: 10px;
     transition: 0.2s;
-    border-left: 1px solid rgb(0, 0, 0)
+    border-right: 1px solid rgb(0, 0, 0)
 }
 
-.item-card:first-child{
+.item-card:last-child{
     border: none;
 }
 

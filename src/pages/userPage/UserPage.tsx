@@ -11,13 +11,14 @@ const UserPage:FC = () => {
 
     return(
       <>
-      <button onClick={() => setChanging(!changing)}>{changing ? 'Back to profile' : 'Edit profile'}</button>
+        <div className="user_container">
+          <a className="changeLink" onClick={() => setChanging(!changing)}>{changing ? 'Back to profile' : 'Edit profile'}</a>
         {changing 
           ? 
             <EditProfileForm /> 
           : 
-        <div className="user_container">
-            <img className="profile_picture" />
+            <div>
+              <img className="profile_picture" style={{backgroundImage: `url(${'http://localhost:5000/' + user.additional?.image})`}} />
             <h3>{user.username}</h3>
             <br />
             <div>
@@ -26,7 +27,9 @@ const UserPage:FC = () => {
               <p>{user.additional?.location}</p>
               <p>{user.additional?.telegram}</p>
             </div>
-        </div>}
+            </div>
+        }   
+        </div>
       </>
     )
 }

@@ -12,6 +12,7 @@ import ProductItem from '../../components/productItem/ProductItem'
 const MainPage:FC = () => {
 
     const {currentBrand, currentType, products} = useAppSelector(state => state.productReducer)
+    const {user} = useAppSelector(state => state.userReducer)
 
     const { setProducts, setCurrentBrand, setCurrentType } = useActions()
 
@@ -36,9 +37,9 @@ const MainPage:FC = () => {
         <div className='mainPage-container'>
             <SideBar />
             {!currentBrand && !currentType ? 
-            <div className='glider-div'>
-                <ProductList />
-            </div>
+                <div className='glider-div'>
+                    <ProductList />
+                </div>
             :
             <div>
                  <div className='active-filters'> 

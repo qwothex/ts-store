@@ -1,18 +1,19 @@
 import { JwtPayload } from "jwt-decode"
-import { Json } from "sequelize/types/utils"
 
 interface additionalInterface {
     name: string,
     bio: string,
     location: string, 
-    telegram: string
+    telegram: string,
+    image: string
 }
 
-interface MyJwtPayload extends JwtPayload {
+interface UserI extends JwtPayload {
     id?: number,
     role?: string,
     username?: string,
-    additional?: additionalInterface
+    additional?: additionalInterface,
+    lastview?: []
 }
 
-export type {MyJwtPayload}
+export type {UserI}

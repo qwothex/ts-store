@@ -15,8 +15,8 @@ const NavBar:FC = () => {
     const usd = useRef<HTMLParagraphElement>(null)
     const uah = useRef<HTMLParagraphElement>(null)
 
-    const user = useAppSelector(state => state.userReducer.user)
-    const isUserAuth = useAppSelector(state => state.userReducer.isUserAuth)
+    const {user} = useAppSelector(state => state.userReducer)
+    const {isUserAuth} = useAppSelector(state => state.userReducer)
     const {currency} = useAppSelector(state => state.productReducer)
 
     const userInfoClick = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -40,8 +40,6 @@ const NavBar:FC = () => {
         dropListEl.current!.style.display = "none"
     }
 
-    
-
     return(
         <div className='navBar-container'>
             <NavLink to={'/'}>HOME</NavLink>
@@ -50,7 +48,7 @@ const NavBar:FC = () => {
                 <div className='rightSide'>
                     <button className='cart'></button>
                     <div className='userInfo' onClick={userInfoClick}>
-                        <div className='profilePicture' />
+                        <div className='profilePicture' style={{backgroundImage: `url(${'http://localhost:5000/' + user.additional?.image})`}} />
                         <span>{user.username}</span>
                     </div>
                 </div>
@@ -60,14 +58,14 @@ const NavBar:FC = () => {
                         <li onClick={() => navigate('/profile', {replace: false})}>
                             Profile
                         </li>
+                        <li onClick={logOut}>
+                            Log out
+                        </li>
                         <li>
                             <p ref={usd} className='usd'>USD</p>
                             <input onClick={currencyChange} ref={currencyEl} type='checkbox' id="money-input"/>
                             <label htmlFor='money-input' className='money'></label>
                             <p ref={uah} className='uah'>UAH</p>
-                        </li>
-                        <li onClick={logOut}>
-                            Log out
                         </li>
                     </ul>
                 </div>
