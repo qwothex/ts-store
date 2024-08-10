@@ -7,6 +7,8 @@ router.post('/registration', userController.registration)
 router.post('/login', userController.login)
 router.post('/additional', userController.additional)
 router.post('/lastview', userController.lastview)
+router.post('/cart', userController.addCart)
+router.post('/cart/delete', userController.deleteCart)
 router.get('/auth', authMiddleware, userController.check)
 
 module.exports = router

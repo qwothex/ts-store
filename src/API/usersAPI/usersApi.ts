@@ -1,6 +1,7 @@
 import { authHost, host } from ".."
-import { jwtDecode } from "jwt-decode"
+import { jwtDecode, JwtPayload } from "jwt-decode"
 import { productItem } from "../../store/slices/productSlice"
+import { UserI } from "../../types/types"
 
 interface UserProps { (username: string, password: string): {} }
 
@@ -33,6 +34,18 @@ export const check = async() => {
 
 export const addLastView = async(id: number, product: productItem) => {
     const {data} = await authHost.post('api/user/lastview', {id, product})
+    localStorage.setItem('token', data.token)
+    return jwtDecode(data.token)
+}
+
+export const addCartProduct = async(id: number, product: productItem) => {
+    const {data} = await authHost.post('api/user/cart', {id, product})
+    localStorage.setItem('token', data.token)
+    return jwtDecode(data.token)
+}
+
+export const deleteCartProduct = async(productId: number, id: number) => {
+    const {data} = await authHost.post('api/user/cart/delete', {productId, id})
     localStorage.setItem('token', data.token)
     return jwtDecode(data.token)
 }

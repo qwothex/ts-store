@@ -33,6 +33,19 @@
     margin-right: 5px;
     cursor: pointer;
     transition: 0.2s;
+    position: relative;
+}
+
+.rightSide .cart .cart-length{
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    background-color: rgb(0, 153, 0);
+    color: white;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    border: 1px solid black;
 }
 
 .rightSide .cart:hover{
@@ -123,6 +136,7 @@
     height: 25px;
     background-color: rgb(218, 218, 218);
     border-radius: 50%;
+    background-position: center;
     background-repeat: no-repeat;
     background-size: contain;
 }

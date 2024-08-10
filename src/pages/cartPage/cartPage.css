@@ -1,0 +1,35 @@
+.cart-container{
+    min-height: 50vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex-wrap: wrap;
+    padding: 20px;
+}
+
+.cart-container .item-card{
+    margin: 5px;
+    border: none;
+}
+
+.cart-total{
+    width: 350px;
+    height: 35px;
+    position: sticky;
+    bottom: 20px;
+    left: 90%;
+    background-color: #fff;
+    border-radius: 20px 0 20px 20px;
+    border: 1px solid black;
+    font-size: 24px;
+    padding: 10px;
+}
+
+.cart-total p {
+    text-align: center;
+    margin: 0;
+}
+
+.cart-total p span {
+    color: green;
+}

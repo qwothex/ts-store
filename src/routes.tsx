@@ -1,5 +1,6 @@
 import AuthForm from "./components/authForm/AuthForm";
 import AdminPage from "./pages/adminPage/AdminPage";
+import CartPage from "./pages/cartPage/CartPage";
 import MainPage from "./pages/mainPage/MainPage";
 import ProductPage from "./pages/productPage/ProductPage";
 import UserPage from "./pages/userPage/UserPage";
@@ -33,4 +34,8 @@ export const privateRoutes = [
         path: '/admin',
         Component: AdminPage
     },
+    {
+        path: '/cart',
+        Component: CartPage
+    }
 ]

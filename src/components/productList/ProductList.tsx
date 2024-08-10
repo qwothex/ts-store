@@ -18,6 +18,7 @@ const ProductList:FC = () => {
         <Glider
             slidesToShow={lastview!.length <= 4 ? products.rows.length : 4}
             slidesToScroll={3}
+            hasArrows
             draggable
         >
             {lastview?.map((el: productItem) => <div key={el.id}><ProductItem product={el} /></div>)}

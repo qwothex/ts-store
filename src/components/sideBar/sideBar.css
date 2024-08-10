@@ -8,6 +8,7 @@
 .sidebar_container ul {
     list-style: none;
     padding: 0 5px 5px 5px;
+    margin-top: 5px;
 }
 
 .sidebar_container ul li {
@@ -17,6 +18,7 @@
     align-items: center;
     cursor: pointer;
     transition: 0.2s;
+    font-size: 18px;
 }
 
 .sidebar_container input {
@@ -28,9 +30,62 @@
     color: #f3f3f3;
 }
 
+.sidebar_container h3 {
+    margin: 5px 0 0 5px;
+}
+
 .image_replacement{
     width: 17.5px;
     height: 17.5px;
     background: white;
     margin: 5px 5px 5px 0;
+}
+
+.download-links{
+    width: 100%;
+    text-align: center;
+    margin-top: 30px;
+}
+
+.download-links h4{
+    margin: 0;
+    font-weight: 600;
+}
+
+.store-logos{
+    margin: 0 auto 0 auto;
+    display: flex;
+    width: 95%;
+    height: 50px;
+    justify-content: space-between;
+}
+
+.appStore{
+    display: block;
+    width: 49%;
+    height: 100%;
+    background-image: url('../../assets/appStoreLogo_black.svg');
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    transition: 0.2s;
+}
+
+.appStore:hover{
+    transform: scale(1.05);
+}
+
+.playMarket{
+    display: block;
+    width: 49%;
+    height: 100%;
+    background-image: url('../../assets/google-play-logo.svg');
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    transition: 0.2s;
+}
+
+.playMarket:hover{
+    transform: scale(1.05);
 }

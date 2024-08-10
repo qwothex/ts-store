@@ -5,30 +5,32 @@ import { useActions } from './hooks/useActions';
 import {RotateLoader} from 'react-spinners'
 import NavBar from './components/navBar/NavBar';
 import Footer from './components/footer/Footer';
+import { UserI } from './types/types';
 
 
 const App:FC = () => {
 
   const [loading, setLoading] = useState<boolean>(true)
 
-  const {setCurrentUser, setUserAuth} = useActions()
+  const {setCurrentUser, setUserAuth, setCartProducts} = useActions()
 
   useEffect(() => {
-      check().then((data) => {
+      check().then((data: UserI) => {
         console.log(data)
         setUserAuth(true)
-        setCurrentUser(data)}).finally(() => setLoading(false))
+        setCurrentUser(data)
+        setCartProducts(data.cart!)}).finally(() => setLoading(false))
   }, [])
 
   if(loading){
     return(
       <div style={{width: '100vw', height: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
-            <RotateLoader color='white' />
+            <RotateLoader color='black' />
       </div>)
   }
 
   return (
-    <div style={{width: '100vw'}}>
+    <div>
       <NavBar />
       <Router />
       <Footer />

@@ -1,4 +1,5 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice, current, PayloadAction } from "@reduxjs/toolkit";
+import ProductItem from "../../components/productItem/ProductItem";
 
 export interface productItem {
     id: number
@@ -9,7 +10,8 @@ export interface productItem {
     image: string
     price: number
     memory: string | null
-    discount: number
+    discount: number, 
+    amount: number
 }
 
 interface productProps {
@@ -22,7 +24,8 @@ interface initialStateProps {
     currentFilter: string,
     currentBrand: string,
     currentType: string,
-    currency: 'UAH' | 'USD'
+    currency: 'UAH' | 'USD',
+    cart: productItem[]
 }
 
 const initialState: initialStateProps = {
@@ -33,7 +36,8 @@ const initialState: initialStateProps = {
     currentFilter: '',
     currentBrand: '',
     currentType: '',
-    currency: 'USD'
+    currency: 'USD',
+    cart: [<productItem>{}]
 }
 
 const productSlice = createSlice({
@@ -51,6 +55,23 @@ const productSlice = createSlice({
         },
         setCurrency: (state, action: PayloadAction<'USD' | 'UAH'>) => {
             state.currency = action.payload
+        },
+        setCartProducts: (state, action: PayloadAction<[productItem]>) => {
+            state.cart = action.payload
+        },
+        addProductToCart: (state, action: PayloadAction<productItem>) => {
+            state.cart ? state.cart.unshift(action.payload) : state.cart = [action.payload]
+        },
+        deleteProductFromCart: (state, action: PayloadAction<number>) => {
+            state.cart = state.cart.filter(el => el.id !== action.payload)
+        },
+        changeProductAmount: (state, action: PayloadAction<{id: number, newAmount: number}>) => {
+            state.cart.findIndex((element,index) => {
+                if(element.id == action.payload.id){
+                    state.cart[index].amount = action.payload.newAmount
+                }
+            })
+
         }
     }
 })

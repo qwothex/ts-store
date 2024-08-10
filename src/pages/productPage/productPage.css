@@ -141,11 +141,28 @@
 .discount-button:hover{
     border: none;
     color: white;
-    background-color: #ff9d00;
+    background-color: #fea622;
 }
 
 .discount-button:active{
     background-color: #a96800;
+}
+
+.delete-button{
+    width: 165px;
+    height: 40px;
+    margin-left: 10px;
+    border-radius: 10px;
+    border: 1px solid rgb(255, 0, 0);
+    background-color: transparent;
+    font-size: 18px;
+    transition: 0.2s;
+}
+
+.delete-button:hover{
+    border: none;
+    color: white;
+    background-color: #cb0000;
 }
 
 .price{
@@ -195,4 +212,15 @@
     display: flex;
     justify-content: space-between;
     margin-bottom: 15px;
+}
+
+details{
+    width: 165px;
+    height: 40px;
+    margin-left: 10px;
+    border-radius: 10px;
+    border: 1px solid rgb(255, 170, 0);
+    background-color: transparent;
+    font-size: 18px;
+    transition: 0.2s;
 }

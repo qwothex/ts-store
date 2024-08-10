@@ -1,0 +1,95 @@
+.cartItem-container{
+    max-width: 100%;
+    min-width: 1000px;
+    height: 250px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.349);
+    background-color: #fff;
+}
+
+.cartItem-container:last-child{
+    border-bottom: none;
+}
+
+.cartItem-container .top-side{
+    height: 60%;
+    width: 100%;
+    display: flex;
+    padding: 15px;
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    box-sizing: border-box;
+}
+
+.top-side__image{
+    width: 200px;
+    min-height: 100px;
+    max-height: 100%;
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    margin-right: 20px;
+}
+
+.top-side__left{
+    display: flex;
+}
+
+.top-side__title{
+    height: 25px;
+    color: black;
+    text-decoration: none;
+}
+
+.top-side__title:hover{
+    text-decoration: underline;
+    color: rgb(255, 52, 52);
+}
+
+.top-side__delete-button{
+    width: 40px;
+    height: 40px;
+    background-image: url('../../assets/trash-can.png');
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    border: none;
+    border-radius: 10px;
+    transition: 0.2s;
+    margin: 10px 40px 0 0;
+}
+
+.top-side__delete-button:hover{
+    background-color: #bfbfbf;
+}
+
+.cartItem-container .bottom-side{
+    width: 100%;
+    display: flex;
+    justify-content: end;
+    align-items: center;
+}
+
+.bottom-side .bottom-side__content{
+    width: 50%;
+    height: 100%;
+    display: flex;
+    justify-content: end;
+    padding-right: 40px;
+}
+
+.bottom-side__content .amount{
+    display: flex;
+    align-items: center;
+    margin-right: 35px;
+}
+
+.amount-button{
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    border: none;
+    /* background-color: #ddfffa65; */
+    margin: 0 10px 0 10px;
+    font-size: 24px;
+}

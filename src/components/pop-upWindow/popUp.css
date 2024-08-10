@@ -1,0 +1,33 @@
+.popUp-container{
+    position: absolute;
+    left: 50%;
+    top: -2%;
+    transform: translate(-50%);
+    width: 200px;
+    height: 20px;
+    background-color: rgb(0, 138, 0);
+    border: 3px solid rgb(0, 100, 0);
+    padding: 6px;
+    animation: appear 4s;
+    border-radius: 7px;
+    color: white;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: start;
+}
+
+@keyframes appear {
+    0%{
+        transform: translate(-50%);
+    }
+    20%{
+        transform: translate(-50%, 200%);
+    }
+    80%{
+        transform: translate(-50%, 200%);
+    }
+    100%{
+        transform: translate(-50%);
+    }
+}

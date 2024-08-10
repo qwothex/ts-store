@@ -19,6 +19,10 @@ export const getOneProduct = async(id:number) => {
     return data
 }
 
+export const deleteProduct = async(id: number) => {
+    await authHost.post('api/product/' + id)
+}
+
 export const addDiscount = async(id: number, price: number) => {
     const {data} = await authHost.post('/api/product/discount', {id, price})
     return data

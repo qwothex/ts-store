@@ -18,6 +18,7 @@ const NavBar:FC = () => {
     const {user} = useAppSelector(state => state.userReducer)
     const {isUserAuth} = useAppSelector(state => state.userReducer)
     const {currency} = useAppSelector(state => state.productReducer)
+    const {cart} = useAppSelector(state => state.productReducer)
 
     const userInfoClick = (e: React.MouseEvent<HTMLDivElement>) => {
         if(dropListEl.current){
@@ -46,7 +47,7 @@ const NavBar:FC = () => {
             {isUserAuth ? 
                 <>
                 <div className='rightSide'>
-                    <button className='cart'></button>
+                    <button className='cart' onClick={() => navigate('/cart', {replace: false})}><div className='cart-length'>{cart ? cart.length : 0}</div></button>
                     <div className='userInfo' onClick={userInfoClick}>
                         <div className='profilePicture' style={{backgroundImage: `url(${'http://localhost:5000/' + user.additional?.image})`}} />
                         <span>{user.username}</span>

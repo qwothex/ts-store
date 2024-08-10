@@ -29,6 +29,7 @@ const SideBar:FC = () => {
 
     return(
         <div className='sidebar_container'>
+            <h3>Type</h3>
             <ul>
                 {types.map(el => 
                     <li key={el.name} onClick={(e) => {
@@ -38,6 +39,7 @@ const SideBar:FC = () => {
                     </li>
                 )}
             </ul>
+            <h3>Brand</h3>
             <ul>
                 {brands.map(el => 
                     <li key={el.name} onClick={(e) => {
@@ -47,6 +49,13 @@ const SideBar:FC = () => {
                     </li>
                 )}
             </ul>
+            <div className='download-links'>
+                <h4>Download our apps</h4>
+                <div className='store-logos'>
+                    <a href='https://www.apple.com/app-store' target='blank' className='appStore'/>
+                    <a href='https://play.google.com/store/games' target='blank' className='playMarket'/>
+                </div>
+            </div>
         </div>
     )
 }

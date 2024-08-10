@@ -5,9 +5,9 @@ const uuid = require('uuid')
 const path = require('path')
 const ApiError = require('../error/ApiError')
 
-const generateJwt = (id, username, role, additional, lastview) => {
+const generateJwt = (id, username, role, additional, lastview, cart) => {
     return jwt.sign(
-        {id, username, role, additional, lastview},
+        {id, username, role, additional, lastview, cart},
          process.env.SECRET_KEY,
          {expiresIn: '72h'}
     )
@@ -38,29 +38,32 @@ class UserController {
         if(!comparePassword){
             return next(ApiError.internal('wrong password'))
         }
-        const token = generateJwt(user.id, user.username, user.role, user.additional, user.lastview)
+        const token = generateJwt(user.id, user.username, user.role, user.additional, user.lastview, user.cart)
         return res.json({token})
     }
 
     async check(req, res, next) {
-        const token = generateJwt(req.user.id, req.user.username, req.user.role, req.user.additional, req.user.lastview)
+        const token = generateJwt(req.user.id, req.user.username, req.user.role, req.user.additional, req.user.lastview, req.user.cart)
         return res.json({token})
     }
 
     async additional(req, res, next) {
-        const {id, name, bio, location, telegram} = req.body
+        const {id, name, bio, location, telegram, image} = req.body
 
-        const {image} = req.files
+        let fileName;
+        if(image) fileName = image
 
-        console.log(image)
+        else{
+            const {image} = req.files;
         
-        let fileName = uuid.v4() + '.jpg'
-        image.mv(path.resolve(__dirname, '..', 'static', fileName))
+            fileName = uuid.v4() + '.jpg'
+            image.mv(path.resolve(__dirname, '..', 'static', fileName))
+        }
  
         const user = await User.findOne({where:{id}})
         await user.update({additional: {name, bio, location, telegram, image: fileName}})
         await user.save()
-        const token = generateJwt(user.id, user.username, user.role, user.additional, user.lastview)
+        const token = generateJwt(user.id, user.username, user.role, user.additional, user.lastview, user.cart)
         return res.json({token})
     }
 
@@ -68,11 +71,33 @@ class UserController {
         const {id, product} = req.body
         const user = await User.findOne({where:{id}})
         let isExist = false;
-        user.lastview.forEach((el) => {if(el.id == product.id) isExist = true})
+        user.lastview.forEach((el) => { if(el.id == product.id) isExist = true })
         if(!isExist){user.lastview.unshift(product)}
         user.changed('lastview', true)
         await user.save()
-        const token = generateJwt(user.id, user.username, user.role, user.additional, user.lastview)
+        const token = generateJwt(user.id, user.username, user.role, user.additional, user.lastview, user.cart)
+        return res.json({token})
+    }
+
+    async addCart(req, res, next) {
+        const {id, product} = req.body
+        const user = await User.findOne({where:{id}})
+        let isExist = false;
+        user.cart.forEach((el) => { if(el.id == product.id) isExist = true })
+        if(!isExist){user.cart.unshift(product)}
+        user.changed('cart', true)
+        await user.save()
+        const token = generateJwt(user.id, user.username, user.role, user.additional, user.lastview, user.cart)
+        return res.json({token})
+    }
+
+    async deleteCart(req, res, next) {
+        const {productId, id} = req.body
+        const user = await User.findOne({where:{id}})
+        user.cart = user.cart.filter(el => el.id !== productId)
+        user.changed('cart', true)
+        await user.save()
+        const token = generateJwt(user.id, user.username, user.role, user.additional, user.lastview, user.cart)
         return res.json({token})
     }
 }
