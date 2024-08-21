@@ -5,7 +5,7 @@ interface modalProps {
     visible: boolean
     title: string
     body: React.ReactElement | React.ReactNode | string
-    footer: React.ReactElement | React.ReactNode | string
+    footer?: React.ReactElement | React.ReactNode | string
     Close: () => void
 }
 

@@ -15,14 +15,7 @@ const SideBar:FC = () => {
         {"name" : "TV", "picture" : "../assets/white-square.png"},
     ]
 
-    const brands = [
-        {"name" : "Apple", "picture" : "../assets/white-square.png"}, 
-        {"name" : "Samsung", "picture" : "../assets/white-square.png"}, 
-        {"name" : "Nokia", "picture" : "../assets/white-square.png"},
-        {"name" : "Asus", "picture" : "../assets/white-square.png"},
-        {"name" : "ARTLINE", "picture" : "../assets/white-square.png"},
-        {"name" : "Xiaomi", "picture" : "../assets/white-square.png"},
-    ]
+    const brands = [ "Apple", "Samsung", "Nokia","Asus", "Acer","Xiaomi" ]
 
     const {currentType} = useAppSelector(state => state.productReducer)
     const {currentBrand} = useAppSelector(state => state.productReducer)
@@ -42,10 +35,10 @@ const SideBar:FC = () => {
             <h3>Brand</h3>
             <ul>
                 {brands.map(el => 
-                    <li key={el.name} onClick={(e) => {
-                        currentBrand == el.name ? setCurrentBrand("") : setCurrentBrand(el.name)
+                    <li key={el} onClick={(e) => {
+                        currentBrand == el ? setCurrentBrand("") : setCurrentBrand(el)
                         }} >
-                            {el.name}
+                            {el}
                     </li>
                 )}
             </ul>

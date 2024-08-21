@@ -3,11 +3,12 @@ import { NavLink, useNavigate } from 'react-router-dom'
 import { useActions } from '../../hooks/useActions'
 import { createUser, loginUser } from '../../API/usersAPI/usersApi'
 import './authForm.css'
+import { UserI } from '../../types/types'
 
 
 const AuthForm:FC = () => {
 
-    const { setUserAuth, setCurrentUser } = useActions()
+    const { setUserAuth, setCurrentUser, setCartProducts } = useActions()
 
     const navigate = useNavigate()
 
@@ -19,7 +20,7 @@ const AuthForm:FC = () => {
     const formSubmitHandler = async(e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         try{
-            let data;
+            let data: UserI;
             if(isLoginPath){
                 data = await loginUser(login, password)
             }else{
@@ -27,6 +28,7 @@ const AuthForm:FC = () => {
             }
             setCurrentUser(data)
             setUserAuth(true)
+            setCartProducts(data.cart!)
             navigate('/', {replace: false})
         }catch(error: any){
             alert(error?.message)

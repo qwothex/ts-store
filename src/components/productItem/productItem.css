@@ -6,11 +6,7 @@
     cursor: pointer;
     padding: 10px;
     transition: 0.2s;
-    border-right: 1px solid rgb(0, 0, 0)
-}
-
-.item-card:last-child{
-    border: none;
+    margin: 2px;
 }
 
 .img-div{

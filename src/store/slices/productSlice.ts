@@ -25,7 +25,7 @@ interface initialStateProps {
     currentBrand: string,
     currentType: string,
     currency: 'UAH' | 'USD',
-    cart: productItem[]
+    cart: productItem[],
 }
 
 const initialState: initialStateProps = {
@@ -37,7 +37,7 @@ const initialState: initialStateProps = {
     currentBrand: '',
     currentType: '',
     currency: 'USD',
-    cart: [<productItem>{}]
+    cart: [<productItem>{}],
 }
 
 const productSlice = createSlice({
@@ -71,7 +71,12 @@ const productSlice = createSlice({
                     state.cart[index].amount = action.payload.newAmount
                 }
             })
-
+        },
+        sortProducts: (state, action: PayloadAction<number>) => {
+            action.payload == 1 ? 
+            state.products.rows.sort((a, b) => b.price - a.price)
+            :
+            state.products.rows.sort((a, b) => a.price - b.price)
         }
     }
 })

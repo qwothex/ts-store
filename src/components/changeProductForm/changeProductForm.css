@@ -1,0 +1,28 @@
+.changeProduct-form{
+    margin: 10px 10px 15px 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-top: 1px solid #000;
+    padding-top: 10px;
+}
+
+.changeProduct-form input{
+    height: 30px;
+    margin: 5px 0;
+}
+
+.changeProduct-form button{
+    height: 35px;
+    margin-top: 10px;
+    border: 1px solid green;
+    border-radius: 10px;
+    background-color: transparent;
+    transition: 0.2s;
+}
+
+.changeProduct-form button:hover{
+    background-color: #209500;
+    color: #fff;
+    border: none;
+}

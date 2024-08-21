@@ -10,6 +10,7 @@ import { useActions } from '../../hooks/useActions'
 import AdminProductModal from '../../components/adminProductModal/AdminProductModal'
 import ErrorPage from '../errorPage/ErrorPage'
 import PopUp from '../../components/pop-upWindow/PopUp'
+import ChangeProductForm from '../../components/changeProductForm/ChangeProductForm'
 
 const ProductPage:FC = () => {
 
@@ -21,6 +22,7 @@ const ProductPage:FC = () => {
     const [RAM, setRAM] = useState('')
     const [loading, setLoading] = useState(true)
     const [modalState, setModalState] = useState(false)
+    const [modalChangeState, setModalChangeState] = useState(false)
     const [popUpStatus, setPopUpStatus] = useState<{show: boolean, success?: boolean, text?: string}>({show: false, success: true, text: ''})
 
     const Close = () => setModalState(false)
@@ -29,14 +31,13 @@ const ProductPage:FC = () => {
 
     const {user} = useAppSelector(state => state.userReducer)
     const {cart} = useAppSelector(state => state.productReducer)
+    const {currency} = useAppSelector(state => state.productReducer)
 
     useEffect(() => {
         getOneProduct(Number(id)).then(data => setProduct(data)).then(data => setLoading(false))
     }, [])
 
-    console.log('qwe')
-
-    if(product) {
+    if(product && user.id) {
         addLastView(user.id!, product)
     }
 
@@ -68,23 +69,26 @@ const ProductPage:FC = () => {
     const discountClickHandler = () => {
        const price = +prompt('enter new price')!
        addDiscount(Number(id), price)
+       Close()
     }
 
-    const removeDiscount = () => {
+    const removeDiscountHandler = () => {
         addDiscount(Number(id), 0)
+        Close()
     }
 
     const deleteProductHandler = () => {
         deleteProduct(Number(id))
         navigate('/', {replace: false})
+        Close()
     }
-
-    const modalFooter = <button className='credit-button'>Save</button>
 
     const modalBody = <div>
         <button className='discount-button' onClick={discountClickHandler}>discount</button>
-        { product?.discount ? <button className='delete-button' onClick={removeDiscount}>remove discount</button> : <></>}
+        { product?.discount ? <button className='delete-button' onClick={removeDiscountHandler}>remove discount</button> : <></>}
         <button className='delete-button' onClick={deleteProductHandler}>delete product</button>
+        <button className='discount-button' onClick={() => setModalChangeState(!modalChangeState)}>change product</button>
+        {modalChangeState ? <ChangeProductForm product={product} /> : <></>}
     </div>
 
     return(
@@ -109,8 +113,16 @@ const ProductPage:FC = () => {
                    :
                     <p className='price'>{price}<span>$</span></p> 
                    } */}
-                   {
-                    discount ? <div><span className='previous-price'>{price}</span><span className='current-price'>{discount}$</span></div> : <p className='price'>{price}<span>$</span></p>
+                   { currency == 'UAH' ?
+                        discount ? 
+                            <div><span className='previous-price'>{price * 40}</span><span className='current-price'>{discount * 40}UAH</span></div> 
+                                : 
+                            <p className='price'>{price * 40}<span>UAH</span></p>
+                     :
+                        discount ? 
+                            <div><span className='previous-price'>{price}</span><span className='current-price'>{discount}$</span></div> 
+                                : 
+                            <p className='price'>{price}<span>$</span></p>
                    }
                     <button className='cart-button' onClick={cartButtonHandler}>Add to cart</button>
                     <button className='credit-button'>buy in credit</button>
@@ -119,7 +131,6 @@ const ProductPage:FC = () => {
                         visible={modalState}
                         title ='ADMIN PANEL'
                         body = {modalBody}
-                        footer = {modalFooter}
                         Close ={Close}
                     />
                 </div>

@@ -16,7 +16,7 @@ const CartPage:FC = () => {
         <div className='cart-container'>
             {cart.map((el) => (
                 el.discount ? total += el.discount * el.amount : total += el.price * el.amount,
-                <CartPropductItem product={el}></CartPropductItem>
+                <CartPropductItem key={el.id} product={el}></CartPropductItem>
             ))}
             <div className='cart-total'>
                 <p>Your total will be: <span>{total}</span>$</p>

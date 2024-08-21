@@ -1,11 +1,8 @@
-import React, {FC, useEffect, useState} from 'react'
+import React, {FC, useState} from 'react'
 import { createProduct } from '../../API/productsAPI/productAPI'
 import './adminPage.css'
-import { useNavigate } from 'react-router-dom'
 
 const Admin:FC = () => {
-
-    const navigate = useNavigate()
     
     const [title, setTitle] = useState('')
     const [description, setDescription] = useState('')
@@ -16,6 +13,7 @@ const Admin:FC = () => {
     const [memory, setMemory] = useState<string[]>([])
 
     const formSubmitHandler = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault()
         const formData = new FormData()
         formData.append('title', title)
         formData.append('description', description)

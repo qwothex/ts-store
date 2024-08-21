@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { UserI } from '../../types/types'
+import { productItem } from './productSlice'
 
 interface UserState {
     isUserAuth: boolean,
@@ -20,7 +21,7 @@ export const userSlice = createSlice({
         },
         setCurrentUser: (state, action: PayloadAction<UserI>) => {
             state.user = action.payload
-        }
+        },
     }
 })
 

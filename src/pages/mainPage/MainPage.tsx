@@ -12,13 +12,13 @@ import ProductItem from '../../components/productItem/ProductItem'
 const MainPage:FC = () => {
 
     const {currentBrand, currentType, products} = useAppSelector(state => state.productReducer)
-    const {user} = useAppSelector(state => state.userReducer)
 
-    const { setProducts, setCurrentBrand, setCurrentType } = useActions()
+    const { setProducts, setCurrentBrand, setCurrentType, sortProducts } = useActions()
 
     const [loading, setLoading] = useState(true)
 
     useEffect(() => {
+        setLoading(true)
         getAllProducts(currentType, currentBrand, 20, 1)
         .then(data => setProducts(data))
         .then(data => console.log(data))
@@ -33,6 +33,11 @@ const MainPage:FC = () => {
         )
     }
 
+    const changeSort = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        e.preventDefault()
+        sortProducts(e.target.selectedIndex)
+    }
+
     return(
         <div className='mainPage-container'>
             <SideBar />
@@ -45,18 +50,27 @@ const MainPage:FC = () => {
                  <div className='active-filters'> 
                     { currentBrand && currentType ?
                         <div>
-                            <button onClick={() => setCurrentBrand('')}>{currentBrand}</button> 
-                            <button onClick={() => setCurrentType('')}>{currentType}</button> 
+                            <button className='active-filters__button' onClick={() => setCurrentBrand('')}>{currentBrand}</button> 
+                            <button className='active-filters__button' onClick={() => setCurrentType('')}>{currentType}</button> 
                         </div>
                     :
                     currentBrand ? 
-                            <button onClick={() => setCurrentBrand('')}>{currentBrand}</button> 
+                            <button className='active-filters__button' onClick={() => setCurrentBrand('')}>{currentBrand}</button> 
                     :
-                    <button onClick={() => setCurrentType('')}>{currentType}</button> 
+                    <button className='active-filters__button' onClick={() => setCurrentType('')}>{currentType}</button> 
                     }
+                    <form>
+                        <select onChange={changeSort} name='select'>
+                            <option value='select' selected >Sort Products</option>
+                            <option value='fromExpensive' >From expensive to cheap</option>
+                            <option value='fromCheap'>From cheap to expensive</option>
+                        </select>
+                    </form>
                 </div>
                 <div className='items-div'>
-                    {products.rows.length > 0 ? products.rows.map(el => <ProductItem product={el} />) : "No products founded"}
+                    {
+                        products.rows.length > 0 ? products.rows.map(el => <ProductItem product={el} />) : "No products founded"
+                    }
                 </div>
             </div>
             }

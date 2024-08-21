@@ -1,7 +1,6 @@
 import { authHost, host } from ".."
-import { jwtDecode, JwtPayload } from "jwt-decode"
+import { jwtDecode } from "jwt-decode"
 import { productItem } from "../../store/slices/productSlice"
-import { UserI } from "../../types/types"
 
 interface UserProps { (username: string, password: string): {} }
 
@@ -27,9 +26,14 @@ export const additionalData: additionalDataProps = async(additionalData) => {
 }
 
 export const check = async() => {
-    const {data} = await authHost.get('api/user/auth')
-    localStorage.setItem('token', data.token)
-    return jwtDecode(data.token)
+    try{
+        const {data} = await authHost.get('api/user/auth')
+        localStorage.setItem('token', data.token)
+        return jwtDecode(data.token)
+    }catch(e){
+        console.log(e)
+        return null
+    }
 }
 
 export const addLastView = async(id: number, product: productItem) => {

@@ -1,8 +1,8 @@
 .sidebar_container{
     width: 250px;
-    min-width: 150px;
+    min-width: 200px;
     background-color: #bcbabe;
-    margin: 0 50px 0 0;
+    margin-right: 25px;
 }
 
 .sidebar_container ul {
@@ -88,4 +88,10 @@
 
 .playMarket:hover{
     transform: scale(1.05);
+}
+
+@media (max-width: 785px) {
+    .sidebar_container{
+        display: none;
+    }
 }

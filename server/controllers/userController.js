@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken')
-const {User, Product} = require('../models/models')
+const {User} = require('../models/models')
 const bcrypt = require('bcrypt')
 const uuid = require('uuid')
 const path = require('path')
@@ -44,6 +44,9 @@ class UserController {
 
     async check(req, res, next) {
         const token = generateJwt(req.user.id, req.user.username, req.user.role, req.user.additional, req.user.lastview, req.user.cart)
+        if(!token){
+            return null
+        }
         return res.json({token})
     }
 

@@ -37,4 +37,13 @@
     border-radius: 6px;
     border: none;
     margin-left: auto;
+    transition: 0.2s;
+}
+
+.adminContainer button:hover{
+    background-color: #bcbcbc;
+}
+
+.adminContainer button:active{
+    border: 1px solid black;
 }

@@ -1,11 +1,12 @@
 .footer{
     width: 100%;
-    height: 250px;
+    height: 200px;
     background-color: rgb(82,82,82);
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding-top: 50px;
+    justify-content: start;
+    padding-top: 20px;
     margin-top: 50px;
 }
 
@@ -17,7 +18,7 @@
     background-position: center;
     background-repeat: no-repeat;
     background-size: contain;
-    margin-bottom: 35px;
+    margin-bottom: 15px;
 }
 
 .footer__social-media{

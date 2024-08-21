@@ -21,9 +21,12 @@ const ProductItem:FC<ProductItemProps> = (props) => {
             </div>
             <h6><span className='title'>{props.product.title}</span> <br /> <span className='brand'>{props.product.brand}</span></h6>
             {props.product.discount ? 
-                <p>{currency == 'USD' ? <div><span className='previous-price'>{props.product.price}</span><span className='current-price'>{props.product.discount}$</span></div> : props.product.discount*40 + 'UAH'}</p>
+                currency == 'USD' ? 
+                    <p>{<div><span className='previous-price'>{props.product.price}</span><span className='current-price'>{props.product.discount}$</span></div>}</p>
+                        :
+                    <p>{<div><span className='previous-price'>{props.product.price * 40}</span><span className='current-price'>{props.product.discount * 40}UAH</span></div>}</p>
             :
-                <p>{currency == 'USD' ? props.product.price + '$' : props.product.price*40 + 'UAH'}</p>
+                    <p>{currency == 'USD' ? props.product.price + '$' : props.product.price*40 + 'UAH'}</p>
             }
         </div>
     )

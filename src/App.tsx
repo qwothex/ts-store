@@ -15,11 +15,13 @@ const App:FC = () => {
   const {setCurrentUser, setUserAuth, setCartProducts} = useActions()
 
   useEffect(() => {
-      check().then((data: UserI) => {
-        console.log(data)
-        setUserAuth(true)
-        setCurrentUser(data)
-        setCartProducts(data.cart!)}).finally(() => setLoading(false))
+        check().then((data: UserI | null) => {
+            if(data){
+              setUserAuth(true)
+              setCurrentUser(data)
+              setCartProducts(data.cart!)
+            }
+          }).finally(() => setLoading(false))
   }, [])
 
   if(loading){

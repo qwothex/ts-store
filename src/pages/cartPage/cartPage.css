@@ -20,9 +20,11 @@
     left: 90%;
     background-color: #fff;
     border-radius: 20px 0 20px 20px;
-    border: 1px solid black;
+    border: 1px solid rgba(0, 0, 0, 0.468);
+    border-right: none;
     font-size: 24px;
     padding: 10px;
+    user-select: none;
 }
 
 .cart-total p {

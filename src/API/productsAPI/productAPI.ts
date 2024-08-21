@@ -1,8 +1,6 @@
 import { authHost, host } from ".."
 
-interface productProps {(product: FormData): {}}
-
-export const createProduct: productProps = async (product) => {
+export const createProduct = async (product: FormData) => {
     const {data} = await authHost.post('api/product', product)
     return data
 } 
@@ -20,10 +18,14 @@ export const getOneProduct = async(id:number) => {
 }
 
 export const deleteProduct = async(id: number) => {
-    await authHost.post('api/product/' + id)
+    await authHost.delete('api/product/' + id)
 }
 
 export const addDiscount = async(id: number, price: number) => {
     const {data} = await authHost.post('/api/product/discount', {id, price})
     return data
+}
+
+export const changeProduct = async(id: number, changes: FormData) => {
+    await authHost.put('api/product/' + id, changes)
 }

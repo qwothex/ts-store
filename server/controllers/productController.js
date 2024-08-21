@@ -12,7 +12,6 @@ class ProductController {
             image.mv(path.resolve(__dirname, '..', 'static', fileName))
 
         const product = await Product.create({title, description, price, brand, type, memory, image: fileName})
-
         res.json(product)
         }catch(e){
             next(ApiError.badRequest(e.message))
@@ -58,6 +57,17 @@ class ProductController {
         console.log(id)
         const device = await Product.findOne({where: {id}})
         device.discount = price
+        device.save()
+        return res.json(device)
+    }
+
+    async change(req, res){
+        const {id} = req.params
+        const {title, description, price} = req.body
+        const device = await Product.findOne({where: {id}})
+        device.title = title
+        device.description = description
+        device.price = price
         device.save()
         return res.json(device)
     }
