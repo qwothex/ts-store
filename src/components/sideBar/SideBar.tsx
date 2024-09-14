@@ -2,6 +2,10 @@ import React, {FC, useState} from 'react'
 import './sideBar.css'
 import { useActions } from '../../hooks/useActions'
 import { useAppSelector } from '../../hooks/useAppSelector'
+import { FaRegQuestionCircle } from "react-icons/fa";
+import { IoChatboxEllipsesOutline } from "react-icons/io5";
+import { IoIosContact } from "react-icons/io";
+import { Link } from 'react-router-dom';
 
 const SideBar:FC = () => {
 
@@ -23,7 +27,7 @@ const SideBar:FC = () => {
     return(
         <div className='sidebar_container'>
             <h3>Type</h3>
-            <ul>
+            <ul className='list'>
                 {types.map(el => 
                     <li key={el.name} onClick={(e) => {
                         currentType == el.name ? setCurrentType("") : setCurrentType(el.name)
@@ -33,7 +37,7 @@ const SideBar:FC = () => {
                 )}
             </ul>
             <h3>Brand</h3>
-            <ul>
+            <ul className='list'>
                 {brands.map(el => 
                     <li key={el} onClick={(e) => {
                         currentBrand == el ? setCurrentBrand("") : setCurrentBrand(el)
@@ -45,10 +49,15 @@ const SideBar:FC = () => {
             <div className='download-links'>
                 <h4>Download our apps</h4>
                 <div className='store-logos'>
-                    <a href='https://www.apple.com/app-store' target='blank' className='appStore'/>
-                    <a href='https://play.google.com/store/games' target='blank' className='playMarket'/>
+                    <a href='https://www.apple.com/app-store' target='blank' className='logo appStore'/>
+                    <a href='https://play.google.com/store/games' target='blank' className='logo playMarket'/>
                 </div>
             </div>
+                <ul className='usefulLinks'>
+                    <li><Link to={'/FAQ'}><FaRegQuestionCircle />&nbsp;FAQ</Link></li>
+                    <li><Link to={'/contact'}><IoChatboxEllipsesOutline />&nbsp;Contact</Link></li>
+                    <li><Link to={'/about'}><IoIosContact />&nbsp;About</Link></li>
+                </ul>
         </div>
     )
 }

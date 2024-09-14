@@ -1,0 +1,44 @@
+.FAQPage-container{
+    background-color: #fff;
+    /* margin-bottom: 15px; */
+}
+
+.FAQPage-container header{
+    text-align: center;
+    background-color: #e3e3e3;
+    padding: 50px 100px;
+}
+
+.FAQPage-container header h1, h4{
+    margin: 0;
+}
+
+.FAQPage-container h2{
+    margin-left: 0;
+}
+
+.FAQPage-container main{
+    padding: 10px 15px 10px 10px;
+    min-height: 75px;
+}
+
+@media (max-width: 1000px) {
+    .FAQPage-container main{
+        padding: 10px;
+    }
+}
+
+@media (max-width: 650px) {
+    .FAQPage-container header{
+        padding: 20px 40px;
+    }
+    .FAQPage-container main{
+        padding: 10px;
+    }
+}
+
+@media (max-width: 450px) {
+    .FAQPage-container header{
+        padding: 20px;
+    }
+}

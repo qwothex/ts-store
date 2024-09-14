@@ -36,8 +36,8 @@ export const check = async() => {
     }
 }
 
-export const addLastView = async(id: number, product: productItem) => {
-    const {data} = await authHost.post('api/user/lastview', {id, product})
+export const addLastView = async(id: number, productId: number) => {
+    const {data} = await authHost.post('api/user/lastview', {id, productId})
     localStorage.setItem('token', data.token)
     return jwtDecode(data.token)
 }

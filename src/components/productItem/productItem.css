@@ -42,7 +42,7 @@
     font-weight: 600;
 }
 
-.item-card p {
+.item-card .discountPrice-container {
     margin: 5px 5px 5px 0;
     font-size: 18px;
     font-weight: 500;

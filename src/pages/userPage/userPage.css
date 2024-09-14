@@ -6,7 +6,7 @@
     /* border: 2px solid black; */
     border-radius: 15px;
     background-color: #fff;
-    margin: 50px auto 0 auto;
+    margin: 100px auto 100px auto;
     padding: 25px;
     position: relative;
 }
@@ -32,4 +32,8 @@
     text-decoration: underline;
     margin-left: auto;
     user-select: none;
+}
+
+.changeLink:hover{
+    color: red;
 }

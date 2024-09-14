@@ -11,12 +11,14 @@ import AdminProductModal from '../../components/adminProductModal/AdminProductMo
 import ErrorPage from '../errorPage/ErrorPage'
 import PopUp from '../../components/pop-upWindow/PopUp'
 import ChangeProductForm from '../../components/changeProductForm/ChangeProductForm'
+import DevileryInfo from '../../components/devileryInfo/DeliveryInfo'
+import NavLayout from '../../components/navLayout/NavLayout'
 
 const ProductPage:FC = () => {
 
     const navigate = useNavigate()
 
-    const {addProductToCart} = useActions()
+    const {addProductToCart, addLastViewProduct} = useActions()
 
     const [product, setProduct] = useState<productItem>()
     const [RAM, setRAM] = useState('')
@@ -38,7 +40,8 @@ const ProductPage:FC = () => {
     }, [])
 
     if(product && user.id) {
-        addLastView(user.id!, product)
+        addLastView(user.id!, product.id)
+        // addLastViewProduct(product)
     }
 
     if(loading){
@@ -92,7 +95,8 @@ const ProductPage:FC = () => {
     </div>
 
     return(
-        <div className='productPageContainer'>
+        <NavLayout>
+          <div className='productPageContainer'>
         {popUpStatus.show ? <PopUp text={popUpStatus.text!} isSucces={popUpStatus.success!} /> : <></>}
             <div className='productPageContainer-leftSide'>
                 <img src={'http://localhost:5000/' + image} />
@@ -108,11 +112,6 @@ const ProductPage:FC = () => {
                 }
                  <p className='description'>{description}</p>
                 <div className='buyOptions'>
-                   {/* {RAM ? 
-                    <p className='price'>{RAM == '128GB' ? price : RAM == '256GB' ? Math.round(Number(price)+ Number(price)*0.1) : Math.round(Number(price)+ Number(price)*0.2)}<span>$</span></p>
-                   :
-                    <p className='price'>{price}<span>$</span></p> 
-                   } */}
                    { currency == 'UAH' ?
                         discount ? 
                             <div><span className='previous-price'>{price * 40}</span><span className='current-price'>{discount * 40}UAH</span></div> 
@@ -124,9 +123,11 @@ const ProductPage:FC = () => {
                                 : 
                             <p className='price'>{price}<span>$</span></p>
                    }
-                    <button className='cart-button' onClick={cartButtonHandler}>Add to cart</button>
-                    <button className='credit-button'>buy in credit</button>
-                    {user.role == 'ADMIN' ? <button onClick={() => setModalState(true)} className='discount-button'>ADMIN PANEL</button> : <></>}
+                    <div className='buyOptionsButtons'>
+                        <button className='cart-button' onClick={cartButtonHandler}>Add to cart</button>
+                        <button className='credit-button'>buy in credit</button>
+                        {user.role == 'ADMIN' ? <button onClick={() => setModalState(true)} className='discount-button'>ADMIN PANEL</button> : <></>}
+                    </div>
                     <AdminProductModal 
                         visible={modalState}
                         title ='ADMIN PANEL'
@@ -134,22 +135,10 @@ const ProductPage:FC = () => {
                         Close ={Close}
                     />
                 </div>
-                <div className='delivery-info'>
-                    <p>Delivery</p>
-                    <ul>
-                        <li>
-                            <span>Pick up from our store</span><span>Free</span>
-                        </li>
-                        <li>
-                            <span>Courier delivery</span><span>20$</span>
-                        </li>
-                        <li>
-                            <span>Delivery to the post office</span><span>8-10$</span>
-                        </li>
-                    </ul>
-                </div>
+                <DevileryInfo />
             </div>
-        </div>
+          </div>
+        </NavLayout>
     )
 }
 

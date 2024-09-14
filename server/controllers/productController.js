@@ -48,8 +48,7 @@ class ProductController {
 
     async remove(req, _res){
         const {id} = req.params
-        return Product.findAll({where: {id}}).then(async (result) => { await Product.destroy({ where: { id } })
-        return result})
+        return Product.findAll({where: {id}}).then(async (result) => { await Product.destroy({ where: { id } })})
     }
 
     async addDiscount(req, res){

@@ -1,0 +1,36 @@
+.slider-container{
+    width: 100%;
+    height: 200px;
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.view-area{
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.all-elements{
+    height: 100%;
+    display: flex;
+    transition: 0.4s;
+}
+
+.ads{
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+.ads1{
+    background-image: url(../../assets/multiplyAdsBanner.jpg);
+}
+
+.ads2{
+    background-image: url(../../assets/ads2.jpg);
+}
+
+.ads3{
+    background-image: url(../../assets/multiplyAdsBanner.jpg);
+}

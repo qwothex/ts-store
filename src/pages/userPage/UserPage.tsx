@@ -2,6 +2,7 @@ import React, {FC, useState} from "react";
 import EditProfileForm from "../../components/editProfile/EditProfileForm";
 import { useAppSelector } from "../../hooks/useAppSelector";
 import './userPage.css'
+import NavLayout from "../../components/navLayout/NavLayout";
 
 const UserPage:FC = () => {
     
@@ -10,7 +11,7 @@ const UserPage:FC = () => {
     const [changing, setChanging] = useState(false)
 
     return(
-      <>
+      <NavLayout>
         <div className="user_container">
           <a className="changeLink" onClick={() => setChanging(!changing)}>{changing ? 'Back to profile' : 'Edit profile'}</a>
         {changing 
@@ -30,7 +31,7 @@ const UserPage:FC = () => {
             </div>
         }   
         </div>
-      </>
+      </NavLayout>
     )
 }
 

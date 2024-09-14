@@ -6,13 +6,14 @@ import {RotateLoader} from 'react-spinners'
 import NavBar from './components/navBar/NavBar';
 import Footer from './components/footer/Footer';
 import { UserI } from './types/types';
-
+import { getOneProduct } from './API/productsAPI/productAPI';
+import { productItem } from './store/slices/productSlice';
 
 const App:FC = () => {
 
   const [loading, setLoading] = useState<boolean>(true)
 
-  const {setCurrentUser, setUserAuth, setCartProducts} = useActions()
+  const {setCurrentUser, setUserAuth, setCartProducts, addLastViewProduct} = useActions()
 
   useEffect(() => {
         check().then((data: UserI | null) => {
@@ -20,6 +21,7 @@ const App:FC = () => {
               setUserAuth(true)
               setCurrentUser(data)
               setCartProducts(data.cart!)
+              data.lastview!.map(id => getOneProduct(id).then((res: productItem) => addLastViewProduct(res)))
             }
           }).finally(() => setLoading(false))
   }, [])
@@ -32,11 +34,7 @@ const App:FC = () => {
   }
 
   return (
-    <div>
-      <NavBar />
       <Router />
-      <Footer />
-    </div>
   );
   
 }

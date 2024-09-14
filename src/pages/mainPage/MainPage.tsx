@@ -1,4 +1,4 @@
-import React, {FC, useEffect, useState} from 'react'
+import React, {FC, useEffect, useRef, useState} from 'react'
 import './mainPage.css'
 import { getAllProducts} from '../../API/productsAPI/productAPI'
 import { useActions } from '../../hooks/useActions'
@@ -6,12 +6,15 @@ import { useAppSelector } from '../../hooks/useAppSelector'
 import { RotateLoader } from 'react-spinners'
 import SideBar from '../../components/sideBar/SideBar'
 import "glider-js/glider.min.css";
-import ProductList from '../../components/productList/ProductList'
 import ProductItem from '../../components/productItem/ProductItem'
+import SliderComponent from '../../components/sliderComponent/SliderComponent'
+import AddSlider from '../../components/addSlider/AddSlider'
+import NavLayout from '../../components/navLayout/NavLayout'
 
 const MainPage:FC = () => {
 
     const {currentBrand, currentType, products} = useAppSelector(state => state.productReducer)
+    const {lastview} = useAppSelector(state => state.productReducer) 
 
     const { setProducts, setCurrentBrand, setCurrentType, sortProducts } = useActions()
 
@@ -39,11 +42,18 @@ const MainPage:FC = () => {
     }
 
     return(
-        <div className='mainPage-container'>
+        <NavLayout>
+                <div className='mainPage-container'>
             <SideBar />
             {!currentBrand && !currentType ? 
                 <div className='glider-div'>
-                    <ProductList />
+                    <AddSlider>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                    </AddSlider>
+                    {lastview.length > 0 ? <SliderComponent title='Recenly viewed' products={lastview} /> : <></>}
+                    <SliderComponent title='Recomendations' products={products.rows} />
                 </div>
             :
             <div>
@@ -61,7 +71,7 @@ const MainPage:FC = () => {
                     }
                     <form>
                         <select onChange={changeSort} name='select'>
-                            <option value='select' selected >Sort Products</option>
+                            <option value='select' defaultValue={'selected'} >Sort Products</option>
                             <option value='fromExpensive' >From expensive to cheap</option>
                             <option value='fromCheap'>From cheap to expensive</option>
                         </select>
@@ -69,12 +79,13 @@ const MainPage:FC = () => {
                 </div>
                 <div className='items-div'>
                     {
-                        products.rows.length > 0 ? products.rows.map(el => <ProductItem product={el} />) : "No products founded"
+                        products.rows.length > 0 ? products.rows.map(el => <ProductItem key={el.id} product={el} />) : "No products founded"
                     }
                 </div>
             </div>
             }
         </div>
+        </NavLayout>
     )
 }
 

@@ -1,6 +1,8 @@
 import React, {FC, useState} from 'react'
 import { createProduct } from '../../API/productsAPI/productAPI'
 import './adminPage.css'
+import NavLayout from '../../components/navLayout/NavLayout'
+
 
 const Admin:FC = () => {
     
@@ -54,7 +56,8 @@ const Admin:FC = () => {
     }
 
     return(
-        <div className='adminContainer'>
+        <NavLayout>
+            <div className='adminContainer'>
             <form onSubmit={formSubmitHandler}>
                 <h1>Create new product</h1>
                 <input type={'text'} placeholder='title' onChange={titleHandler} />
@@ -64,9 +67,9 @@ const Admin:FC = () => {
                 :
                 <></>
                 }
-                <input type={'text'} placeholder='brand' onChange={brandHandler} />
-                <input type={'text'} placeholder='type' onChange={typeHandler} />
-                <input type={'number'} placeholder='price' onChange={priceHandler} />
+                <input type={'text'} placeholder='brand (Apple, Samsung, etc.)' onChange={brandHandler} />
+                <input type={'text'} placeholder='type (Phone, Laptop, etc.)' onChange={typeHandler} />
+                <input type={'number'} placeholder='price $' onChange={priceHandler} />
 
                 <input style={{display: 'none'}} type={'file'} id='file_input' placeholder='image' onChange={imageHandler} />
                 <label htmlFor='file_input'>
@@ -75,7 +78,8 @@ const Admin:FC = () => {
 
                 <button type='submit'>Create device</button>
             </form>
-        </div>
+            </div>
+        </NavLayout>
     )
 }
 

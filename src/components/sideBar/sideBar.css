@@ -1,17 +1,20 @@
 .sidebar_container{
     width: 250px;
     min-width: 200px;
-    background-color: #bcbabe;
+    /* background-color: #bcbabe; */
+    background-color: #fff;
     margin-right: 25px;
+    border-right: 1px solid black;
+    padding: 0 10px 0 10px;
 }
 
-.sidebar_container ul {
+.sidebar_container .list {
     list-style: none;
     padding: 0 5px 5px 5px;
     margin-top: 5px;
 }
 
-.sidebar_container ul li {
+.sidebar_container .list li {
     padding: 0 0 0 10px;
     display: flex;
     flex-direction: row;
@@ -25,7 +28,7 @@
     display: none;
 }
 
-.sidebar_container ul li:hover{
+.sidebar_container .list li:hover{
     background-color: rgb(82, 82, 82);
     color: #f3f3f3;
 }
@@ -44,7 +47,10 @@
 .download-links{
     width: 100%;
     text-align: center;
-    margin-top: 30px;
+    margin-top: 10px;
+    padding: 10px 0 10px 0;
+    border-top: 1px solid rgb(75, 75, 75);
+    border-bottom: 1px solid rgb(75, 75, 75);
 }
 
 .download-links h4{
@@ -60,15 +66,18 @@
     justify-content: space-between;
 }
 
-.appStore{
+.logo{
     display: block;
     width: 49%;
     height: 100%;
-    background-image: url('../../assets/appStoreLogo_black.svg');
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
     transition: 0.2s;
+}
+
+.appStore{
+    background-image: url('../../assets/appStoreLogo_black.svg');
 }
 
 .appStore:hover{
@@ -76,21 +85,53 @@
 }
 
 .playMarket{
-    display: block;
-    width: 49%;
-    height: 100%;
     background-image: url('../../assets/google-play-logo.svg');
-    background-position: center;
-    background-size: cover;
-    background-repeat: no-repeat;
-    transition: 0.2s;
 }
 
 .playMarket:hover{
     transform: scale(1.05);
 }
 
-@media (max-width: 785px) {
+.usefulLinks{
+    padding: 0;
+    list-style-type: none;
+    border-bottom: 1px solid #000;
+    padding-bottom: 16px;
+}
+
+.usefulLinks li {
+    padding: 0;
+    height: 35px;
+    font-size: 20px;
+}
+
+.usefulLinks li a {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    text-decoration: none;
+    color: black;
+    transition: 0.2s;
+}
+
+.usefulLinks a:hover{
+    color: rgb(100, 100, 255);
+}
+
+@media (max-width: 1250px) {
+    .store-logos{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        height: 100px;
+    }
+    .logo{
+        width: 75%;
+        margin-top: 10px;
+    }
+}
+
+@media (max-width: 900px) {
     .sidebar_container{
         display: none;
     }

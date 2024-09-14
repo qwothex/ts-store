@@ -40,6 +40,15 @@
     border-bottom: 1px solid rgb(0, 136, 18);
 }
 
+.editProfileForm label{
+    width: fit-content;
+    cursor: pointer;
+}
+
+.editProfileForm label:hover{
+    text-decoration: underline;
+}
+
 .editProfileForm button{
     width: 125px;
     height: 35px;

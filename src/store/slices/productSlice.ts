@@ -1,5 +1,6 @@
 import { createSlice, current, PayloadAction } from "@reduxjs/toolkit";
 import ProductItem from "../../components/productItem/ProductItem";
+import { getOneProduct } from "../../API/productsAPI/productAPI";
 
 export interface productItem {
     id: number
@@ -26,6 +27,7 @@ interface initialStateProps {
     currentType: string,
     currency: 'UAH' | 'USD',
     cart: productItem[],
+    lastview: productItem[]
 }
 
 const initialState: initialStateProps = {
@@ -38,6 +40,7 @@ const initialState: initialStateProps = {
     currentType: '',
     currency: 'USD',
     cart: [<productItem>{}],
+    lastview: []
 }
 
 const productSlice = createSlice({
@@ -77,6 +80,12 @@ const productSlice = createSlice({
             state.products.rows.sort((a, b) => b.price - a.price)
             :
             state.products.rows.sort((a, b) => a.price - b.price)
+        },
+        addLastViewProduct: (state, action: PayloadAction<productItem>) => {
+            state.lastview.unshift(action.payload)
+        },
+        truncateLastViewProducts: (state) => {
+            state.lastview = []
         }
     }
 })

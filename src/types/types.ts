@@ -14,7 +14,7 @@ interface UserI extends JwtPayload {
     role?: string,
     username?: string,
     additional?: additionalInterface,
-    lastview?: [productItem],
+    lastview?: [number],
     cart?: [productItem]
 }
 

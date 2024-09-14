@@ -9,7 +9,7 @@ import { productItem } from "../../store/slices/productSlice";
 const ProductList:FC = () => {
 
     const {products} = useAppSelector(state => state.productReducer)
-    const {lastview} = useAppSelector(state => state.userReducer.user)
+    const {lastview} = useAppSelector(state => state.productReducer)
 
     return(
     <>
@@ -17,21 +17,21 @@ const ProductList:FC = () => {
     <div className={lastview!.length <= 4 ? "recentlyViewed-container" : ""}>
         <h1>Recently viewed</h1>
         <Glider
-            slidesToShow={lastview!.length <= 4 ? products.rows.length : 4}
+            slidesToShow={lastview!.length <= 6 ? products.rows.length : 6}
             slidesToScroll={3}
-            hasArrows={!(lastview!.length <= 4)}
+            hasArrows={!(lastview!.length <= 6)}
             draggable
         >
-            {lastview?.map((el: productItem) => <div key={el.id}><ProductItem product={el} /></div>)}
+            {lastview.map((el: productItem) => <div key={el.id}><ProductItem product={el} /></div>)}
         </Glider>
     </div> 
         : <></>}
     <div>
         <h1>Recomendations</h1>
         <Glider
-            slidesToShow={products.rows.length <= 4 ? products.rows.length : 4}
+            slidesToShow={products.rows.length <= 6 ? products.rows.length : 6}
             slidesToScroll={3}
-            hasArrows
+            hasArrows={!(lastview!.length <= 6)}
             draggable
         >
             {products.rows.map((el) => <div key={el.id}><ProductItem product={el} /></div>)}
