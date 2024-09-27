@@ -34,7 +34,7 @@
 .contact-header{
     width: 100%;
     height: 100px;
-    background-image: linear-gradient(140deg, #548199 35%, rgb(105, 114, 158), #8abae2);
+    background-image: linear-gradient(140deg, #ffffff 35%, rgb(123, 127, 144), #707070);
     position: sticky;
     top: 0;
     display: flex;

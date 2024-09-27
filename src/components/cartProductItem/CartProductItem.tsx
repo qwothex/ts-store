@@ -39,23 +39,38 @@ const CartProductItem:FC<cartProductProps> = ({product}) => {
     if(plusRef.current) amount > 8 ? plusRef.current.disabled = true : plusRef.current.disabled = false
 
     return(
+        // <div className='cartItem-container'>
+        //     <div className='top-side'>
+        //         <div className='top-side__left'>
+        //             <div className='top-side__image' style={{backgroundImage: `url(${'http://localhost:5000/' + image})`}} onClick={() => navigate('/product/' + id)} />
+        //             <a href={'/product/' + id} className='top-side__title'>{title}</a>
+        //         </div>
+        //         <button onClick={deleteCartProductHandler} className='top-side__delete-button' />
+        //     </div>
+        //     <div className='bottom-side'>
+        //         <div className='bottom-side__content'>
+        //         <div className='amount'><button ref={minusRef} onClick={() => setAmount(amount-1)} className='amount-button'>-</button><div>{amount}</div><button ref={plusRef} onClick={() => setAmount(amount+1)} className='amount-button'>+</button></div>
+        //         {
+        //             discount ? <div><span className='previous-price'>{price * amount}</span><span className='current-price'>{discount * amount}$</span></div> : <p className='price'>{price*amount}<span>$</span></p>
+        //         }
+        //         </div>
+        //     </div>
+        // </div>
         <div className='cartItem-container'>
-            <div className='top-side'>
-                <div className='top-side__left'>
-                    <div className='top-side__image' style={{backgroundImage: `url(${'http://localhost:5000/' + image})`}} onClick={() => navigate('/product/' + id)} />
-                    <a href={'/product/' + id} className='top-side__title'>{title}</a>
-                </div>
-                <button onClick={deleteCartProductHandler} className='top-side__delete-button' />
-            </div>
-            <div className='bottom-side'>
-                <div className='bottom-side__content'>
+        <div className='left-side'>
+                <div className='left-side__image' style={{backgroundImage: `url(${'http://localhost:5000/' + image})`}} onClick={() => navigate('/product/' + id)} />
+                <a href={'/product/' + id} className='left-side__title'>{title}</a>
+        </div>
+        <div className='right-side'>
+            <button onClick={deleteCartProductHandler} className='right-side__delete-button' />
+            <div className='amount-price'>
                 <div className='amount'><button ref={minusRef} onClick={() => setAmount(amount-1)} className='amount-button'>-</button><div>{amount}</div><button ref={plusRef} onClick={() => setAmount(amount+1)} className='amount-button'>+</button></div>
-                {
-                    discount ? <div><span className='previous-price'>{price * amount}</span><span className='current-price'>{discount * amount}$</span></div> : <p className='price'>{price*amount}<span>$</span></p>
-                }
-                </div>
+            {
+                discount ? <div><span className='previous-price'>{price * amount}</span><span className='current-price'>{discount * amount}$</span></div> : <p className='price'>{price*amount}<span>$</span></p>
+            }
             </div>
         </div>
+    </div>
     )
 }
 

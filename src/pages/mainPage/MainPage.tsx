@@ -22,9 +22,8 @@ const MainPage:FC = () => {
 
     useEffect(() => {
         setLoading(true)
-        getAllProducts(currentType, currentBrand, 20, 1)
+        getAllProducts(currentType, currentBrand, 30, 1)
         .then(data => setProducts(data))
-        .then(data => console.log(data))
         .then(() => setLoading(false))
     }, [currentBrand, currentType])
 

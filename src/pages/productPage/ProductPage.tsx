@@ -1,7 +1,7 @@
 import {FC, useEffect, useState} from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-import { addDiscount, deleteProduct, getOneProduct } from '../../API/productsAPI/productAPI'
-import { productItem } from '../../store/slices/productSlice'
+import { addDiscount, deleteProduct, getAllProducts, getOneProduct } from '../../API/productsAPI/productAPI'
+import { productItem, productProps } from '../../store/slices/productSlice'
 import './productPage.css'
 import { RotateLoader } from 'react-spinners'
 import { addCartProduct, addLastView } from '../../API/usersAPI/usersApi'
@@ -13,6 +13,9 @@ import PopUp from '../../components/pop-upWindow/PopUp'
 import ChangeProductForm from '../../components/changeProductForm/ChangeProductForm'
 import DevileryInfo from '../../components/devileryInfo/DeliveryInfo'
 import NavLayout from '../../components/navLayout/NavLayout'
+import SliderComponent from '../../components/sliderComponent/SliderComponent'
+import USDPrice from '../../components/priceController/USDPrice'
+import UAHPrice from '../../components/priceController/UAHPrice'
 
 const ProductPage:FC = () => {
 
@@ -21,11 +24,13 @@ const ProductPage:FC = () => {
     const {addProductToCart, addLastViewProduct} = useActions()
 
     const [product, setProduct] = useState<productItem>()
-    const [RAM, setRAM] = useState('')
+    const [RAMvolume, setRAMvolume] = useState('')
+    const [RAMprice, setRAMprice] = useState(0)
     const [loading, setLoading] = useState(true)
     const [modalState, setModalState] = useState(false)
     const [modalChangeState, setModalChangeState] = useState(false)
     const [popUpStatus, setPopUpStatus] = useState<{show: boolean, success?: boolean, text?: string}>({show: false, success: true, text: ''})
+    const [similarOffers, setSimilarOffers] = useState<productProps>()
 
     const Close = () => setModalState(false)
 
@@ -35,9 +40,18 @@ const ProductPage:FC = () => {
     const {cart} = useAppSelector(state => state.productReducer)
     const {currency} = useAppSelector(state => state.productReducer)
 
+    const initialFetch = async() => {
+        const productData: productItem = await getOneProduct(Number(id))
+        if(productData){
+            setProduct(productData)
+            getAllProducts(productData.type, productData.brand, 20, 1).then((data) => setSimilarOffers(data))
+        }
+        setLoading(false)
+    }
+
     useEffect(() => {
-        getOneProduct(Number(id)).then(data => setProduct(data)).then(data => setLoading(false))
-    }, [])
+        initialFetch()
+    }, [id])
 
     if(product && user.id) {
         addLastView(user.id!, product.id)
@@ -56,7 +70,10 @@ const ProductPage:FC = () => {
         setTimeout(() => setPopUpStatus({show: false}), 4000)
     }
 
-    const {description, price, title, image, memory, discount} = product!
+    const {description, price, title, image, memory, discount, detailedDescription} = product!
+
+    let parsedDetailedDescription: {display: string | null, camera: string | null, os: string | null, processor: string | null, size: string | null, materials: string | null, manufacturer: string | null}; 
+    if(detailedDescription) parsedDetailedDescription = JSON.parse(detailedDescription)
 
     const cartButtonHandler = () => {
         addCartProduct(user.id!, {...product, amount: 1})
@@ -96,33 +113,24 @@ const ProductPage:FC = () => {
 
     return(
         <NavLayout>
-          <div className='productPageContainer'>
-        {popUpStatus.show ? <PopUp text={popUpStatus.text!} isSucces={popUpStatus.success!} /> : <></>}
-            <div className='productPageContainer-leftSide'>
+          <div className='productPage-container'>
+            <div className='mainContent'>
+            {popUpStatus.show ? <PopUp text={popUpStatus.text!} isSucces={popUpStatus.success!} /> : <></>}
+            <div className='productPage-container__leftSide'>
                 <img src={'http://localhost:5000/' + image} />
             </div>
-            <div className='info'>
+              <div className='info'>
                 <h1 className='title'>{title}</h1>
                 { product?.memory ? 
                     <div className='memoryButtons'>
-                        {JSON.parse(memory!).map((el:string) => <button key={el} onClick={() => setRAM(el)}>{el}</button>)}
+                        {JSON.parse(memory!).map(((el:{volume: string, price: string}) => <button onClick={() => setRAMprice(Number(el.price))}>{el.volume}</button>))}
                     </div>
                 :
                     <></>
                 }
-                 <p className='description'>{description}</p>
+                <p className='description'>{description}</p>
                 <div className='buyOptions'>
-                   { currency == 'UAH' ?
-                        discount ? 
-                            <div><span className='previous-price'>{price * 40}</span><span className='current-price'>{discount * 40}UAH</span></div> 
-                                : 
-                            <p className='price'>{price * 40}<span>UAH</span></p>
-                     :
-                        discount ? 
-                            <div><span className='previous-price'>{price}</span><span className='current-price'>{discount}$</span></div> 
-                                : 
-                            <p className='price'>{price}<span>$</span></p>
-                   }
+                    {currency == "USD" ? <USDPrice price={RAMprice || price} discount={discount} /> : <UAHPrice price={RAMprice || price} discount={discount} />}
                     <div className='buyOptionsButtons'>
                         <button className='cart-button' onClick={cartButtonHandler}>Add to cart</button>
                         <button className='credit-button'>buy in credit</button>
@@ -136,6 +144,26 @@ const ProductPage:FC = () => {
                     />
                 </div>
                 <DevileryInfo />
+              </div>
+            </div>
+                {product.detailedDescription ? 
+                    <div className='detailedDescription'>
+                        <h2>Characteristics</h2>
+                        <ul className='detailedDescription__list'>
+                            {parsedDetailedDescription!.display ? <li>Display ------------- {parsedDetailedDescription!.display}</li> : <></>}
+                            {parsedDetailedDescription!.camera ? <li>Camera ------------- {parsedDetailedDescription!.camera}</li> : <></>}
+                            {parsedDetailedDescription!.os ? <li>OS ------------- {parsedDetailedDescription!.os}</li> : <></>}
+                            {parsedDetailedDescription!.processor ? <li>Processor ------------- {parsedDetailedDescription!.processor}</li> : <></>}
+                            {parsedDetailedDescription!.size ? <li>Size ------------- {parsedDetailedDescription!.size}</li> : <></>}
+                            {parsedDetailedDescription!.materials ? <li>Materials ------------- {parsedDetailedDescription!.materials}</li> : <></>}
+                            {parsedDetailedDescription!.manufacturer ? <li>Manufacturer ------------- {parsedDetailedDescription!.manufacturer}</li> : <></>}
+                        </ul>
+                    </div>
+                :
+                    <></>
+                }
+            <div className='similar-offers'>
+                {similarOffers && <SliderComponent title='You might like it' products={similarOffers.rows} />}
             </div>
           </div>
         </NavLayout>

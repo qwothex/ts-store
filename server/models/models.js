@@ -8,7 +8,7 @@ const User = sequelize.define( 'user', {
     role: {type: DataTypes.STRING, defaultValue: 'USER'},
     additional: {type: DataTypes.JSON},
     lastview: {type: DataTypes.JSON, unique: true, allowNull: true, defaultValue: []},
-    cart: {type: DataTypes.JSON, allowNull: true, defaultValue: []}
+    cart: {type: DataTypes.JSON, allowNull: true, defaultValue: []},
 })
 
 const Product = sequelize.define( 'product', {
@@ -21,6 +21,7 @@ const Product = sequelize.define( 'product', {
     brand: {type: DataTypes.STRING, allowNull: false},
     memory: {type: DataTypes.JSON, allowNull: true},
     discount: {type: DataTypes.INTEGER, defaultValue: 0, allowNull: true},
+    detailedDescription: {type: DataTypes.JSON, allowNull: true}
 })
 
 module.exports = {

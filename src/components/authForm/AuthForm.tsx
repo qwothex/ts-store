@@ -4,6 +4,7 @@ import { useActions } from '../../hooks/useActions'
 import { createUser, loginUser } from '../../API/usersAPI/usersApi'
 import './authForm.css'
 import { UserI } from '../../types/types'
+import NavBar from '../navBar/NavBar'
 
 
 const AuthForm:FC = () => {
@@ -36,7 +37,8 @@ const AuthForm:FC = () => {
     }
 
     return(
-        <div>
+        <div className='authPage-container'>
+            <NavBar />
             <form className='authForm' onSubmit={formSubmitHandler}>
                     <h3 style={{margin: '0 0 15px 0'}}>{isLoginPath ? 'Sign in' : 'Sing up'}</h3>
                     <input required placeholder='login' type={'text'} value={login} onChange={(e) => setLogin(e.target.value)}/>

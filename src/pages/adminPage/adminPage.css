@@ -1,37 +1,53 @@
-.adminContainer {
-    width: 500px;
-    margin: 35px auto 50px auto;
-    padding: 15px;
-    background-color: #ffffff;
+.adminContainer{
+    background-color: #f3f3f3;
+    padding: 0 50px 0 50px;
+    display: flex;
 }
 
 .adminContainer form {
+    width: 50%;
     display: flex;
     flex-direction: column;
+    background-color: #fff;
+    padding: 15px;
+    margin: 50px 5px 50px 5px;
 }
 
 .adminContainer form h1 {
     margin: 0 0 10px 0;
 }
 
-.adminContainer form input {
+/* .adminContainer form .formInput {
     height: 25px;
     margin: 0 0 25px 0;
     background-color: #ffffff;
     border: none;
     border-bottom: 1px solid #333;
-}
+} */
 
-.adminContainer form label {
-    margin: 0 0 15px 0;
-    cursor: pointer;
+.adminContainer form .formInput {
+    height: 30px;
+    margin: 0 0 25px 0;
+    background-color: #ffffff;
+    border: 1px solid rgba(0, 0, 0, 0.200);
+    border-radius: 10px;
+    padding-left: 10px;
+    font-size: 1.02rem;
 }
 
 .adminContainer form input:focus{
     outline: none;
+    border-color: #000000;
 }
 
-.adminContainer button {
+.adminContainer form label {
+    width: 70px;
+    font-size: 1.2rem;
+    margin: 0 0 15px 0;
+    cursor: pointer;
+}
+
+.adminContainer .submit-button {
     width: 150px;
     height: 35px;
     border-radius: 6px;
@@ -46,4 +62,82 @@
 
 .adminContainer button:active{
     border: 1px solid black;
+}
+
+.memoryButton{
+    height: 30px;
+    width: 50px;
+    border: none;
+    border-radius: 8px;
+    transition: 0.2s;
+}
+
+.memoryButton:hover{
+    background-color: #f3f3f3;
+}
+
+.addMemoryOption{
+    width: 25px;
+    height: 25px;
+    border-radius: 6px;
+    border: none;
+    transition: 0.2s;
+}
+
+.memory{
+    display: flex;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.memory p {
+    margin: 0 15px 0 0 ;
+}
+
+.memoryInput{
+    width: 200px;
+    height: 30px;
+    border-radius: 8px;
+    background-color: #fff;
+    border: none;
+    margin: 5px;
+}
+
+.memoryInput:focus{
+    border: 1px solid black;
+}
+
+.memoryOption-container{
+    margin-bottom: 25px;
+}
+
+.detailed-description h2 {
+    margin-top: 0;
+}
+
+@media (max-width: 950px) {
+    .adminContainer {
+        flex-direction: column;
+    }
+
+    .adminContainer form {
+        width: 95%;
+    }
+}
+
+@media (max-width: 600px) {
+    .adminContainer {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 10px;
+    }
+    
+    .adminContainer form {
+        display: flex;
+        flex-direction: column;
+        background-color: #ffffff;
+        padding: 15px;
+        margin: 50px 0 50px 0;
+    }
 }

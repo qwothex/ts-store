@@ -12,10 +12,11 @@ export interface productItem {
     price: number
     memory: string | null
     discount: number, 
-    amount: number
+    amount: number,
+    detailedDescription: string | null
 }
 
-interface productProps {
+export interface productProps {
     count: number, 
     rows: [productItem]
 }

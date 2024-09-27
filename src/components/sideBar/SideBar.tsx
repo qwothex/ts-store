@@ -13,13 +13,12 @@ const SideBar:FC = () => {
 
     const types = [
         {"name" : "Laptop", "picture" : "../assets/white-square.png"}, 
-        {"name" : "Phone", "picture" : "../assets/white-square.png"}, 
-        {"name" : "Frige", "picture" : "../assets/white-square.png"},
+        {"name" : "Phone", "picture" : "../assets/white-square.png"},  
         {"name" : "PC", "picture" : "../assets/white-square.png"},
         {"name" : "TV", "picture" : "../assets/white-square.png"},
     ]
 
-    const brands = [ "Apple", "Samsung", "Nokia","Asus", "Acer","Xiaomi" ]
+    const brands = [ "Apple", "Samsung","Asus", "Acer","Xiaomi" ]
 
     const {currentType} = useAppSelector(state => state.productReducer)
     const {currentBrand} = useAppSelector(state => state.productReducer)
@@ -56,7 +55,6 @@ const SideBar:FC = () => {
                 <ul className='usefulLinks'>
                     <li><Link to={'/FAQ'}><FaRegQuestionCircle />&nbsp;FAQ</Link></li>
                     <li><Link to={'/contact'}><IoChatboxEllipsesOutline />&nbsp;Contact</Link></li>
-                    <li><Link to={'/about'}><IoIosContact />&nbsp;About</Link></li>
                 </ul>
         </div>
     )

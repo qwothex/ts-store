@@ -3,6 +3,7 @@ import "./cartPage.css"
 import { useAppSelector } from '../../hooks/useAppSelector'
 import ErrorPage from '../errorPage/ErrorPage'
 import CartPropductItem from '../../components/cartProductItem/CartProductItem'
+import NavBar from '../../components/navBar/NavBar'
 
 const CartPage:FC = () => { 
 
@@ -13,6 +14,8 @@ const CartPage:FC = () => {
     let total = 0
 
     return(
+      <>
+        <NavBar />
         <div className='cart-container'>
             {cart.map((el) => (
                 el.discount ? total += el.discount * el.amount : total += el.price * el.amount,
@@ -22,6 +25,7 @@ const CartPage:FC = () => {
                 <p>Your total will be: <span>{total}</span>$</p>
             </div>
         </div>
+      </>
     )
 }
 

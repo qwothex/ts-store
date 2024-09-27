@@ -22,6 +22,7 @@
     cursor: pointer;
     transition: 0.2s;
     font-size: 18px;
+    border-radius: 5px;
 }
 
 .sidebar_container input {
@@ -29,8 +30,9 @@
 }
 
 .sidebar_container .list li:hover{
-    background-color: rgb(82, 82, 82);
-    color: #f3f3f3;
+    background-color: rgb(206, 206, 206);
+    /* background-color: rgb(82, 82, 82); */
+    /* color: #f3f3f3; */
 }
 
 .sidebar_container h3 {
@@ -80,7 +82,7 @@
     background-image: url('../../assets/appStoreLogo_black.svg');
 }
 
-.appStore:hover{
+.logo:hover{
     transform: scale(1.05);
 }
 
@@ -88,21 +90,19 @@
     background-image: url('../../assets/google-play-logo.svg');
 }
 
-.playMarket:hover{
-    transform: scale(1.05);
-}
-
 .usefulLinks{
-    padding: 0;
+    padding: 0 0 10px 0;
     list-style-type: none;
     border-bottom: 1px solid #000;
-    padding-bottom: 16px;
+    margin-top: 10px;
 }
 
 .usefulLinks li {
     padding: 0;
     height: 35px;
     font-size: 20px;
+    display: flex;
+    align-items: center;
 }
 
 .usefulLinks li a {
@@ -116,19 +116,6 @@
 
 .usefulLinks a:hover{
     color: rgb(100, 100, 255);
-}
-
-@media (max-width: 1250px) {
-    .store-logos{
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        height: 100px;
-    }
-    .logo{
-        width: 75%;
-        margin-top: 10px;
-    }
 }
 
 @media (max-width: 900px) {
