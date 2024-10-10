@@ -36,7 +36,7 @@ const ProductPage:FC = () => {
 
     const {id} = useParams()
 
-    const {user} = useAppSelector(state => state.userReducer)
+    const {user, isUserAuth} = useAppSelector(state => state.userReducer)
     const {cart} = useAppSelector(state => state.productReducer)
     const {currency} = useAppSelector(state => state.productReducer)
 
@@ -76,9 +76,10 @@ const ProductPage:FC = () => {
     if(detailedDescription) parsedDetailedDescription = JSON.parse(detailedDescription)
 
     const cartButtonHandler = () => {
-        !user.id ? 
-            setPopUpStatus({show: true, success: false, text: "Login or create the account first"})
-        :
+        if(!isUserAuth) {
+            setPopUpStatus({show: true, success: false, text: 'Login or create account first'})
+        }
+        else{
         addCartProduct(user.id!, {...product, amount: 1})
         let isExist = false;
         if(cart) cart.forEach((el) => { if(el.id == product.id) isExist = true })
@@ -87,6 +88,7 @@ const ProductPage:FC = () => {
             setPopUpStatus({show: true, success: true, text: 'Added to cart'})
         }
         else setPopUpStatus({show: true, success: false, text: 'Already in cart'})
+        }
     }
 
 
