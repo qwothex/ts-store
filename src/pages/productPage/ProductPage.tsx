@@ -1,6 +1,6 @@
 import {FC, useEffect, useState} from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-import { addDiscount, deleteProduct, getAllProducts, getOneProduct } from '../../API/productsAPI/productAPI'
+import { addDiscount, deleteProduct, getAllProducts, getOneProduct } from '../../API/productsAPI/productsAPI'
 import { productItem, productProps } from '../../store/slices/productSlice'
 import './productPage.css'
 import { RotateLoader } from 'react-spinners'
@@ -76,6 +76,9 @@ const ProductPage:FC = () => {
     if(detailedDescription) parsedDetailedDescription = JSON.parse(detailedDescription)
 
     const cartButtonHandler = () => {
+        !user.id ? 
+            setPopUpStatus({show: true, success: false, text: "Login or create the account first"})
+        :
         addCartProduct(user.id!, {...product, amount: 1})
         let isExist = false;
         if(cart) cart.forEach((el) => { if(el.id == product.id) isExist = true })
@@ -85,6 +88,7 @@ const ProductPage:FC = () => {
         }
         else setPopUpStatus({show: true, success: false, text: 'Already in cart'})
     }
+
 
     const discountClickHandler = () => {
        const price = +prompt('enter new price')!
@@ -150,20 +154,20 @@ const ProductPage:FC = () => {
                     <div className='detailedDescription'>
                         <h2>Characteristics</h2>
                         <ul className='detailedDescription__list'>
-                            {parsedDetailedDescription!.display ? <li>Display ------------- {parsedDetailedDescription!.display}</li> : <></>}
-                            {parsedDetailedDescription!.camera ? <li>Camera ------------- {parsedDetailedDescription!.camera}</li> : <></>}
-                            {parsedDetailedDescription!.os ? <li>OS ------------- {parsedDetailedDescription!.os}</li> : <></>}
-                            {parsedDetailedDescription!.processor ? <li>Processor ------------- {parsedDetailedDescription!.processor}</li> : <></>}
-                            {parsedDetailedDescription!.size ? <li>Size ------------- {parsedDetailedDescription!.size}</li> : <></>}
-                            {parsedDetailedDescription!.materials ? <li>Materials ------------- {parsedDetailedDescription!.materials}</li> : <></>}
-                            {parsedDetailedDescription!.manufacturer ? <li>Manufacturer ------------- {parsedDetailedDescription!.manufacturer}</li> : <></>}
+                            {parsedDetailedDescription!.display ? <li><span className='characteristic'><p>Display</p></span> {parsedDetailedDescription!.display}</li> : <></>}
+                            {parsedDetailedDescription!.camera ? <li><span className='characteristic'><p>Camera</p></span>  {parsedDetailedDescription!.camera}</li> : <></>}
+                            {parsedDetailedDescription!.os ? <li><span className='characteristic'><p>OS</p></span>  {parsedDetailedDescription!.os}</li> : <></>}
+                            {parsedDetailedDescription!.processor ? <li><span className='characteristic'><p>Processor</p></span>  {parsedDetailedDescription!.processor}</li> : <></>}
+                            {parsedDetailedDescription!.size ? <li><span className='characteristic'><p>Size</p></span>  {parsedDetailedDescription!.size}</li> : <></>}
+                            {parsedDetailedDescription!.materials ? <li><span className='characteristic'><p>Materials</p></span>  {parsedDetailedDescription!.materials}</li> : <></>}
+                            {parsedDetailedDescription!.manufacturer ? <li><span className='characteristic'><p>Manufacturer</p></span>  {parsedDetailedDescription!.manufacturer}</li> : <></>}
                         </ul>
                     </div>
                 :
                     <></>
                 }
             <div className='similar-offers'>
-                {similarOffers && <SliderComponent title='You might like it' products={similarOffers.rows} />}
+                {similarOffers && <SliderComponent title='You might like it' products={similarOffers.rows} slidesToShow={8} slidesToScroll={4} />}
             </div>
           </div>
         </NavLayout>

@@ -8,7 +8,7 @@
     width: 100%;
     /* background-color: rgb(82, 82, 82); */
     background-color: var(--bgColor);
-    border-bottom: 1px solid black;
+    border-bottom: 1px solid var(--border-color);
     display: flex;
     justify-content: space-between;
     align-items: center;

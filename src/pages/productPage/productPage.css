@@ -215,12 +215,38 @@ details{
     margin-top: 5px;
 }
 
+.detailedDescription__list li{
+    display: flex;
+}
+
+.detailedDescription__list .characteristic{
+    width: 450px;
+    min-width: 200px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    margin-right: 10px;
+    background-color: #fff;
+}
+
+.detailedDescription__list .characteristic p {
+    margin: 0;
+    background-color: #fff;
+    z-index: 10;
+    padding-right: 10px;
+}
+
+.detailedDescription__list .characteristic::after{
+    content: "";
+    position: absolute;
+    left: 0;
+    width: 100%;
+    border: 1px dotted var(--border-color);
+}
+
 @media (max-width: 1150px) {
     .buyOptionsButtons button{
         width: 33%
-    }
-    .detailedDescription__list{
-
     }
 }
 

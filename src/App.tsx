@@ -6,7 +6,7 @@ import {RotateLoader} from 'react-spinners'
 import NavBar from './components/navBar/NavBar';
 import Footer from './components/footer/Footer';
 import { UserI } from './types/types';
-import { getOneProduct } from './API/productsAPI/productAPI';
+import { getOneProduct } from './API/productsAPI/productsAPI';
 import { productItem } from './store/slices/productSlice';
 
 const App:FC = () => {

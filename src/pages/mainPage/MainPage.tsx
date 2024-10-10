@@ -1,6 +1,6 @@
 import React, {FC, useEffect, useRef, useState} from 'react'
 import './mainPage.css'
-import { getAllProducts} from '../../API/productsAPI/productAPI'
+import { getAllProducts} from '../../API/productsAPI/productsAPI'
 import { useActions } from '../../hooks/useActions'
 import { useAppSelector } from '../../hooks/useAppSelector'
 import { RotateLoader } from 'react-spinners'
@@ -51,8 +51,8 @@ const MainPage:FC = () => {
                         <div></div>
                         <div></div>
                     </AddSlider>
-                    {lastview.length > 0 ? <SliderComponent title='Recenly viewed' products={lastview} /> : <></>}
-                    <SliderComponent title='Recomendations' products={products.rows} />
+                    {lastview.length > 0 ? <SliderComponent title='Recenly viewed' products={lastview} slidesToScroll={3} slidesToShow={6} /> : <></>}
+                    <SliderComponent title='Recomendations' products={products.rows} slidesToScroll={3} slidesToShow={6} />
                 </div>
             :
             <div>

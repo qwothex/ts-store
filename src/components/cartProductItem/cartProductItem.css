@@ -1,15 +1,14 @@
    
 .cartItem-container{
     max-width: 100%;
-    min-width: 1000px;
-    height: 250px;
+    height: 150px;
     border-bottom: 1px solid rgba(0, 0, 0, 0.349);
     background-color: #fff;
     display: flex;
 }
 
 .cartItem-container:last-child{
-    border-bottom: none;
+    border: none;
 }
 
 .cartItem-container .left-side{
@@ -24,7 +23,7 @@
 }
 
 .left-side__image{
-    width: 200px; 
+    width: 150px; 
     min-height: 100px; 
     max-height: 100%;
     background-size: contain;
@@ -45,14 +44,14 @@
 }
 
 .right-side__delete-button{
-    width: 40px;
-    height: 40px;
+    width: 30px;
+    height: 30px;
     background-image: url('../../assets/trash-can.png');
     background-position: center;
     background-size: contain;
     background-repeat: no-repeat;
     border: none;
-    border-radius: 10px;
+    border-radius: 7px;
     transition: 0.2s;
 }
 
@@ -81,9 +80,9 @@
 }
 
 .amount-button{
-    width: 40px;
-    height: 40px;
-    border-radius: 10px;
+    width: 30px;
+    height: 30px;
+    border-radius: 7px;
     border: none;
     margin: 0 10px 0 10px;
     font-size: 24px;

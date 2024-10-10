@@ -6,17 +6,19 @@ import ProductItem from "../productItem/ProductItem";
 
 interface SliderComponentProps {
     products: productItem[],
-    title?: string
+    title?: string,
+    slidesToShow: number,
+    slidesToScroll: number
 }
 
-const SliderComponent:FC<SliderComponentProps> = ({products, title}) => {
+const SliderComponent:FC<SliderComponentProps> = ({products, title, slidesToScroll, slidesToShow}) => {
     return(
         <div className="SliderComponent-container">
             {title ? <h1 key={title}>{title}</h1> : <></>}
             <Glider
-                slidesToShow={products.length <= 6 ? products.length : 6}
-                slidesToScroll={3}
-                hasArrows={!(products.length <= 6)}
+                slidesToShow={products.length <= slidesToShow ? products.length : slidesToShow}
+                slidesToScroll={slidesToScroll}
+                hasArrows={products.length > slidesToShow}
                 draggable
             >
                 {products.map((el: productItem) => el !== null ? <div><ProductItem key={el.id} product={el} /></div> : <></>)}

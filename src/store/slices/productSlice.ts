@@ -1,6 +1,6 @@
 import { createSlice, current, PayloadAction } from "@reduxjs/toolkit";
 import ProductItem from "../../components/productItem/ProductItem";
-import { getOneProduct } from "../../API/productsAPI/productAPI";
+import { getOneProduct } from "../../API/productsAPI/productsAPI";
 
 export interface productItem {
     id: number
@@ -70,10 +70,8 @@ const productSlice = createSlice({
             state.cart = state.cart.filter(el => el.id !== action.payload)
         },
         changeProductAmount: (state, action: PayloadAction<{id: number, newAmount: number}>) => {
-            state.cart.findIndex((element,index) => {
-                if(element.id == action.payload.id){
-                    state.cart[index].amount = action.payload.newAmount
-                }
+            state.cart.map((el, index) => {
+                if(el.id == action.payload.id) state.cart[index].amount = action.payload.newAmount
             })
         },
         sortProducts: (state, action: PayloadAction<number>) => {

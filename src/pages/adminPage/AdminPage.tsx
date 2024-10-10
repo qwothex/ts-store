@@ -1,5 +1,5 @@
 import React, {FC, useEffect, useState} from 'react'
-import { createProduct } from '../../API/productsAPI/productAPI'
+import { createProduct } from '../../API/productsAPI/productsAPI'
 import './adminPage.css'
 import NavLayout from '../../components/navLayout/NavLayout'
 

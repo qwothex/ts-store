@@ -17,13 +17,21 @@ const CartPage:FC = () => {
       <>
         <NavBar />
         <div className='cart-container'>
-            {cart.map((el) => (
-                el.discount ? total += el.discount * el.amount : total += el.price * el.amount,
-                <CartPropductItem key={el.id} product={el}></CartPropductItem>
-            ))}
-            <div className='cart-total'>
-                <p>Your total will be: <span>{total}</span>$</p>
-            </div>
+          <h1>There is {cart.length} items in your cart</h1>
+          <div className='cart-container__items'>
+              {cart.map(el =>(
+              el.discount ? total += el.discount * el.amount : total += el.price * el.amount,
+              <CartPropductItem key={el.id} product={el} />
+              ))}
+              <div className='cart-container__info'>
+                <div className='item'><span>Subtotal</span><span>{total}$</span></div>
+                <div className='item'><span>Delivery</span><span>20$</span></div>
+                <div className='item'><span>Grand total</span><span>{total + 20}$</span></div>
+                <p>{total >= 4980 ? 'Congrats! You can have a free shipping' : `Add ${4980 - total}$ more for free shipping`}</p>
+                <progress max={5000} value={total}></progress>
+                <button>Proceed to checkout</button>
+              </div>
+          </div>
         </div>
       </>
     )
