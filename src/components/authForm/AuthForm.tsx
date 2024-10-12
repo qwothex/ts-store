@@ -5,11 +5,13 @@ import { createUser, loginUser } from '../../API/usersAPI/usersApi'
 import './authForm.css'
 import { UserI } from '../../types/types'
 import NavBar from '../navBar/NavBar'
+import { getOneProduct } from '../../API/productsAPI/productsAPI'
+import { productItem } from '../../store/slices/productSlice'
 
 
 const AuthForm:FC = () => {
 
-    const { setUserAuth, setCurrentUser, setCartProducts } = useActions()
+    const { setUserAuth, setCurrentUser } = useActions()
 
     const navigate = useNavigate()
 
@@ -29,7 +31,7 @@ const AuthForm:FC = () => {
             }
             setCurrentUser(data)
             setUserAuth(true)
-            setCartProducts(data.cart!)
+            if(data.cart)data.cart.map(id => getOneProduct(id).then((res: productItem) => addProductToCart(res)))
             navigate('/', {replace: false})
         }catch(error: any){
             alert(error?.message)
@@ -61,3 +63,7 @@ const AuthForm:FC = () => {
 }
 
 export default AuthForm
+
+function addProductToCart(res: productItem): any {
+    throw new Error('Function not implemented.')
+}

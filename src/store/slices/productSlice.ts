@@ -1,6 +1,4 @@
-import { createSlice, current, PayloadAction } from "@reduxjs/toolkit";
-import ProductItem from "../../components/productItem/ProductItem";
-import { getOneProduct } from "../../API/productsAPI/productsAPI";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export interface productItem {
     id: number
@@ -40,7 +38,7 @@ const initialState: initialStateProps = {
     currentBrand: '',
     currentType: '',
     currency: 'USD',
-    cart: [<productItem>{}],
+    cart: [],
     lastview: []
 }
 

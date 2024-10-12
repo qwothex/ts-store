@@ -25,7 +25,7 @@ const CartPage:FC = () => {
               ))}
               <div className='cart-container__info'>
                 <div className='item'><span>Subtotal</span><span>{total}$</span></div>
-                <div className='item'><span>Delivery</span><span>20$</span></div>
+                <div className='item'><span>Shipping</span><span>20$</span></div>
                 <div className='item'><span>Grand total</span><span>{total + 20}$</span></div>
                 <p>{total >= 4980 ? 'Congrats! You can have a free shipping' : `Add ${4980 - total}$ more for free shipping`}</p>
                 <progress max={5000} value={total}></progress>

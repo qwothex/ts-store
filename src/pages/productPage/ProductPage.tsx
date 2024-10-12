@@ -80,7 +80,7 @@ const ProductPage:FC = () => {
             setPopUpStatus({show: true, success: false, text: 'Login or create account first'})
         }
         else{
-        addCartProduct(user.id!, {...product, amount: 1})
+        addCartProduct(user.id!, product.id)
         let isExist = false;
         if(cart) cart.forEach((el) => { if(el.id == product.id) isExist = true })
         if(!isExist) {

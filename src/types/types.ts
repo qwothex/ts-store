@@ -15,7 +15,7 @@ interface UserI extends JwtPayload {
     username?: string,
     additional?: additionalInterface,
     lastview?: [number],
-    cart?: [productItem]
+    cart?: [number]
 }
 
 export type {UserI}

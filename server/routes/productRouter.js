@@ -9,5 +9,5 @@ router.get('/', productController.getAll)
 router.delete('/:id', checkRole('ADMIN'), productController.remove)
 router.put('/:id', checkRole('ADMIN'), productController.change)
 router.get('/:id', productController.getOne)
-
+ 
 module.exports = router

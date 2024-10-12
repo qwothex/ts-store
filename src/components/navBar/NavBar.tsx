@@ -55,9 +55,15 @@ const NavBar:FC = () => {
                 </div>
                 <div ref={dropListEl} className='dropList'>
                     <ul>
-                        {user.role == 'ADMIN' ? <li onClick={() => navigate('/admin', {replace: false})}>ADMIN PANEL</li> : undefined}
+                        {user.role == 'ADMIN' ? 
+                        <li onClick={() => navigate('/admin', {replace: false})}>
+                            ADMIN PANEL
+                        </li> : undefined}
                         <li onClick={() => navigate('/profile', {replace: false})}>
                             Profile
+                        </li>
+                        <li onClick={() => navigate('/orders', {replace: false})}>
+                            Orders
                         </li>
                         <li onClick={logOut}>
                             Log out

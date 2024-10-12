@@ -83,11 +83,11 @@ class UserController {
     }
 
     async addCart(req, res, next) {
-        const {id, product} = req.body
+        const {id, productId} = req.body
         const user = await User.findOne({where:{id}})
         let isExist = false;
-        user.cart.forEach((el) => { if(el.id == product.id) isExist = true })
-        if(!isExist){user.cart.unshift(product)}
+        user.cart.forEach((el) => { if(el == productId) isExist = true })
+        if(!isExist){user.cart.unshift(productId)}
         user.changed('cart', true)
         await user.save()
         const token = generateJwt(user.id, user.username, user.role, user.additional, user.lastview, user.cart)
@@ -97,7 +97,7 @@ class UserController {
     async deleteCart(req, res, next) {
         const {productId, id} = req.body
         const user = await User.findOne({where:{id}})
-        user.cart = user.cart.filter(el => el.id !== productId)
+        user.cart = user.cart.filter(el => el !== productId)
         user.changed('cart', true)
         await user.save()
         const token = generateJwt(user.id, user.username, user.role, user.additional, user.lastview, user.cart)
