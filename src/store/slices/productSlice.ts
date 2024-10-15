@@ -67,6 +67,9 @@ const productSlice = createSlice({
         deleteProductFromCart: (state, action: PayloadAction<number>) => {
             state.cart = state.cart.filter(el => el.id !== action.payload)
         },
+        truncateLocalCart: (state) => {
+            state.cart = []
+        },
         changeProductAmount: (state, action: PayloadAction<{id: number, newAmount: number}>) => {
             state.cart.map((el, index) => {
                 if(el.id == action.payload.id) state.cart[index].amount = action.payload.newAmount

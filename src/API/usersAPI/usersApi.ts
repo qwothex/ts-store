@@ -53,3 +53,11 @@ export const deleteCartProduct = async(productId: number, id: number) => {
     localStorage.setItem('token', data.token)
     return jwtDecode(data.token)
 }
+
+export const truncateUserCart = async(id: number) => {
+    const {data} = await authHost.delete('api/user/cart', {params: {
+        id
+    }})
+    localStorage.setItem('token', data.token)
+    return jwtDecode(data.token)
+}

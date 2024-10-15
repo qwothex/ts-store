@@ -1,0 +1,118 @@
+.ordersPage-container{
+    width: 100%;
+    display: flex;
+    background-color: #fff;
+    padding: 50px 0 50px 100px;
+}
+
+.ordersPage-container__filters{
+    width: 20%;
+    padding: 15px 0 0 25px;
+}
+
+.ordersPage-container__filters select{
+    width: 50%;
+    height: 40px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.ordersPage-container__filters ul {
+    list-style-type: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+.ordersPage-container__filters ul li {
+    height: 50px;
+    margin-bottom: 15px;
+    padding-left: 15px;
+    display: flex;
+    align-items: center;
+    background-color: #f3f3f3;
+    cursor: pointer;
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    transition: .1s;
+}
+
+.ordersPage-container__filters ul li:hover{
+    color: red
+}
+
+.ordersPage-container__filters ul li span{
+    margin-left: 7px;
+}
+
+.ordersPage-container__info{
+    width: 60%;
+    padding: 15px 25px 25px;
+    display: flex;
+    flex-direction: column;
+}
+
+.ordersPage-container__info__title {
+    text-align: center;
+    margin: 0 0 10px 0;
+}
+
+.ordersPage-container__info p {
+    margin: 0;
+}
+/* .ordersPage-container__filters ul li {
+    height: 40px;
+    border: 1px solid black;
+    border-radius: 8px;
+    margin: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+} */
+
+@media (max-width: 950px) {
+    .ordersPage-container{
+        padding: 50px;
+    }
+}
+
+@media (max-width: 800px) {
+    .ordersPage-container{
+        padding: 20px;
+    }   
+}
+
+@media (max-width: 700px) {
+    .ordersPage-container{
+        flex-direction: column;
+        align-items: center;
+        padding: 0;
+    }
+
+    .ordersPage-container__filters{
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        padding: 15px 0 0 0;
+    }
+
+    .ordersPage-container__filters ul{
+        width: 100%;
+        display: flex;
+        gap: 15px;
+        padding: 0 10px 0 10px;
+    }
+
+    .ordersPage-container__filters ul li{
+        width: 33%;
+    }
+
+    .ordersPage-container__info{
+        width: 90%;
+    }
+}
+
+@media (max-width: 425px) {
+    .ordersPage-container__filters ul li{
+        padding: 0;
+    }
+}

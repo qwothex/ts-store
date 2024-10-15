@@ -1,7 +1,6 @@
 import React, {FC} from "react";
 import './FAQPage.css'
 import HiddenText from "../../components/hiddenText/HiddenText";
-import NavBar from "../../components/navBar/NavBar";
 import HiddenSection from "../../components/hiddenSection/HiddenSection";
 import NavLayout from "../../components/navLayout/NavLayout";
 

@@ -1,21 +1,21 @@
 import { JwtPayload } from "jwt-decode"
-import { productItem } from "../store/slices/productSlice"
-
-interface additionalInterface {
-    name: string,
-    bio: string,
-    location: string, 
-    telegram: string,
-    image: string
-}
 
 interface UserI extends JwtPayload {
     id?: number,
     role?: string,
     username?: string,
-    additional?: additionalInterface,
+    additional?: {name: string, bio: string, location: string, telegram: string, image: string},
     lastview?: [number],
     cart?: [number]
 }
 
-export type {UserI}
+interface OrderI {
+    id: number,
+    userId: number,
+    products: [],
+    total: number,
+    createdAt: Date,
+    updatedAt: Date,
+}
+
+export type {UserI, OrderI}

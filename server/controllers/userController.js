@@ -94,10 +94,20 @@ class UserController {
         return res.json({token})
     }
 
-    async deleteCart(req, res, next) {
+    async deleteFromCart(req, res, next) {
         const {productId, id} = req.body
         const user = await User.findOne({where:{id}})
         user.cart = user.cart.filter(el => el !== productId)
+        user.changed('cart', true)
+        await user.save()
+        const token = generateJwt(user.id, user.username, user.role, user.additional, user.lastview, user.cart)
+        return res.json({token})
+    }
+
+    async truncateCart(req, res, next) {
+        const {id} = req.query
+        const user = await User.findOne({where:{id}})
+        user.cart = []
         user.changed('cart', true)
         await user.save()
         const token = generateJwt(user.id, user.username, user.role, user.additional, user.lastview, user.cart)

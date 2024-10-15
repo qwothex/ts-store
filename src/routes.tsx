@@ -4,6 +4,7 @@ import AdminPage from "./pages/adminPage/AdminPage";
 import CartPage from "./pages/cartPage/CartPage";
 import FAQPage from "./pages/FAQPage/FAQPage";
 import MainPage from "./pages/mainPage/MainPage";
+import OrdersPage from "./pages/ordersPage/OrdersPage";
 import ProductPage from "./pages/productPage/ProductPage";
 import UserPage from "./pages/userPage/UserPage";
 
@@ -51,5 +52,9 @@ export const privateRoutes = [
     {
         path: '/cart',
         Component: CartPage
+    },
+    {
+        path: '/orders',
+        Component: OrdersPage
     }
 ]

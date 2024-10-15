@@ -6,6 +6,7 @@ import {RotateLoader} from 'react-spinners'
 import { UserI } from './types/types';
 import { getOneProduct } from './API/productsAPI/productsAPI';
 import { productItem } from './store/slices/productSlice';
+import Loading from './components/loading/Loading';
 
 const App:FC = () => {
 
@@ -24,12 +25,7 @@ const App:FC = () => {
           }).finally(() => setLoading(false))
   }, [])
 
-  if(loading){
-    return(
-      <div style={{width: '100vw', height: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
-            <RotateLoader color='black' />
-      </div>)
-  }
+  if(loading) return <Loading />
 
   return (
       <Router />

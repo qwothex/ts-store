@@ -1,15 +1,15 @@
-import React, {FC, useEffect, useRef, useState} from 'react'
+import React, {FC, useEffect, useState} from 'react'
 import './mainPage.css'
 import { getAllProducts} from '../../API/productsAPI/productsAPI'
 import { useActions } from '../../hooks/useActions'
 import { useAppSelector } from '../../hooks/useAppSelector'
-import { RotateLoader } from 'react-spinners'
 import SideBar from '../../components/sideBar/SideBar'
 import "glider-js/glider.min.css";
 import ProductItem from '../../components/productItem/ProductItem'
 import SliderComponent from '../../components/sliderComponent/SliderComponent'
 import AddSlider from '../../components/addSlider/AddSlider'
 import NavLayout from '../../components/navLayout/NavLayout'
+import Loading from '../../components/loading/Loading'
 
 const MainPage:FC = () => {
 
@@ -27,13 +27,7 @@ const MainPage:FC = () => {
         .then(() => setLoading(false))
     }, [currentBrand, currentType])
 
-    if(loading){
-        return( 
-        <div style={{width: '100vw', height: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
-            <RotateLoader color='black' />
-        </div>
-        )
-    }
+    if(loading) return <Loading />
 
     const changeSort = (e: React.ChangeEvent<HTMLSelectElement>) => {
         e.preventDefault()

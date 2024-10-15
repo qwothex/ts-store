@@ -1,6 +1,7 @@
 import React, {FC} from "react";
 import './errorPage.css'
 import { Link } from "react-router-dom";
+import NavBar from "../../components/navBar/NavBar";
 
 interface ErrorPropsI {
     message: string
@@ -8,11 +9,14 @@ interface ErrorPropsI {
 
 const ErrorPage:FC<ErrorPropsI> = ({message}) => {
     return(
-        <div className="error-container">
+        <>
+        <NavBar/>
+          <div className="error-container">
             <div className="error-image" />
             <h1>{message}</h1>
             <Link to="/">Home</Link>
-        </div>
+          </div>
+        </>
     )
 }
 

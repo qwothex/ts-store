@@ -1,0 +1,44 @@
+.orderItem-container{
+    width: 100%;
+    height: 150px;
+    border-top: 1px solid black;
+    display: flex;
+}
+
+.orderItem-container__left-side{
+    width: 70%;
+    height: 100%;
+}
+
+.orderItem-container__right-side{
+    width: 30%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.orderItem-container__right-side button{
+    width: 100%;
+    height: 25px;
+    border-radius: 15px;
+    background: transparent;
+    border: 1px solid black;
+}
+
+.orderItem-container__right-side button:hover{
+    cursor: pointer;
+    border: 2px solid black;
+}
+
+.orderItem-container__left-side h3{
+    margin-bottom: 0;
+}
+
+.orderItem-container__left-side h4{
+    margin: 5px 0;
+    font-weight: 400;
+}
+
+.orderItem-container__left-side h4 span {
+    font-weight: 600;
+}

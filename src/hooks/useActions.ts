@@ -3,10 +3,12 @@ import { useMemo } from 'react'
 import { useDispatch } from "react-redux"
 import { actions as userActions } from '../store/slices/userSlice'
 import { actions as productActions } from '../store/slices/productSlice'
+import { actions as orderActions } from '../store/slices/orderSlice'
 
 const rootActions = {
     ...userActions,
-    ...productActions
+    ...productActions,
+    ...orderActions
 }
 
 export const useActions = () => {
