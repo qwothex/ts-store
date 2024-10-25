@@ -51,13 +51,20 @@
     flex-direction: column;
 }
 
-.ordersPage-container__info__title {
+.ordersPage-title {
     text-align: center;
     margin: 0 0 10px 0;
 }
 
 .ordersPage-container__info p {
     margin: 0;
+}
+
+.ordersPage-container select {
+    width: 150px;
+    height: 30px;
+    margin: 0 0 10px auto;
+    border-radius: 5px;
 }
 /* .ordersPage-container__filters ul li {
     height: 40px;

@@ -28,7 +28,8 @@ const Order = sequelize.define('order', {
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
     products: {type: DataTypes.JSON, allowNull: false},
     total: {type: DataTypes.INTEGER, allowNull: false},
-    userId: {type: DataTypes.INTEGER, allowNull: false}
+    userId: {type: DataTypes.INTEGER, allowNull: false},
+    status: {type: DataTypes.STRING, allowNull: false, defaultValue: 'in progress'}
 })
 
 module.exports = {

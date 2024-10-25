@@ -20,6 +20,9 @@ export const userSlice = createSlice({
         },
         setCurrentUser: (state, action: PayloadAction<UserI>) => {
             state.user = action.payload
+        },
+        addProductToLocalCart: (state, action: PayloadAction<number>) => {
+            state.user.cart?.push(action.payload)
         }
     }
 })

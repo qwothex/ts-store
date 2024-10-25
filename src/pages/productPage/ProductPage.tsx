@@ -1,13 +1,13 @@
 import {FC, useEffect, useState} from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { addDiscount, deleteProduct, getAllProducts, getOneProduct } from '../../API/productsAPI/productsAPI'
-import { productItem, productProps } from '../../store/slices/productSlice'
+import { DetailedDescription, productItem, productProps } from '../../store/slices/productSlice'
 import './productPage.css'
 import { RotateLoader } from 'react-spinners'
 import { addCartProduct, addLastView } from '../../API/usersAPI/usersApi'
 import { useAppSelector } from '../../hooks/useAppSelector'
 import { useActions } from '../../hooks/useActions'
-import AdminProductModal from '../../components/adminProductModal/AdminProductModal'
+import ModalWindow from '../../components/adminProductModal/ModalWindow'
 import ErrorPage from '../errorPage/ErrorPage'
 import PopUp from '../../components/pop-upWindow/PopUp'
 import ChangeProductForm from '../../components/changeProductForm/ChangeProductForm'
@@ -21,14 +21,13 @@ const ProductPage:FC = () => {
 
     const navigate = useNavigate()
 
-    const {addProductToCart, addLastViewProduct} = useActions()
+    const {addProductToCart, addLastViewProduct, addProductToLocalCart} = useActions()
 
     const [product, setProduct] = useState<productItem>()
-    const [RAMvolume, setRAMvolume] = useState('')
     const [RAMprice, setRAMprice] = useState(0)
     const [loading, setLoading] = useState(true)
     const [modalState, setModalState] = useState(false)
-    const [modalChangeState, setModalChangeState] = useState(false)
+    const [changeState, setChangeState] = useState(false)
     const [popUpStatus, setPopUpStatus] = useState<{show: boolean, success?: boolean, text?: string}>({show: false, success: true, text: ''})
     const [similarOffers, setSimilarOffers] = useState<productProps>()
 
@@ -43,7 +42,7 @@ const ProductPage:FC = () => {
     const initialFetch = async() => {
         const productData: productItem = await getOneProduct(Number(id))
         if(productData){
-            setProduct(productData)
+            setProduct({...productData, detailedDescription: typeof productData.detailedDescription === 'string' ? JSON.parse(productData.detailedDescription) : null})
             getAllProducts(productData.type, productData.brand, 20, 1).then((data) => setSimilarOffers(data))
         }
         setLoading(false)
@@ -72,9 +71,6 @@ const ProductPage:FC = () => {
 
     const {description, price, title, image, memory, discount, detailedDescription} = product!
 
-    let parsedDetailedDescription: {display: string | null, camera: string | null, os: string | null, processor: string | null, size: string | null, materials: string | null, manufacturer: string | null}; 
-    if(detailedDescription) parsedDetailedDescription = JSON.parse(detailedDescription)
-
     const cartButtonHandler = () => {
         if(!isUserAuth) {
             setPopUpStatus({show: true, success: false, text: 'Login or create account first'})
@@ -85,6 +81,7 @@ const ProductPage:FC = () => {
         if(cart) cart.forEach((el) => { if(el.id == product.id) isExist = true })
         if(!isExist) {
             addProductToCart({...product, amount: 1}) 
+            addProductToLocalCart(product.id)
             setPopUpStatus({show: true, success: true, text: 'Added to cart'})
         }
         else setPopUpStatus({show: true, success: false, text: 'Already in cart'})
@@ -113,8 +110,8 @@ const ProductPage:FC = () => {
         <button className='discount-button' onClick={discountClickHandler}>discount</button>
         { product?.discount ? <button className='delete-button' onClick={removeDiscountHandler}>remove discount</button> : <></>}
         <button className='delete-button' onClick={deleteProductHandler}>delete product</button>
-        <button className='discount-button' onClick={() => setModalChangeState(!modalChangeState)}>change product</button>
-        {modalChangeState ? <ChangeProductForm product={product} /> : <></>}
+        <button className='discount-button' onClick={() => setChangeState(!changeState)}>change product</button>
+        {changeState ? <ChangeProductForm product={product} /> : <></>}
     </div>
 
     return(
@@ -142,7 +139,7 @@ const ProductPage:FC = () => {
                         <button className='credit-button'>buy in credit</button>
                         {user.role == 'ADMIN' ? <button onClick={() => setModalState(true)} className='discount-button'>ADMIN PANEL</button> : <></>}
                     </div>
-                    <AdminProductModal 
+                    <ModalWindow 
                         visible={modalState}
                         title ='ADMIN PANEL'
                         body = {modalBody}
@@ -156,13 +153,13 @@ const ProductPage:FC = () => {
                     <div className='detailedDescription'>
                         <h2>Characteristics</h2>
                         <ul className='detailedDescription__list'>
-                            {parsedDetailedDescription!.display ? <li><span className='characteristic'><p>Display</p></span> {parsedDetailedDescription!.display}</li> : <></>}
-                            {parsedDetailedDescription!.camera ? <li><span className='characteristic'><p>Camera</p></span>  {parsedDetailedDescription!.camera}</li> : <></>}
-                            {parsedDetailedDescription!.os ? <li><span className='characteristic'><p>OS</p></span>  {parsedDetailedDescription!.os}</li> : <></>}
-                            {parsedDetailedDescription!.processor ? <li><span className='characteristic'><p>Processor</p></span>  {parsedDetailedDescription!.processor}</li> : <></>}
-                            {parsedDetailedDescription!.size ? <li><span className='characteristic'><p>Size</p></span>  {parsedDetailedDescription!.size}</li> : <></>}
-                            {parsedDetailedDescription!.materials ? <li><span className='characteristic'><p>Materials</p></span>  {parsedDetailedDescription!.materials}</li> : <></>}
-                            {parsedDetailedDescription!.manufacturer ? <li><span className='characteristic'><p>Manufacturer</p></span>  {parsedDetailedDescription!.manufacturer}</li> : <></>}
+                            {detailedDescription!.display ? <li><span className='characteristic'><p>Display</p></span> {detailedDescription!.display}</li> : <></>}
+                            {detailedDescription!.camera ? <li><span className='characteristic'><p>Camera</p></span>  {detailedDescription!.camera}</li> : <></>}
+                            {detailedDescription!.os ? <li><span className='characteristic'><p>OS</p></span>  {detailedDescription!.os}</li> : <></>}
+                            {detailedDescription!.processor ? <li><span className='characteristic'><p>Processor</p></span>  {detailedDescription!.processor}</li> : <></>}
+                            {detailedDescription!.size ? <li><span className='characteristic'><p>Size</p></span>  {detailedDescription!.size}</li> : <></>}
+                            {detailedDescription!.materials ? <li><span className='characteristic'><p>Materials</p></span>  {detailedDescription!.materials}</li> : <></>}
+                            {detailedDescription!.manufacturer ? <li><span className='characteristic'><p>Manufacturer</p></span>  {detailedDescription!.manufacturer}</li> : <></>}
                         </ul>
                     </div>
                 :

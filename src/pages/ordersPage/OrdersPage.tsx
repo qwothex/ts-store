@@ -1,4 +1,4 @@
-import React, {FC, useEffect, useState} from 'react'
+import {ChangeEvent, FC, useEffect, useState} from 'react'
 import './ordersPage.css'
 import NavLayout from '../../components/navLayout/NavLayout'
 import { getOrders } from '../../API/ordersAPI/ordersAPI'
@@ -9,50 +9,82 @@ import OrderItem from '../../components/orderItem/OrderItem'
 import { RiProgress1Line } from "react-icons/ri";
 import { MdFileDownloadDone } from "react-icons/md";
 import { TbLocationCancel } from "react-icons/tb";
+import { OrderI } from '../../types/types'
 
 const OrdersPage:FC = () => {
 
-    const {setOrders} = useActions()
+    const {setOrders, truncateCurrentOrderProducts} = useActions()
 
     const {orders} = useAppSelector(state => state.orderReducer)
     const {id} = useAppSelector(state => state.userReducer.user)
 
     const [loading, setLoading] = useState(true)
+    const [sort, setSort] = useState<'id <' | 'id >' | 'total <' | 'total >'>('id <')
+    const [filter, setFilter] = useState<'in progress' | 'delivered' | 'canceled' | ''>('')
 
     useEffect(() => {
-        getOrders(id!).then((data) => setOrders(data!)).finally(() => setLoading(false))
+        getOrders(id!).then((data) => setOrders(data)).finally(() => setLoading(false))
+        truncateCurrentOrderProducts()
     }, [])
 
-    console.log(orders)
-
     if(loading) return <Loading />
+
+    const sortExpression = (e: ChangeEvent<HTMLSelectElement>) => {
+        console.log(e.target.selectedIndex)
+        switch(e.target.selectedIndex){
+            case 0:
+                setSort('id <')
+                break;
+            case 1:
+                setSort('id >')
+                break;
+            case 2:
+                setSort('total <')
+                break;
+            case 3:
+                setSort('total >')
+                break;
+        }
+    }
+
+    type Field = 'id' | 'total' 
+    type Option = '>' | '<' 
+
+    const sortFn = (sortOption: string) => {
+        const field:Field = sort.split(' ')[0] as Field
+        const option:Option = sortOption.split(' ')[1] as Option
+        return (a: OrderI, b: OrderI) => option == '>' ? a[field] >  b[field] ? 1 : -1 : a[field] <  b[field] ? 1 : -1
+    }
 
     return(
         <NavLayout>
           <div className='ordersPage-container'>
             <div className='ordersPage-container__filters'>
-                {/* <select>
-                    <option>Last Month</option>
-                    <option>Past 2 months</option>
-                    <option>Past 4 months</option>
-                    <option>Past 6 months</option>
-                </select> */}
                 <ul>
-                    <li>
+                    <li onClick={() => setFilter('')}>
+                        <RiProgress1Line size={30} /> <span>All</span>
+                    </li>
+                    <li onClick={() => setFilter('in progress')}>
                         <RiProgress1Line size={30} /> <span>In Progress</span>
                     </li>
-                    <li>
+                    <li onClick={() => setFilter('delivered')}>
                         <MdFileDownloadDone size={30} /> <span>Delivered</span>
                     </li>
-                    <li>
+                    <li onClick={() => setFilter('canceled')}>
                         <TbLocationCancel size={30} /> <span>Canceled</span>
                     </li>
                 </ul>
             </div>
             <div className='ordersPage-container__info'>
-                <h2 className='ordersPage-container__info__title'>Order history</h2>
+                <h2 className='ordersPage-title'>Order history</h2>
+                <select name='select' onChange={sortExpression}>
+                    <option value={'cheapest'}>Recent</option>
+                    <option value={'most expensive'}>Oldest</option>
+                    <option value={'recent'}>Most expensive</option>
+                    <option value={'oldest'}>Cheapest</option>
+                </select>
                 <p>view all your ongoing and previous orders here</p>
-                {orders.map(el => <OrderItem order={el} />)}
+                {orders.filter(el => filter ? el.status === filter : el.status !== filter).sort(sortFn(sort)).map(el => <OrderItem key={el.id} order={el} />)}
             </div>
           </div>
         </NavLayout>

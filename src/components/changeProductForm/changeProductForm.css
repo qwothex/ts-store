@@ -26,3 +26,8 @@
     color: #fff;
     border: none;
 }
+
+.change-detailedDescription{
+    display: flex;
+    gap: 5px;
+}

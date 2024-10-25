@@ -62,11 +62,12 @@ class ProductController {
 
     async change(req, res){
         const {id} = req.params
-        const {title, description, price} = req.body
+        const {title, description, price, detailedDescription} = req.body
         const device = await Product.findOne({where: {id}})
         device.title = title
         device.description = description
         device.price = price
+        device.detailedDescription = detailedDescription
         device.save()
         return res.json(device)
     }

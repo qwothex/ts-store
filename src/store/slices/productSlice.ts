@@ -1,5 +1,15 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
+export interface DetailedDescription {
+    display?: string,
+    camera?: string,
+    os?: string,
+    processor?: string,
+    size?: string,
+    materials?: string,
+    manufacturer?: string
+}
+
 export interface productItem {
     id: number
     title: string
@@ -11,7 +21,7 @@ export interface productItem {
     memory: string | null
     discount: number, 
     amount: number,
-    detailedDescription: string | null
+    detailedDescription: DetailedDescription | null
 }
 
 export interface productProps {

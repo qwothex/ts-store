@@ -14,6 +14,7 @@ interface OrderI {
     userId: number,
     products: [],
     total: number,
+    status: string,
     createdAt: Date,
     updatedAt: Date,
 }

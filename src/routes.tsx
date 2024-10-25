@@ -1,5 +1,6 @@
 import AuthForm from "./components/authForm/AuthForm";
 import ContactForm from "./components/contactForm/ContactForm";
+import OrderDetails from "./components/orderDetails/OrderDetails";
 import AdminPage from "./pages/adminPage/AdminPage";
 import CartPage from "./pages/cartPage/CartPage";
 import FAQPage from "./pages/FAQPage/FAQPage";
@@ -56,5 +57,9 @@ export const privateRoutes = [
     {
         path: '/orders',
         Component: OrdersPage
+    },
+    {
+        path: '/orders/:id',
+        Component: OrderDetails
     }
 ]

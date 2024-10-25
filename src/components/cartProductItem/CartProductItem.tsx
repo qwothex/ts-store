@@ -15,8 +15,6 @@ const CartProductItem:FC<cartProductProps> = ({product}) => {
 
     const {changeProductAmount, deleteProductFromCart} = useActions()
 
-    console.log(product)
-
     const [amount, setAmount] = useState(product.amount)
 
     const plusRef = useRef<HTMLButtonElement>(null)
@@ -28,7 +26,6 @@ const CartProductItem:FC<cartProductProps> = ({product}) => {
 
     useEffect(() => {
         changeProductAmount({id, newAmount: amount})
-        console.log(amount)
     }, [amount])
 
     const navigate = useNavigate()
