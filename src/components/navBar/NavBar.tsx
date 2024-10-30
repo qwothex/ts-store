@@ -8,7 +8,7 @@ const NavBar:FC = () => {
 
     const navigate = useNavigate()
 
-    const {setCurrentUser, setUserAuth, setCurrency} = useActions()
+    const {setCurrentUser, setUserAuth, setCurrency, truncateLastViewProducts} = useActions()
 
     const dropListEl = useRef<HTMLDivElement>(null)
     const currencyEl = useRef<HTMLInputElement>(null)
@@ -30,6 +30,7 @@ const NavBar:FC = () => {
         localStorage.removeItem('token')
         setUserAuth(false)
         setCurrentUser({})
+        truncateLastViewProducts()
         navigate('/')
     }
 

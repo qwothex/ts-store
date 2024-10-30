@@ -54,7 +54,7 @@ const SideBar:FC = () => {
             </div>
                 <ul className='usefulLinks'>
                     <li><Link to={'/FAQ'}><FaRegQuestionCircle />&nbsp;FAQ</Link></li>
-                    <li><Link to={'/contact'}><IoChatboxEllipsesOutline />&nbsp;Contact</Link></li>
+                    <li><a href='#contact'><IoChatboxEllipsesOutline />&nbsp;Contact</a></li>
                 </ul>
         </div>
     )

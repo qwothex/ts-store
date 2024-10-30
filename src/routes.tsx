@@ -33,11 +33,7 @@ export const publicRoutes = [
     {
         path: '/FAQ',
         Component: FAQPage
-    },
-    {
-        path: '/contact',
-        Component: ContactForm
-    },
+    }
 ]
 
 export const privateRoutes = [

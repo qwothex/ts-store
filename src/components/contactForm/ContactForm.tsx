@@ -1,6 +1,10 @@
 import {useState, FC} from "react"
 import "./contactForm.css"
-import NavLayout from "../navLayout/NavLayout";
+import { SlMap } from "react-icons/sl";
+import { BsTelephoneInbound } from "react-icons/bs";
+import { GoMail } from "react-icons/go";
+import { SlEarphonesAlt } from "react-icons/sl";
+
 
 const ContactForm:FC = () => {
     const [result, setResult] = useState("");
@@ -29,34 +33,53 @@ const ContactForm:FC = () => {
     };
   
     return (
-      <NavLayout>
+      <>
         <form className="contact-form" onSubmit={onSubmit}>
 
-        <div className="contact-header">
-        <h2 style={{fontWeight: 500, marginTop: "5px", marginBottom: 0}}>How can we help?</h2>
-        <h4 style={{fontWeight: 400, marginTop: "5px", marginBottom: 0}}>We usually responde in a few hours</h4>
+        <h2 id="contact">How can we help?</h2>
+        <h4>We usually responde in a few hours</h4>
+
+        <div className="info-icons">
+          <div className="icon-item"><SlMap size={50}/>
+            <span>LOCATION</span>
+            <h4>Ankara, Turkey</h4>
+          </div>
+          <div className="icon-item"><BsTelephoneInbound size={50}/>
+            <span>PHONE NUMBER</span>
+            <h4>+380669798557</h4>
+          </div>
+          <div className="icon-item"><GoMail size={50}/>
+            <span>EMAIL</span>
+            <h4>work.nariadov@gmail.com</h4>
+          </div>
+          <div className="icon-item"><SlEarphonesAlt size={50}/>
+            <span>TOLL FREE</span>
+            <h4>200 430 5660</h4>
+          </div>
         </div>
 
-        <div className="formBottomSide">
-          <p>Full Name</p>
-          <input type="text" placeholder="Josh Doe" name="name" required/>
+        <div className="contact-main">
+         <div className="contact-main__inputs">
+          <div className="contact-main__inputs-container">
+            <input type="text" placeholder="Name" name="name" required/>
+            <input type="email" placeholder="Email" name="email" required/>
+          </div>
+
+          <div className="contact-main__inputs-container">
+            <input type="text" name="phone" placeholder="Phone"/>
+            <input type="text" name="subject" placeholder="Subject"/>
+          </div>
+         </div>
           
-          <p>Email Address</p>
-          <input type="email" placeholder="example@company.com" name="email" required/>
-          
-          <p>Title</p>
-          <input type="text" name="title" placeholder="Short description of your problem"/>
-          
-          <p>Message</p>
-          <textarea name="message" placeholder="How can we help?" rows={6} required></textarea>
-  
-          <button type="submit">Submit Form</button>
+         <div className="contact-main__textarea">
+            <textarea name="message" placeholder="Message" rows={7} required></textarea>
+         </div>
+         <button type="submit">Submit</button>
+        </div>
           <br />
         <span>{result}</span>
-        </div>
         </form>
-  
-      </NavLayout>
+      </>
     )
 }
 

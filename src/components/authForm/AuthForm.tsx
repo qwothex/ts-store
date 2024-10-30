@@ -11,7 +11,7 @@ import { productItem } from '../../store/slices/productSlice'
 
 const AuthForm:FC = () => {
 
-    const { setUserAuth, setCurrentUser } = useActions()
+    const { setUserAuth, setCurrentUser, addLastViewProduct } = useActions()
 
     const navigate = useNavigate()
 
@@ -32,6 +32,7 @@ const AuthForm:FC = () => {
             setCurrentUser(data)
             setUserAuth(true)
             if(data.cart)data.cart.map(id => getOneProduct(id).then((res: productItem) => addProductToCart(res)))
+            if(data.lastview)data.lastview.map(id => getOneProduct(id).then((res: productItem) => addLastViewProduct(res)))
             navigate('/', {replace: false})
         }catch(error: any){
             alert(error?.message)

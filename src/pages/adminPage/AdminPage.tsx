@@ -1,7 +1,7 @@
 import React, {FC, useEffect, useState} from 'react'
 import { createProduct } from '../../API/productsAPI/productsAPI'
 import './adminPage.css'
-import NavLayout from '../../components/navLayout/NavLayout'
+import NavBar from '../../components/navBar/NavBar'
 
 
 const Admin:FC = () => {
@@ -25,8 +25,6 @@ const Admin:FC = () => {
     const [materials, setMaterials] = useState('')
     const [manufacturer, setManufacturer] = useState('')
 
-    const [detailedDescription, setDetailedDescription] = useState<{}>({})
-
     const formSubmitHandler = (e: React.FormEvent<HTMLFormElement>) => {
         const formData = new FormData()
         formData.append('title', title)
@@ -36,7 +34,36 @@ const Admin:FC = () => {
         formData.append('image', image!)
         formData.append('price', `${price}`)
         formData.append('memory', JSON.stringify(memory))
-        formData.append('detailedDescription', JSON.stringify(detailedDescription))
+        formData.append('detailedDescription', JSON.stringify(Object.defineProperties({}, {
+          "display":{
+            value: display,
+            enumerable: true
+          },
+          "camera":{
+            value: camera,
+            enumerable: true
+          },
+          "os":{
+            value: os,
+            enumerable: true
+          },
+          "processor":{
+            value: processor,
+            enumerable: true
+          },
+          "size":{
+            value: size,
+            enumerable: true
+          },
+          "materials":{
+            value: materials,
+            enumerable: true
+          },
+          "manufacturer":{
+            value: manufacturer,
+            enumerable: true
+          }
+        })))
         createProduct(formData)
     }
 
@@ -79,42 +106,9 @@ const Admin:FC = () => {
         setcurrentMemoryPrice("")
     }
 
-    const detailedDataHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
-      e.preventDefault()
-      setDetailedDescription(Object.defineProperties({}, {
-        "display":{
-          value: display,
-          enumerable: true
-        },
-        "camera":{
-          value: camera,
-          enumerable: true
-        },
-        "os":{
-          value: os,
-          enumerable: true
-        },
-        "processor":{
-          value: processor,
-          enumerable: true
-        },
-        "size":{
-          value: size,
-          enumerable: true
-        },
-        "materials":{
-          value: materials,
-          enumerable: true
-        },
-        "manufacturer":{
-          value: manufacturer,
-          enumerable: true
-        }
-      }))
-    }
-
     return(
-        <NavLayout>
+        <>
+        <NavBar/>
             <div className='adminContainer'>
               <form onSubmit={formSubmitHandler} className='main-data'>
                 <h1>Create new product</h1>
@@ -155,10 +149,9 @@ const Admin:FC = () => {
                 <input className='formInput' type='text' placeholder='Size' value={size} onChange={(e) => setSize(e.target.value)} />
                 <input className='formInput' type='text' placeholder='Materials' value={materials} onChange={(e) => setMaterials(e.target.value)} />
                 <input className='formInput' type='text' placeholder='Country of origin of the product' value={manufacturer} onChange={(e) => setManufacturer(e.target.value)} />
-                  <button className='submit-button' onClick={detailedDataHandler}>save data(before create device)</button>
               </form>
             </div>
-        </NavLayout>
+        </>
     )
 }
 

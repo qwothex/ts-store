@@ -4,6 +4,10 @@
   src: url(./fonts/FontsFree-Net-Prelo-Black.ttf);
 }
 
+html{
+  scroll-behavior: smooth;
+}
+
 body {
   margin: 0;
   font-family: 'plero-black', sans-serif;
