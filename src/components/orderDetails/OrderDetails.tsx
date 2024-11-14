@@ -2,14 +2,14 @@ import {FC, useEffect, useState} from 'react'
 import './orderDetails.css'
 import { useParams } from 'react-router-dom'
 import { changeOrderStatus, getOneOrder } from '../../API/ordersAPI/ordersAPI'
-import { OrderI } from '../../types/types'
+import { CartI, OrderI } from '../../types/types'
 import Loading from '../loading/Loading'
 import { getOneProduct } from '../../API/productsAPI/productsAPI'
 import { productItem } from '../../store/slices/productSlice'
 import { useActions } from '../../hooks/useActions'
 import { useAppSelector } from '../../hooks/useAppSelector'
 import ProductItem from '../productItem/ProductItem'
-import NavBar from '../navBar/NavBar'
+import NavLayout from '../navLayout/NavLayout'
 
 const OrderDetails:FC = () => {
 
@@ -28,7 +28,7 @@ const OrderDetails:FC = () => {
         if(!currentOrderProducts.length){
             getOneOrder(+id!).then((data: OrderI) => {
                 setOrder(data)
-                data.products.map(el => getOneProduct(el).then((data:productItem) => setCurrentOrderProducts(data)))
+                data.products.map((el: CartI) => getOneProduct(el.id).then((data:productItem) => setCurrentOrderProducts({...data, price: el.RAMprice, memory: el.RAMvolume})))
             })
         }
         setLoading(false)
@@ -37,8 +37,7 @@ const OrderDetails:FC = () => {
     if(loading) return <Loading />
 
     return(
-        <>
-        <NavBar />
+        <NavLayout>
         <div className='orderDetails-container'>
             <h2>Order details</h2>
             <div className='order-data'>
@@ -55,7 +54,7 @@ const OrderDetails:FC = () => {
             </div>
             <button className='cancel-button' onClick={() => changeOrderStatus(order.id, 'canceled')}>Cancel order</button>
         </div>
-        </>
+        </NavLayout>
     )
 }
 

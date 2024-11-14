@@ -6,7 +6,7 @@
     align-items: center;
     border-top: 1px solid var(--border-color);
     background-color: #fff;
-    padding: 0 150px 50px 150px;
+    padding: 0 15% 50px 15%;
     box-sizing: border-box;
 }
 
@@ -65,4 +65,10 @@
 .footer__rights{
     font-size: 16px;
     color: black
+}
+
+@media (max-width: 1000px) {
+    .footer{
+        padding: 0 5% 50px 5%;
+    }
 }

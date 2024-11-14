@@ -131,11 +131,10 @@
 .userInfo .profilePicture {
     width: 25px;
     height: 25px;
-    background-color: rgb(218, 218, 218);
     border-radius: 50%;
     background-position: center;
     background-repeat: no-repeat;
-    background-size: contain;
+    background-size: cover;
 }
 
 .userInfo:hover{
@@ -199,8 +198,14 @@
     }
 }
 
+@media (max-width: 950px) {
+    .navBar-container{
+        padding: 5px 25px 5px 40px;
+    }
+}
+
 @media (max-width: 800px) {
     .navBar-container{
-        padding: 5px 5px 5px 50px;
+        padding: 5px 5px 5px 25px;
     }
 }

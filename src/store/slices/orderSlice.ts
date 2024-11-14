@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { OrderI } from "../../types/types";
+import { CartI, OrderI } from "../../types/types";
 import { productItem } from "./productSlice";
 
 interface initialStateI {

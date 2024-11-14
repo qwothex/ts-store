@@ -92,7 +92,17 @@ const productSlice = createSlice({
             state.products.rows.sort((a, b) => a.price - b.price)
         },
         addLastViewProduct: (state, action: PayloadAction<productItem>) => {
-            state.lastview.unshift(action.payload)
+            try{
+                if(!state.lastview.length) {
+                    state.lastview.push(action.payload)
+                }else{
+                    let isExist = false;
+                    state.lastview.forEach((el) => { if(el.id == action.payload.id) isExist = true })
+                    if(!isExist){state.lastview.unshift(action.payload)}
+                }
+            }catch(e){
+                console.log(e)
+            }
         },
         truncateLastViewProducts: (state) => {
             state.lastview = []

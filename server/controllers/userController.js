@@ -15,6 +15,7 @@ const generateJwt = (id, username, role, additional, lastview, cart) => {
 
 class UserController {
     async registration(req, res, next) {
+        try{
         const {username, password, role} = req.body 
         if(!username || !password){
             return next(ApiError.badRequest('wrong username or password'))
@@ -24,9 +25,12 @@ class UserController {
             return next(ApiError.badRequest('username alredy registered'))
         }
         const hashPassword = await bcrypt.hash(password, 5)
-        const user = await User.create({username, role, password: hashPassword})
-        const token = generateJwt(user.id, user.username, user.role)
+        const user = await User.create({username, role, password: hashPassword, additional: {'image':'Default_pfp.png'}})
+        const token = generateJwt(user.id, user.username, user.role, user.additional)
         res.json({token})
+        }catch(e){
+            return next(ApiError.internal('something wrong!'))
+        }
     }
     async login(req, res, next) {
         const {username, password} = req.body
@@ -83,11 +87,11 @@ class UserController {
     }
 
     async addCart(req, res, next) {
-        const {id, productId} = req.body
+        const {id, productId, RAMvolume, RAMprice} = req.body
         const user = await User.findOne({where:{id}})
         let isExist = false;
-        user.cart.forEach((el) => { if(el == productId) isExist = true })
-        if(!isExist){user.cart.unshift(productId)}
+        user.cart.forEach((el) => { if(el.id == productId) isExist = true })
+        if(!isExist){user.cart.unshift({id: productId, RAMvolume: RAMvolume, RAMprice: RAMprice})}
         user.changed('cart', true)
         await user.save()
         const token = generateJwt(user.id, user.username, user.role, user.additional, user.lastview, user.cart)
@@ -97,7 +101,7 @@ class UserController {
     async deleteFromCart(req, res, next) {
         const {productId, id} = req.body
         const user = await User.findOne({where:{id}})
-        user.cart = user.cart.filter(el => el !== productId)
+        user.cart = user.cart.filter(el => el.id !== productId)
         user.changed('cart', true)
         await user.save()
         const token = generateJwt(user.id, user.username, user.role, user.additional, user.lastview, user.cart)

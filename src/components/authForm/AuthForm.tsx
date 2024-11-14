@@ -3,7 +3,7 @@ import { NavLink, useNavigate } from 'react-router-dom'
 import { useActions } from '../../hooks/useActions'
 import { createUser, loginUser } from '../../API/usersAPI/usersApi'
 import './authForm.css'
-import { UserI } from '../../types/types'
+import { CartI, UserI } from '../../types/types'
 import NavBar from '../navBar/NavBar'
 import { getOneProduct } from '../../API/productsAPI/productsAPI'
 import { productItem } from '../../store/slices/productSlice'
@@ -31,8 +31,12 @@ const AuthForm:FC = () => {
             }
             setCurrentUser(data)
             setUserAuth(true)
-            if(data.cart)data.cart.map(id => getOneProduct(id).then((res: productItem) => addProductToCart(res)))
-            if(data.lastview)data.lastview.map(id => getOneProduct(id).then((res: productItem) => addLastViewProduct(res)))
+            if(data.cart?.length)
+                data.cart.map((el: CartI) => getOneProduct(el.id)
+               .then((res: productItem) => addProductToCart({...res, amount: 1, price: el.RAMprice, memory: el.RAMvolume})))
+
+            if(data.lastview)data.lastview.map(id => getOneProduct(id)
+                .then((res: productItem) => addLastViewProduct(res)))
             navigate('/', {replace: false})
         }catch(error: any){
             alert(error?.message)

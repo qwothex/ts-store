@@ -40,6 +40,7 @@ const ContactForm:FC = () => {
         <h4>We usually responde in a few hours</h4>
 
         <div className="info-icons">
+          <div className="info-icons-column">
           <div className="icon-item"><SlMap size={50}/>
             <span>LOCATION</span>
             <h4>Ankara, Turkey</h4>
@@ -48,6 +49,8 @@ const ContactForm:FC = () => {
             <span>PHONE NUMBER</span>
             <h4>+380669798557</h4>
           </div>
+          </div>
+          <div className="info-icons-column">
           <div className="icon-item"><GoMail size={50}/>
             <span>EMAIL</span>
             <h4>work.nariadov@gmail.com</h4>
@@ -55,6 +58,7 @@ const ContactForm:FC = () => {
           <div className="icon-item"><SlEarphonesAlt size={50}/>
             <span>TOLL FREE</span>
             <h4>200 430 5660</h4>
+          </div>
           </div>
         </div>
 

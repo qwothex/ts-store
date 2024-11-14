@@ -1,9 +1,9 @@
 import { FC, useEffect, useState } from 'react';
 import Router from './components/Router';
-import { check } from './API/usersAPI/usersApi';
+import { check, truncateUserCart } from './API/usersAPI/usersApi';
 import { useActions } from './hooks/useActions';
 import {RotateLoader} from 'react-spinners'
-import { UserI } from './types/types';
+import { CartI, UserI } from './types/types';
 import { getOneProduct } from './API/productsAPI/productsAPI';
 import { productItem } from './store/slices/productSlice';
 import Loading from './components/loading/Loading';
@@ -19,8 +19,12 @@ const App:FC = () => {
             if(data){
               setUserAuth(true)
               setCurrentUser(data)
-              if(data.lastview?.length)data.lastview.map(id => getOneProduct(id).then((res: productItem) => addLastViewProduct(res)))
-              if(data.cart?.length)data.cart.map(id => getOneProduct(id).then((res: productItem) => addProductToCart({...res, amount: 1})))
+              if(data.lastview?.length)
+                data.lastview.map(id => getOneProduct(id)
+               .then((res: productItem) => addLastViewProduct(res)))
+              if(data.cart?.length)
+                data.cart.map((el: CartI) => typeof el.id === 'number' ? getOneProduct(el.id)
+               .then((res: productItem) => addProductToCart({...res, amount: 1, price: el.RAMprice, memory: el.RAMvolume})) : null)
             }
           }).finally(() => setLoading(false))
   }, [])

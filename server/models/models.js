@@ -7,7 +7,7 @@ const User = sequelize.define( 'user', {
     password: {type: DataTypes.STRING},
     role: {type: DataTypes.STRING, defaultValue: 'USER'},
     additional: {type: DataTypes.JSON},
-    lastview: {type: DataTypes.JSON, unique: true, allowNull: true, defaultValue: []},
+    lastview: {type: DataTypes.JSON, allowNull: true, defaultValue: []},
     cart: {type: DataTypes.JSON, allowNull: true, defaultValue: []},
 })
 

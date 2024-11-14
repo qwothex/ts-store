@@ -8,28 +8,28 @@ interface ProductItemProps {
     product: productItem
 }
 
-const ProductItem:FC<ProductItemProps> = (props) => {
+const ProductItem:FC<ProductItemProps> = ({product}) => {
 
     const navigate = useNavigate()
 
     const {currency} = useAppSelector(state => state.productReducer)
     
     return(
-        <div className='item-card' onClick={() => navigate('/product/' + props.product.id, {replace: false})} >
+        <div className='item-card' onClick={() => navigate('/product/' + product.id, {replace: false})} >
             <div className='img-div'>
-                <img src={process.env.REACT_APP_URL_API || 'http://localhost:5000/' + props.product.image} alt="product image" />
+                <img src={`${process.env.REACT_APP_URL_API + '/' || 'http://localhost:5000/'}${product.image}`} alt="product image" />
             </div>
-            <h6><span className='title'>{props.product.title}</span> 
+            <h6><span className='title'>{product.title}</span> {/* product.memory ? product.title.replace(/(128GB|256GB|512GB|1TB)/, product.memory || JSON.parse(product.memory![0]).volume) */} 
             <br /> 
-            <span className='brand'>{props.product.brand}</span></h6>
-            {props.product.discount ? 
+            <span className='brand'>{product.brand}</span></h6>
+            {product.discount ? 
                 currency == 'USD' ? 
-                    <div className='discountPrice-container'><span className='previous-price'>{props.product.price}</span><span className='current-price'>{props.product.discount}$</span></div>
+                    <div className='discountPrice-container'><span className='previous-price'>{product.price}</span><span className='current-price'>{product.discount}$</span></div>
                         :
-                    <div className='discountPrice-container'><span className='previous-price'>{props.product.price * 40}</span><span className='current-price'>{props.product.discount * 40}UAH</span></div>
+                    <div className='discountPrice-container'><span className='previous-price'>{product.price * 40}</span><span className='current-price'>{product.discount * 40}UAH</span></div>
                 :
                     <div className='discountPrice-container'>
-                        {currency == 'USD' ? props.product.price + '$' : props.product.price*40 + 'UAH'}
+                        {currency == 'USD' ? product.price + '$' : product.price*40 + 'UAH'}
                     </div>
             } 
         </div>

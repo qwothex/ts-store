@@ -16,8 +16,8 @@ const FAQPage:FC = () => {
             </header>
             <main>
                 <HiddenSection title="Shipping timeframes and methods">
-                    <HiddenText question="How long will it take for my order to arrive?" answer="In common, it's been less than 2 days, but sometimes package can delayed in post office." />
-                    <HiddenText question="Do you offer express or expedited shipping options?" answer="We didn't. Because our shipping is always fast." />
+                    <HiddenText question="How long will it take for my order to arrive?" answer="In common, it's takes less than 2 days, but sometimes package can delayed in post office." />
+                    <HiddenText question="Do you offer express or expedited shipping options?" answer="We don't. Because our shipping is always fast." />
                     <HiddenText question="Do you offer international shipping?" answer="Yes. You can order our services from every country." />
                     <HiddenText question="What shipping methods do you offer?" answer="We offer 3 shipping methods: 1.Courier delivery: the courier will ship your package right to your door. 2.Post office: the package will be delivered to the closest to you post office, then you need to get it. 3.Pick up from our store: you can order products in our site and then get it in our local store. " />
                 </HiddenSection>
@@ -33,8 +33,8 @@ const FAQPage:FC = () => {
                     <HiddenText question="What happens if I miss the delivery attempt?" answer="Your package will be refunded. In common package will wait for you 7 days before it will be send back,so make sure you have enough time to receive it." />
                 </HiddenSection>
                 <HiddenSection title="General return and exchange questions">
-                    <HiddenText question="Can I return or exchange a personalized/customized item?" answer="You can't. If you want to exchange your items, they must be in the same state as it was bought. We didn't accept back any of products what was modified in any way. " />
-                    <HiddenText question="Can I return or exchange an item without a receipt?" answer="In that case you need to proof somehow what you actually bought it." />
+                    <HiddenText question="Can I return or exchange a personalized/customized item?" answer="You can't. If you want to exchange your items, they must be in the same state as it was bought. We don't accept back any of products what was modified in any way. " />
+                    <HiddenText question="Can I return or exchange an item without a receipt?" answer="Yes, you can. We store digital copies of every receipt." />
                     <HiddenText question="How many days do I have to initiate a return or exchange?" answer="You always have 1 week to exchange or return your purchase, if your reason meets the requirements " />
                 </HiddenSection>
                 <HiddenSection title="General contact information">
@@ -42,9 +42,9 @@ const FAQPage:FC = () => {
                     <HiddenText question="What are your customer support hours?" answer="You can text us any time, usually it takes a couple hours to answer." />
                 </HiddenSection>
                 <HiddenSection title="Condition of returned items">
-                    <HiddenText question="What condition should the item be in for a successful return or exchange?" answer="For return or exchange item can't be modified in any way, he can`t be damaged or overused" />
-                    <HiddenText question="Can I return an item that has been opened/used?" answer="You can, but only if it's not overused or damaged and you have a receipt" />
-                    <HiddenText question="Do I need to include all original packaging and accessories when returning an item?" answer="You can have not all packaging, but still need had a receipt and you refund amount can be reduced" />
+                    <HiddenText question="What condition should the item be in for a successful return or exchange?" answer="For return or exchange, item can't be modified in any way, he also can`t be damaged or overused" />
+                    <HiddenText question="Can I return an item that has been opened/used?" answer="You can, but only if exactly products didn`t used" />
+                    <HiddenText question="Do I need to include all original packaging and accessories when returning an item?" answer="You can have not all packaging, but refund amount can be reduced" />
                     <HiddenText question="Can I return or exchange a damaged or defective item?" answer="Only in case when your item was defective." />
                 </HiddenSection>
                 <HiddenSection title="Feedback and complaints">

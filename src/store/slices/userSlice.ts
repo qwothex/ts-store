@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { UserI } from '../../types/types'
+import { CartI, UserI } from '../../types/types'
 
 interface UserState {
     isUserAuth: boolean,
@@ -21,7 +21,7 @@ export const userSlice = createSlice({
         setCurrentUser: (state, action: PayloadAction<UserI>) => {
             state.user = action.payload
         },
-        addProductToLocalCart: (state, action: PayloadAction<number>) => {
+        addProductToLocalCart: (state, action: PayloadAction<CartI>) => {
             state.user.cart?.push(action.payload)
         }
     }

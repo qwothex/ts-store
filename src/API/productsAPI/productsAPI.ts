@@ -1,4 +1,4 @@
-import { authHost, host } from ".."
+import { authHost, cacheHost, host } from ".."
 
 export const createProduct = async (product: FormData) => {
     const {data} = await authHost.post('api/product', product)
@@ -13,7 +13,7 @@ export const getAllProducts = async(type: string | null, brand: string | null, l
 }
 
 export const getOneProduct = async(id:number) => {
-    const {data} = await host.get('api/product/' + id)
+    const {data} = await cacheHost.get('api/product/' + id)
     return data
 }
 

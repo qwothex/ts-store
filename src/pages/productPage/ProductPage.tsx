@@ -1,7 +1,7 @@
 import {FC, useEffect, useState} from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { addDiscount, deleteProduct, getAllProducts, getOneProduct } from '../../API/productsAPI/productsAPI'
-import { DetailedDescription, productItem, productProps } from '../../store/slices/productSlice'
+import { productItem, productProps } from '../../store/slices/productSlice'
 import './productPage.css'
 import { RotateLoader } from 'react-spinners'
 import { addCartProduct, addLastView } from '../../API/usersAPI/usersApi'
@@ -25,6 +25,7 @@ const ProductPage:FC = () => {
 
     const [product, setProduct] = useState<productItem>()
     const [RAMprice, setRAMprice] = useState(0)
+    const [RAMvolume, setRAMvolume] = useState('')
     const [loading, setLoading] = useState(true)
     const [modalState, setModalState] = useState(false)
     const [changeState, setChangeState] = useState(false)
@@ -43,7 +44,11 @@ const ProductPage:FC = () => {
         const productData: productItem = await getOneProduct(Number(id))
         if(productData){
             setProduct({...productData, detailedDescription: typeof productData.detailedDescription === 'string' ? JSON.parse(productData.detailedDescription) : null})
-            getAllProducts(productData.type, productData.brand, 20, 1).then((data) => setSimilarOffers(data))
+            getAllProducts(productData.type, productData.brand, 16, 1).then((data) => setSimilarOffers(data))
+            if(user.id){
+                addLastView(user.id!, productData.id)
+                addLastViewProduct(productData)
+            }
         }
         setLoading(false)
     }
@@ -51,11 +56,6 @@ const ProductPage:FC = () => {
     useEffect(() => {
         initialFetch()
     }, [id])
-
-    if(product && user.id) {
-        addLastView(user.id!, product.id)
-        // addLastViewProduct(product)
-    }
 
     if(loading){
         return <div style={{width: '100vw', height: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center'}}><RotateLoader /></div>
@@ -76,12 +76,12 @@ const ProductPage:FC = () => {
             setPopUpStatus({show: true, success: false, text: 'Login or create account first'})
         }
         else{
-        addCartProduct(user.id!, product.id)
+        addCartProduct(user.id!, product.id, RAMvolume, RAMprice || price)
         let isExist = false;
         if(cart) cart.forEach((el) => { if(el.id == product.id) isExist = true })
         if(!isExist) {
-            addProductToCart({...product, amount: 1}) 
-            addProductToLocalCart(product.id)
+            addProductToCart({...product, amount: 1, price: RAMprice || price, memory: RAMvolume || null})
+            addProductToLocalCart({id: product.id, RAMvolume: RAMvolume, RAMprice: RAMprice})
             setPopUpStatus({show: true, success: true, text: 'Added to cart'})
         }
         else setPopUpStatus({show: true, success: false, text: 'Already in cart'})
@@ -123,10 +123,17 @@ const ProductPage:FC = () => {
                 <img src={'http://localhost:5000/' + image} />
             </div>
               <div className='info'>
-                <h1 className='title'>{title}</h1>
+                <h1 className='title'>{RAMvolume ? title.replace(/(128GB|256GB|512GB|1TB)/, RAMvolume) : title}</h1>
                 { product?.memory ? 
                     <div className='memoryButtons'>
-                        {JSON.parse(memory!).map(((el:{volume: string, price: string}) => <button onClick={() => setRAMprice(Number(el.price))}>{el.volume}</button>))}
+                        {JSON.parse(memory!).map(((el:{volume: string, price: string}) => 
+                        <button onClick={() => {
+                            setRAMprice(Number(el.price))
+                            setRAMvolume(el.volume)
+                        }}>
+                            {el.volume}
+                        </button>
+                        ))}
                     </div>
                 :
                     <></>

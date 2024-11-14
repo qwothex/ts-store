@@ -22,7 +22,7 @@ const CartProductItem:FC<cartProductProps> = ({product}) => {
 
     const {id, title, image, discount, price} = product
 
-    const {user} = useAppSelector(state => state.userReducer)
+    const userId = useAppSelector(state => state.userReducer.user.id)
 
     useEffect(() => {
         changeProductAmount({id, newAmount: amount})
@@ -31,25 +31,36 @@ const CartProductItem:FC<cartProductProps> = ({product}) => {
     const navigate = useNavigate()
 
     const deleteCartProductHandler = () => {
-        deleteCartProduct(product.id, user.id!)
+        deleteCartProduct(product.id, userId!)
         deleteProductFromCart(product.id)
     }
 
     setTimeout(() => amount < 2 ? minusRef.current!.disabled = true : minusRef.current!.disabled = false, 1)
     if(plusRef.current) amount > 8 ? plusRef.current.disabled = true : plusRef.current.disabled = false
 
+    console.log(product)
+
     return(
         <div className='cartItem-container'>
         <div className='left-side'>
                 <div className='left-side__image' style={{backgroundImage: `url(${'http://localhost:5000/' + image})`}} onClick={() => navigate('/product/' + id)} />
-                <a href={'/product/' + id} className='left-side__title'>{title}</a>
+                <a href={'/product/' + id} className='left-side__title'>{product.memory ? title.replace(/(128GB|256GB|512GB|1TB)/, product.memory!) : title}</a>
         </div>
         <div className='right-side'>
             <button onClick={deleteCartProductHandler} className='right-side__delete-button' />
             <div className='amount-price'>
-                <div className='amount'><button ref={minusRef} onClick={() => setAmount(amount-1)} className='amount-button'>-</button><div>{amount}</div><button ref={plusRef} onClick={() => setAmount(amount+1)} className='amount-button'>+</button></div>
+                <div className='amount'>
+                  <button ref={minusRef} onClick={() => setAmount(amount-1)} className='amount-button'>-</button>
+                    <div>{amount}</div>
+                  <button ref={plusRef} onClick={() => setAmount(amount+1)} className='amount-button'>+</button></div>
             {
-                discount ? <div><span className='previous-price'>{price * amount}</span><span className='current-price'>{discount * amount}$</span></div> : <p className='price'>{price*amount}<span>$</span></p>
+                discount ? 
+                <div>
+                    <span className='previous-price'>{price * amount}</span>
+                    <span className='current-price'>{discount * amount}$</span>
+                </div> 
+                    : 
+                <p className='price'>{price*amount}<span>$</span></p>
             }
             </div>
         </div>

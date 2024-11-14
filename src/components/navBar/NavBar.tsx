@@ -44,7 +44,7 @@ const NavBar:FC = () => {
 
     return(
         <div className='navBar-container'>
-            <NavLink to={'/'}>HOME</NavLink>
+                <NavLink to={'/'}>HOME</NavLink>
             {isUserAuth ? 
                 <>
                 <div className='rightSide'>
