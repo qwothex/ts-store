@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom'
 import { productItem } from '../../store/slices/productSlice'
 import './productItem.css'
 import { useAppSelector } from '../../hooks/useAppSelector'
+import USDPrice from '../priceController/USDPrice'
+import UAHPrice from '../priceController/UAHPrice'
 
 interface ProductItemProps {
     product: productItem
@@ -24,11 +26,11 @@ const ProductItem:FC<ProductItemProps> = ({product}) => {
             <span className='brand'>{product.brand}</span></h6>
             {product.discount ? 
                 currency == 'USD' ? 
-                    <div className='discountPrice-container'><span className='previous-price'>{product.price}</span><span className='current-price'>{product.discount}$</span></div>
+                    <USDPrice price={product.price} discount={product.discount} />
                         :
-                    <div className='discountPrice-container'><span className='previous-price'>{product.price * 40}</span><span className='current-price'>{product.discount * 40}UAH</span></div>
+                    <UAHPrice price={product.price} discount={product.discount} />
                 :
-                    <div className='discountPrice-container'>
+                    <div className='price-container'>
                         {currency == 'USD' ? product.price + '$' : product.price*40 + 'UAH'}
                     </div>
             } 

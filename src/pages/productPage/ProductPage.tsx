@@ -90,8 +90,12 @@ const ProductPage:FC = () => {
 
 
     const discountClickHandler = () => {
-       const price = +prompt('enter new price')!
-       addDiscount(Number(id), price)
+       const price = +prompt('Enter discount as percent (1-99%)')!
+       if(price > 0 && price < 100) {
+            addDiscount(Number(id), price)
+       }else{
+            alert("Wrong input")
+       }
        Close()
     }
 

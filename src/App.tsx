@@ -1,8 +1,7 @@
 import { FC, useEffect, useState } from 'react';
 import Router from './components/Router';
-import { check, truncateUserCart } from './API/usersAPI/usersApi';
+import { check } from './API/usersAPI/usersApi';
 import { useActions } from './hooks/useActions';
-import {RotateLoader} from 'react-spinners'
 import { CartI, UserI } from './types/types';
 import { getOneProduct } from './API/productsAPI/productsAPI';
 import { productItem } from './store/slices/productSlice';

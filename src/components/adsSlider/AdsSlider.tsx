@@ -1,5 +1,5 @@
 import React, {Children, cloneElement, FC, ReactNode, useEffect, useState} from "react";
-import './addSlider.css'
+import './adsSlider.css'
 import { HiOutlineArrowSmRight, HiOutlineArrowSmLeft } from "react-icons/hi";
 import '../../assets/ads1.jpg'
 

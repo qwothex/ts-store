@@ -7,7 +7,7 @@ import SideBar from '../../components/sideBar/SideBar'
 import "glider-js/glider.min.css";
 import ProductItem from '../../components/productItem/ProductItem'
 import SliderComponent from '../../components/sliderComponent/SliderComponent'
-import AddSlider from '../../components/addSlider/AddSlider'
+import AddSlider from '../../components/adsSlider/AdsSlider'
 import NavLayout from '../../components/navLayout/NavLayout'
 import Loading from '../../components/loading/Loading'
 
@@ -46,7 +46,10 @@ const MainPage:FC = () => {
                         <div></div>
                     </AddSlider>
                     {lastview.length > 0 ? <SliderComponent title='Recenly viewed' products={lastview} slidesToScroll={3} slidesToShow={6} /> : <></>}
-                    <SliderComponent title='Recomendations' products={products.rows} slidesToScroll={3} slidesToShow={6} />
+                    <h1 className='sections-h'>Sections</h1>
+                    <SliderComponent title='Discounts' products={products.rows.filter(el => typeof el.discount == "number" && el.discount !== 0)} slidesToScroll={3} slidesToShow={6} />
+                    <SliderComponent title='Laptops' products={products.rows.filter(el => el.type === 'Laptop')} slidesToScroll={3} slidesToShow={6} />
+                    <SliderComponent title='Phones' products={products.rows.filter(el => el.type === 'Phone')} slidesToScroll={3} slidesToShow={6} />
                 </div>
             :
             <div>
@@ -60,6 +63,7 @@ const MainPage:FC = () => {
                     currentBrand ? 
                             <button className='active-filters__button' onClick={() => setCurrentBrand('')}>{currentBrand}</button> 
                     :
+                    //currentType
                     <button className='active-filters__button' onClick={() => setCurrentType('')}>{currentType}</button> 
                     }
                     <form>

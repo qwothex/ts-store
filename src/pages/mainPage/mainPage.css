@@ -90,6 +90,10 @@
     background-color: #cac9cb;
 }
 
+.sections-h{
+    text-align: center;
+}
+
 @media (max-width: 1150px) {
     .items-div{
         width: 700px;

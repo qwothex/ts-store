@@ -131,7 +131,7 @@ const Admin:FC = () => {
                 }
                 <input className='formInput' type={'text'} placeholder='brand (Apple, Samsung, etc.)' onChange={brandHandler} />
                 <input className='formInput' type={'text'} placeholder='type (Phone, Laptop, etc.)' onChange={typeHandler} />
-                <input className='formInput' type={'number'} placeholder='price $' onChange={priceHandler} />
+                <input className='formInput' type={'number'} placeholder='price $' onChange={priceHandler} min={1}/>
 
                 <input style={{display: 'none'}} type={'file'} id='file_input' placeholder='image' onChange={imageHandler} />
                 <label htmlFor='file_input'>
