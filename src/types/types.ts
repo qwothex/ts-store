@@ -1,9 +1,10 @@
 import { JwtPayload } from "jwt-decode"
 
-export interface CartI{
+interface CartI{
     id: number, 
-    RAMvolume: string, 
-    RAMprice: number
+    RAMvolume: string | null, 
+    RAMprice: number,
+    amount: number
 }
 
 interface UserI extends JwtPayload {
@@ -12,7 +13,31 @@ interface UserI extends JwtPayload {
     username?: string,
     additional?: {name: string, bio: string, location: string, telegram: string, image: string},
     lastview?: [number],
-    cart?: [CartI]
+    cart?: CartI[]
+}
+
+interface DetailedDescription {
+    display?: string,
+    camera?: string,
+    os?: string,
+    processor?: string,
+    size?: string,
+    materials?: string,
+    manufacturer?: string
+}
+
+interface productItem {
+    id: number
+    title: string
+    description: string
+    brand: string
+    type: string
+    image: string
+    price: number
+    memory: string | null
+    discount: number, 
+    amount: number,
+    detailedDescription: DetailedDescription | null
 }
 
 interface OrderI {
@@ -25,4 +50,4 @@ interface OrderI {
     updatedAt: Date,
 }
 
-export type {UserI, OrderI}
+export type {UserI, OrderI, CartI, DetailedDescription, productItem}

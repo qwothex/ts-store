@@ -4,7 +4,7 @@
 
 .cart-container{
     background-color: #fff;
-    padding: 10px 100px 10px 100px;
+    padding: 10px 100px;
 }
 
 .cart-container h1 {
@@ -68,4 +68,25 @@
 
 .cart-container__info .item:last-child{
     font-size: 24px;
+}
+
+@media (max-width: 799px) {
+    .cart-container{
+        padding: 10px 0;
+    }
+
+    .cart-container__info{
+        max-width: 300px
+    }
+}
+
+@media (max-width: 600px) {
+    .cart-container__items{
+        padding: 10px;
+    }
+
+    .cart-container h1{
+        font-size: 1.4rem;
+        margin-bottom: 15px;
+    }
 }

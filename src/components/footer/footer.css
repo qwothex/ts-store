@@ -6,8 +6,9 @@
     align-items: center;
     border-top: 1px solid var(--border-color);
     background-color: #fff;
-    padding: 0 15% 50px 15%;
+    padding: 0 50px 50px 50px;
     box-sizing: border-box;
+    margin-top: 25px;
 }
 
 .footer-contact{
@@ -15,7 +16,6 @@
 }
 
 .footer-main{
-    width: 25%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -39,7 +39,7 @@
     display: flex;
 }
 
-.icon{
+.footer .footer__social-media .icon{
     width: 35px;
     height: 35px;
     margin: 5px;
@@ -70,5 +70,12 @@
 @media (max-width: 1000px) {
     .footer{
         padding: 0 5% 50px 5%;
+    }
+}
+
+@media (max-width: 400px) {
+    .footer-main{
+        width: 100%;
+        border-top: 1px solid var(--border-color);
     }
 }

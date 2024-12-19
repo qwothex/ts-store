@@ -30,7 +30,6 @@ const OrdersPage:FC = () => {
     if(loading) return <Loading />
 
     const sortExpression = (e: ChangeEvent<HTMLSelectElement>) => {
-        console.log(e.target.selectedIndex)
         switch(e.target.selectedIndex){
             case 0:
                 setSort('id <')

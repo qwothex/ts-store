@@ -7,9 +7,10 @@ import SideBar from '../../components/sideBar/SideBar'
 import "glider-js/glider.min.css";
 import ProductItem from '../../components/productItem/ProductItem'
 import SliderComponent from '../../components/sliderComponent/SliderComponent'
-import AddSlider from '../../components/adsSlider/AdsSlider'
+import {AdsSlider} from '../../components/adsSlider/AdsSlider'
 import NavLayout from '../../components/navLayout/NavLayout'
 import Loading from '../../components/loading/Loading'
+import AdsSliderContent from '../../components/adsSlider-content/AdsSliderContent'
 
 const MainPage:FC = () => {
 
@@ -39,17 +40,27 @@ const MainPage:FC = () => {
                 <div className='mainPage-container'>
             <SideBar />
             {!currentBrand && !currentType ? 
-                <div className='glider-div'>
-                    <AddSlider>
-                        <div></div>
-                        <div></div>
-                        <div></div>
-                    </AddSlider>
-                    {lastview.length > 0 ? <SliderComponent title='Recenly viewed' products={lastview} slidesToScroll={3} slidesToShow={6} /> : <></>}
-                    <h1 className='sections-h'>Sections</h1>
-                    <SliderComponent title='Discounts' products={products.rows.filter(el => typeof el.discount == "number" && el.discount !== 0)} slidesToScroll={3} slidesToShow={6} />
-                    <SliderComponent title='Laptops' products={products.rows.filter(el => el.type === 'Laptop')} slidesToScroll={3} slidesToShow={6} />
-                    <SliderComponent title='Phones' products={products.rows.filter(el => el.type === 'Phone')} slidesToScroll={3} slidesToShow={6} />
+                <div className='main-content'>
+                    <AdsSlider>
+                        <AdsSlider.Element>
+                            {/* <AdsSliderContent imageUrl='http://localhost:3000/static/media/iphone16-advertising-2.34949fb7c7bbdf62f33e.jpg'/> */}
+                            <div className='ads ads3'></div>
+                        </AdsSlider.Element>
+
+                        <AdsSlider.Element>
+                            {/* <AdsSliderContent imageUrl='http://localhost:3000/static/media/flip-advertising.de816cdfc1fdfc36b07d.png'/> */}
+                            <div className='ads ads2'></div>
+                        </AdsSlider.Element>
+
+                        <AdsSlider.Element>
+                            {/* <AdsSliderContent imageUrl='http://localhost:3000/static/media/iphone16-advertising.e997b6c2be6bafeaeb1e.jpg'/> */}
+                            <div className='ads ads1'></div>
+                        </AdsSlider.Element>
+                    </AdsSlider>
+                    {lastview.length > 0 ? <SliderComponent title='Recenly viewed' products={lastview} slidesToShow={6} /> : <></>}
+                    <SliderComponent title='Discounts' products={products.rows.filter(el => typeof el.discount == "number" && el.discount !== 0)} slidesToShow={6} />
+                    <SliderComponent title='Laptops' products={products.rows.filter(el => el.type === 'Laptop')} slidesToShow={6} />
+                    <SliderComponent title='Phones' products={products.rows.filter(el => el.type === 'Phone')} slidesToShow={6} />
                 </div>
             :
             <div>

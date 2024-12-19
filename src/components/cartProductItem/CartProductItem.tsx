@@ -1,11 +1,13 @@
 import React, {FC, useEffect, useRef, useState} from 'react'
 import './cartProductItem.css'
-import { productItem } from '../../store/slices/productSlice'
 import { useNavigate } from 'react-router-dom'
 import { useActions } from '../../hooks/useActions'
 import { deleteCartProduct } from '../../API/usersAPI/usersApi'
 import { useAppSelector } from '../../hooks/useAppSelector'
 import Loading from '../loading/Loading'
+import USDPrice from '../priceController/USDPrice'
+import UAHPrice from '../priceController/UAHPrice'
+import { productItem } from '../../types/types'
 
 interface cartProductProps {
     product: productItem
@@ -14,7 +16,7 @@ interface cartProductProps {
 
 const CartProductItem:FC<cartProductProps> = ({product}) => {
 
-    const {changeProductAmount, deleteProductFromCart} = useActions()
+    const {changeProductAmount, changeUserProductAmount, deleteProductFromLocalCart} = useActions()
 
     const [amount, setAmount] = useState(product.amount)
     const [loading, setLoading] = useState(false)
@@ -25,36 +27,37 @@ const CartProductItem:FC<cartProductProps> = ({product}) => {
     const {id, title, image, discount, price} = product
 
     const userId = useAppSelector(state => state.userReducer.user.id)
+    const {currency} = useAppSelector(state => state.productReducer)
 
     useEffect(() => {
         changeProductAmount({id, newAmount: amount})
+        changeUserProductAmount({id, amount})
     }, [amount])
 
     const navigate = useNavigate()
 
-    const preventPageReload = (e: any) => {
-        e.preventDefault();
-        e.returnValue = 'Выполняется запрос, Ваши изменения могут быть потеряны.';
-    };
+    // const preventPageReload = (e: any) => {
+    //     e.preventDefault();
+    //     e.returnValue = 'Выполняется запрос, Ваши изменения могут быть потеряны.';
+    // };
 
-    const lockReload = async (e: any, request: () => any) => {
-        const preventPageReload = e.preventDefault();
-        window.addEventListener('beforeunload', preventPageReload);
+    // const lockReload = async (e: any, request: () => any) => {
+    //     const preventPageReload = e.preventDefault();
+    //     window.addEventListener('beforeunload', preventPageReload);
 
-        try {
-            const response = await request();
-            return response;
-        } finally {
-            window.removeEventListener('beforeunload', preventPageReload);
-        }
-    }
+    //     try {
+    //         const response = await request();
+    //         return response;
+    //     } finally {
+    //         window.removeEventListener('beforeunload', preventPageReload);
+    //     }
+    // }
 
     const deleteCartProductHandler = async (e: React.MouseEvent<HTMLButtonElement>) => {
-        await lockReload(e, async () => {
-            setLoading(true);
-            await deleteCartProduct(product.id, userId!).then(() => setLoading(false))
-            deleteProductFromCart(product.id)
-        })
+        setLoading(true);
+        await deleteCartProduct(product.id, userId!)
+        .then(() => deleteProductFromLocalCart(product.id))
+        .finally(() => setLoading(false))
     }
 
     if(loading){
@@ -70,31 +73,27 @@ const CartProductItem:FC<cartProductProps> = ({product}) => {
 
     return(
         <div className='cartItem-container'>
-            <div className='left-side'>
-                <div className='left-side__image' 
+            <div className='image' 
                     style={{backgroundImage: `url(${'http://localhost:5000/' + image})`}} 
                     onClick={() => navigate('/product/' + id)} 
-                />
-                <a href={'/product/' + id} className='left-side__title'>
-                    {product.memory ? title.replace(/(128GB|256GB|512GB|1TB)/, product.memory!) : title}
-                </a>
-            </div>
+            />
             <div className='right-side'>
-                <button onClick={deleteCartProductHandler} className='right-side__delete-button' />
+                <div className='top'>
+                    <a href={'/product/' + id} className='right-side__title'>
+                        {product.memory ? title.replace(/(128GB|256GB|512GB|1TB)/, product.memory!) : title}
+                    </a>
+                    <button onClick={deleteCartProductHandler} className='right-side__delete-button' />
+                </div>
                 <div className='amount-price'>
                     <div className='amount'>
                         <button ref={minusRef} onClick={() => setAmount(amount-1)} className='amount-button'>-</button>
                         <div>{amount}</div>
                         <button ref={plusRef} onClick={() => setAmount(amount+1)} className='amount-button'>+</button></div>
                     {
-                     discount 
-                        ? 
-                    <div>
-                        <span className='previous-price'>{price * amount}</span>
-                        <span className='current-price'>{discount * amount}$</span>
-                    </div> 
-                        : 
-                    <p className='price'>{price*amount}<span>$</span></p>
+                        currency == 'USD' ?
+                            <USDPrice price={price} discount={discount} amount={amount}/>
+                        :
+                            <UAHPrice price={price} discount={discount} amount={amount}/>
                     }
                 </div>
             </div>

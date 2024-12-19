@@ -34,7 +34,7 @@ const EditProfileForm:FC = () => {
         setName(e.target.value)
     }
 
-    const changeBioHandler = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const changeBioHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
         setBio(e.target.value)
     }
 
@@ -55,15 +55,19 @@ const EditProfileForm:FC = () => {
             <form className="editProfileForm" onSubmit={additionalDataHandler}>
                 <span>Name</span>
                 <input placeholder='Josh Doe' value={name} onChange={changeNameHandler} />
+
                 <span>Bio</span>
-                <textarea placeholder='About you' value={bio} onChange={changeBioHandler} />
+                <input placeholder='Frontend web developer' value={bio} onChange={changeBioHandler} />
+
                 <span>Location</span>
                 <input placeholder='Ukraine' value={location} onChange={changeLocationHandler} />
+
                 <span>Telegram</span>
                 <input placeholder='@qwothex' value={telegram} onChange={changeTelegramHandler} />
-                <input style={{display: 'none'}} type={'file'} id='file_input' placeholder='image' onChange={changeImageHandler} />
+
+                <input style={{display: 'none'}} type={'file'} id='file_input' onChange={changeImageHandler} />
                 <label htmlFor='file_input'>
-                        <span>Add file<> </>{image?.name}</span>
+                        <span>Add profile picture<> </>{image?.name}</span>
                 </label>
                   <button type="submit">save changes</button>
             </form>

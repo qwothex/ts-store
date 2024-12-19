@@ -8,7 +8,7 @@ const NavBar:FC = () => {
 
     const navigate = useNavigate()
 
-    const {setCurrentUser, setUserAuth, setCurrency, truncateLastViewProducts} = useActions()
+    const {setCurrentUser, setUserAuth, setCurrency, truncateLastViewProducts, truncateLocalUserCart, truncateLocalCart} = useActions()
 
     const dropListEl = useRef<HTMLDivElement>(null)
     const currencyEl = useRef<HTMLInputElement>(null)
@@ -31,6 +31,8 @@ const NavBar:FC = () => {
         setUserAuth(false)
         setCurrentUser({})
         truncateLastViewProducts()
+        // truncateLocalUserCart()
+        truncateLocalCart()
         navigate('/')
     }
 
@@ -44,7 +46,7 @@ const NavBar:FC = () => {
 
     return(
         <div className='navBar-container'>
-                <NavLink to={'/'}>HOME</NavLink>
+                <NavLink to={'/'} />
             {isUserAuth ? 
                 <>
                 <div className='rightSide'>

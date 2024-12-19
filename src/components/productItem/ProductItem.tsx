@@ -1,10 +1,10 @@
 import React, {FC} from 'react'
 import { useNavigate } from 'react-router-dom'
-import { productItem } from '../../store/slices/productSlice'
 import './productItem.css'
 import { useAppSelector } from '../../hooks/useAppSelector'
 import USDPrice from '../priceController/USDPrice'
 import UAHPrice from '../priceController/UAHPrice'
+import { productItem } from '../../types/types'
 
 interface ProductItemProps {
     product: productItem
@@ -24,15 +24,10 @@ const ProductItem:FC<ProductItemProps> = ({product}) => {
             <h6><span className='title'>{product.title}</span> {/* product.memory ? product.title.replace(/(128GB|256GB|512GB|1TB)/, product.memory || JSON.parse(product.memory![0]).volume) */} 
             <br /> 
             <span className='brand'>{product.brand}</span></h6>
-            {product.discount ? 
-                currency == 'USD' ? 
+            {currency == 'USD' ? 
                     <USDPrice price={product.price} discount={product.discount} />
                         :
                     <UAHPrice price={product.price} discount={product.discount} />
-                :
-                    <div className='price-container'>
-                        {currency == 'USD' ? product.price + '$' : product.price*40 + 'UAH'}
-                    </div>
             } 
         </div>
     )

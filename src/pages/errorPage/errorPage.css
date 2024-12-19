@@ -10,12 +10,13 @@
 
 .error-container h1{
     color: rgb(41, 41, 41);
+    margin: 5px 0;
 }
 
 .error-container .error-image{
     width: 250px;
     height: 200px;
-    background-image: url("../../assets/error-emoji-removebg-preview.png");
+    background-image: url("../../assets/error-emoji-2.png");
     mix-blend-mode: multiply;
     background-repeat: no-repeat;
     background-size: contain;

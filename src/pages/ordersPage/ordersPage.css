@@ -105,12 +105,16 @@
     .ordersPage-container__filters ul{
         width: 100%;
         display: flex;
-        gap: 15px;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 5px;
         padding: 0 10px 0 10px;
     }
 
     .ordersPage-container__filters ul li{
-        width: 33%;
+        width: 49%;
+        box-sizing: border-box;
+        padding: 0;
     }
 
     .ordersPage-container__info{
@@ -119,7 +123,8 @@
 }
 
 @media (max-width: 425px) {
-    .ordersPage-container__filters ul li{
-        padding: 0;
+
+    .ordersPage-container__filters ul{
+        gap: 5px;
     }
 }

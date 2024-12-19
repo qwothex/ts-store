@@ -1,7 +1,7 @@
 import {FC, useEffect, useState} from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { addDiscount, deleteProduct, getAllProducts, getOneProduct } from '../../API/productsAPI/productsAPI'
-import { productItem, productProps } from '../../store/slices/productSlice'
+import { productProps } from '../../store/slices/productSlice'
 import './productPage.css'
 import { RotateLoader } from 'react-spinners'
 import { addCartProduct, addLastView } from '../../API/usersAPI/usersApi'
@@ -16,12 +16,13 @@ import NavLayout from '../../components/navLayout/NavLayout'
 import SliderComponent from '../../components/sliderComponent/SliderComponent'
 import USDPrice from '../../components/priceController/USDPrice'
 import UAHPrice from '../../components/priceController/UAHPrice'
+import { productItem } from '../../types/types'
 
 const ProductPage:FC = () => {
 
     const navigate = useNavigate()
 
-    const {addProductToCart, addLastViewProduct, addProductToLocalCart} = useActions()
+    const {addProductToLocalCart, addLastViewProduct, addProductToLocalUserCart} = useActions()
 
     const [product, setProduct] = useState<productItem>()
     const [RAMprice, setRAMprice] = useState(0)
@@ -30,7 +31,7 @@ const ProductPage:FC = () => {
     const [modalState, setModalState] = useState(false)
     const [changeState, setChangeState] = useState(false)
     const [popUpStatus, setPopUpStatus] = useState<{show: boolean, success?: boolean, text?: string}>({show: false, success: true, text: ''})
-    const [similarOffers, setSimilarOffers] = useState<productProps>()
+    const [similarOffers, setSimilarOffers] = useState<productItem[]>()
 
     const Close = () => setModalState(false)
 
@@ -44,7 +45,10 @@ const ProductPage:FC = () => {
         const productData: productItem = await getOneProduct(Number(id))
         if(productData){
             setProduct({...productData, detailedDescription: typeof productData.detailedDescription === 'string' ? JSON.parse(productData.detailedDescription) : null})
-            getAllProducts(productData.type, productData.brand, 16, 1).then((data) => setSimilarOffers(data))
+            getAllProducts(productData.type, productData.brand, 16, 1).then((data: productProps) => {
+                const deleted = data.rows.splice(data.rows.findIndex(el => el.id == +id!))
+                setSimilarOffers(data.rows)
+            })
             if(user.id){
                 addLastView(user.id!, productData.id)
                 addLastViewProduct(productData)
@@ -55,6 +59,8 @@ const ProductPage:FC = () => {
 
     useEffect(() => {
         initialFetch()
+        setRAMprice(0) 
+        setRAMvolume("")
     }, [id])
 
     if(loading){
@@ -80,8 +86,8 @@ const ProductPage:FC = () => {
         let isExist = false;
         if(cart) cart.forEach((el) => { if(el.id == product.id) isExist = true })
         if(!isExist) {
-            addProductToCart({...product, amount: 1, price: RAMprice || price, memory: RAMvolume || null})
-            addProductToLocalCart({id: product.id, RAMvolume: RAMvolume, RAMprice: RAMprice})
+            addProductToLocalCart({...product, price: RAMprice || price, memory: RAMvolume || null, amount: 1})
+            addProductToLocalUserCart({id: product.id, RAMprice: RAMprice || price, RAMvolume: RAMvolume || null, amount: 1})
             setPopUpStatus({show: true, success: true, text: 'Added to cart'})
         }
         else setPopUpStatus({show: true, success: false, text: 'Already in cart'})
@@ -148,7 +154,7 @@ const ProductPage:FC = () => {
                     <div className='buyOptionsButtons'>
                         <button className='cart-button' onClick={cartButtonHandler}>Add to cart</button>
                         <button className='credit-button'>buy in credit</button>
-                        {user.role == 'ADMIN' ? <button onClick={() => setModalState(true)} className='discount-button'>ADMIN PANEL</button> : <></>}
+                        {user.role == 'ADMIN' ? <button onClick={() => setModalState(true)} className='discount-button'>ADMIN</button> : <></>}
                     </div>
                     <ModalWindow 
                         visible={modalState}
@@ -164,20 +170,20 @@ const ProductPage:FC = () => {
                     <div className='detailedDescription'>
                         <h2>Characteristics</h2>
                         <ul className='detailedDescription__list'>
-                            {detailedDescription!.display ? <li><span className='characteristic'><p>Display</p></span> {detailedDescription!.display}</li> : <></>}
-                            {detailedDescription!.camera ? <li><span className='characteristic'><p>Camera</p></span>  {detailedDescription!.camera}</li> : <></>}
-                            {detailedDescription!.os ? <li><span className='characteristic'><p>OS</p></span>  {detailedDescription!.os}</li> : <></>}
-                            {detailedDescription!.processor ? <li><span className='characteristic'><p>Processor</p></span>  {detailedDescription!.processor}</li> : <></>}
-                            {detailedDescription!.size ? <li><span className='characteristic'><p>Size</p></span>  {detailedDescription!.size}</li> : <></>}
-                            {detailedDescription!.materials ? <li><span className='characteristic'><p>Materials</p></span>  {detailedDescription!.materials}</li> : <></>}
-                            {detailedDescription!.manufacturer ? <li><span className='characteristic'><p>Manufacturer</p></span>  {detailedDescription!.manufacturer}</li> : <></>}
+                            {detailedDescription!.display ? <li><span className='characteristic'><p>Display</p></span><span className='characteristic-value'>{detailedDescription!.display}</span></li> : <></>}
+                            {detailedDescription!.camera ? <li><span className='characteristic'><p>Camera</p></span> <span className='characteristic-value'>{detailedDescription!.camera}</span></li> : <></>}
+                            {detailedDescription!.os ? <li><span className='characteristic'><p>OS</p></span><span className='characteristic-value'>{detailedDescription!.os}</span></li> : <></>}
+                            {detailedDescription!.processor ? <li><span className='characteristic'><p>Processor</p></span><span className='characteristic-value'>{detailedDescription!.processor}</span></li> : <></>}
+                            {detailedDescription!.size ? <li><span className='characteristic'><p>Size</p></span><span className='characteristic-value'>{detailedDescription!.size}</span></li> : <></>}
+                            {detailedDescription!.materials ? <li><span className='characteristic'><p>Materials</p></span><span className='characteristic-value'>{detailedDescription!.materials}</span></li> : <></>}
+                            {detailedDescription!.manufacturer ? <li><span className='characteristic'><p>Manufacturer</p></span><span className='characteristic-value'>{detailedDescription!.manufacturer}</span></li> : <></>}
                         </ul>
                     </div>
                 :
                     <></>
                 }
             <div className='similar-offers'>
-                {similarOffers && <SliderComponent title='You might like it' products={similarOffers.rows} slidesToShow={8} slidesToScroll={4} />}
+                {similarOffers && <SliderComponent title='You might like it' products={similarOffers} slidesToShow={8} />}
             </div>
           </div>
         </NavLayout>

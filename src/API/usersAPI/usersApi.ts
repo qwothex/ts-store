@@ -1,6 +1,5 @@
 import { authHost, host } from ".."
 import { jwtDecode } from "jwt-decode"
-import { productItem } from "../../store/slices/productSlice"
 
 interface UserProps { (username: string, password: string): {} }
 

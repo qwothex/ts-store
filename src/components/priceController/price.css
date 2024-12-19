@@ -1,0 +1,20 @@
+.price{
+    font-size: 20px;
+    margin: 0 15px 0 0;
+}
+
+.price span{
+    font-size: 18px;
+}
+
+.previous-price{
+    text-decoration: line-through;
+    font-size: 14px;
+    color: rgb(52, 52, 52);
+}
+
+.current-price{
+    color: red;
+    font-size: 24px;
+    margin-right: 15px;
+}

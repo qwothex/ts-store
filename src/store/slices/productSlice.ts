@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { productItem } from "../../types/types";
 
 export interface DetailedDescription {
     display?: string,
@@ -8,20 +9,6 @@ export interface DetailedDescription {
     size?: string,
     materials?: string,
     manufacturer?: string
-}
-
-export interface productItem {
-    id: number
-    title: string
-    description: string
-    brand: string
-    type: string
-    image: string
-    price: number
-    memory: string | null
-    discount: number, 
-    amount: number,
-    detailedDescription: DetailedDescription | null
 }
 
 export interface productProps {
@@ -71,10 +58,10 @@ const productSlice = createSlice({
         setCartProducts: (state, action: PayloadAction<[productItem]>) => {
             state.cart = action.payload
         },
-        addProductToCart: (state, action: PayloadAction<productItem>) => {
+        addProductToLocalCart: (state, action: PayloadAction<productItem>) => {
             state.cart ? state.cart.unshift(action.payload) : state.cart = [action.payload]
         },
-        deleteProductFromCart: (state, action: PayloadAction<number>) => {
+        deleteProductFromLocalCart: (state, action: PayloadAction<number>) => {
             state.cart = state.cart.filter(el => el.id !== action.payload)
         },
         truncateLocalCart: (state) => {
@@ -111,3 +98,4 @@ const productSlice = createSlice({
 })
 
 export const {reducer, actions} = productSlice
+

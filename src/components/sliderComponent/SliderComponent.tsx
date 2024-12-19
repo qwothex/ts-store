@@ -1,28 +1,51 @@
-import {FC} from "react";
+import {FC, useEffect, useRef, useState} from "react";
 import './sliderComponent.css';
 import Glider from 'react-glider';
-import { productItem } from "../../store/slices/productSlice";
 import ProductItem from "../productItem/ProductItem";
+import { productItem } from "../../types/types";
 
-interface SliderComponentProps {
+interface SliderComponentI {
     products: productItem[],
     title?: string,
-    slidesToShow: number,
-    slidesToScroll: number
+    slidesToShow: number
 }
 
-const SliderComponent:FC<SliderComponentProps> = ({products, title, slidesToScroll, slidesToShow}) => {
+const SliderComponent:FC<SliderComponentI> = ({products, title, slidesToShow}) => {
+
+    const [currentRowAmount, setCurrentRowAmount] = useState(1)
+    const [offsetWidth, setOffsetWidth] = useState(0)
+
+    const sliderContainerEl = useRef<HTMLDivElement>(null)
+
+    useEffect(() => {
+        if(sliderContainerEl.current){
+            setOffsetWidth(sliderContainerEl.current?.offsetWidth)
+        }
+    }, [])
+
+    const minElementsAmount = 2
+    const elementsAmount = offsetWidth/170
+
     return(
-        <div className="SliderComponent-container">
-            {title ? <h1 key={title}>{title}</h1> : <></>}
+        <div ref={sliderContainerEl} className="SliderComponent-container">
+            {title ? <h2 key={title}>{title}</h2> : <></>}
             <Glider
-                slidesToShow={products.length <= slidesToShow ? products.length : slidesToShow}
-                slidesToScroll={slidesToScroll}
-                hasArrows={products.length > slidesToShow}
-                draggable
+                slidesToShow={elementsAmount >= minElementsAmount ? elementsAmount : minElementsAmount} //Math.floor(window.innerWidth / 170        //products.length <= slidesToShow ? products.length : slidesToShow
+                hasArrows={offsetWidth >= 680}
+                draggable={offsetWidth >= 680}
             >
-                {products.map((el: productItem) => el !== null ? <div><ProductItem key={el.id} product={el} /></div> : <></>)}
+                {Math.floor(elementsAmount) > 3 
+                ? 
+                    products.map(el => el !== null ? <div><ProductItem key={el.id} product={el} /></div> : <></>) 
+                :
+                    products.slice(0, Math.floor(elementsAmount >= minElementsAmount ? elementsAmount : minElementsAmount) * currentRowAmount).map((el: productItem) => el !== null ? <div><ProductItem key={el.id} product={el} /></div> : <></>)
+                }
             </Glider>
+            <div className="button-container">
+                <button className="show-more-button" onClick={() => setCurrentRowAmount((state) => state + 1)}>
+                    Show more
+                </button>
+            </div>
         </div>
     )
 }

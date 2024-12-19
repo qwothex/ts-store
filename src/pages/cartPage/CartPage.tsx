@@ -1,13 +1,14 @@
-import React, {FC, useEffect, useState} from 'react'
+import {FC, useState} from 'react'
 import "./cartPage.css"
 import { useAppSelector } from '../../hooks/useAppSelector'
 import ErrorPage from '../errorPage/ErrorPage'
 import CartPropductItem from '../../components/cartProductItem/CartProductItem'
-import NavBar from '../../components/navBar/NavBar'
 import { createOrder } from '../../API/ordersAPI/ordersAPI'
 import { useActions } from '../../hooks/useActions'
 import { truncateUserCart } from '../../API/usersAPI/usersApi'
 import ModalWindow from '../../components/adminProductModal/ModalWindow'
+import NavLayout from '../../components/navLayout/NavLayout'
+import { productItem } from '../../types/types'
 
 const CartPage:FC = () => { 
 
@@ -19,39 +20,36 @@ const CartPage:FC = () => {
 
     const Close = () => setModalState(false)
 
-    const {truncateLocalCart} = useActions()
+    const {truncateLocalCart, truncateLocalUserCart} = useActions()
 
-    if(!cart.length ?? !userCart?.length) return <ErrorPage message='Cart is empty :(' />
+    if(!cart.length && !userCart?.length) return <ErrorPage message='Cart is empty :(' />
 
-    let total = 20
+    let total = 20 //shipping price
 
     const proceed = () => {
-      setModalState(true)
-      createOrder({products: userCart!, total, userId: id!}).then(() => {
+      createOrder({products: userCart!, total: total < 5000 ? total : total - 20, userId: id!}).then(() => {
         truncateLocalCart() 
+        truncateLocalUserCart()
         truncateUserCart(id!)
-      })
+      }).finally(() => setModalState(true))
     }
 
-    const modalBody = <div>
-        <p>Your order has been placed</p>
-    </div>
+    const modalBody = <div> <p>Your order has been placed</p> </div>
 
     return(
-      <>
-        <NavBar />
+      <NavLayout>
         <ModalWindow 
-          visible= {modalState}
-          title= 'Your order'
-          body= {modalBody}
-          Close= {Close}
+          visible={modalState}
+          title='Your order'
+          body={modalBody}
+          Close={Close}
           width={600}
         />
         <div className='cart-container'>
           <h1>There is {cart.length} items in your cart</h1>
           <div className='cart-container__items'>
-              {cart.map(el =>(
-              el.discount ? total += el.discount * el.amount : total += el.price * el.amount,
+              {cart.map((el: productItem) => (
+              el.discount ? total += +((el.price - (el.price * el.discount/100)).toFixed()) * el.amount : total += el.price * el.amount,
               <CartPropductItem key={el.id} product={el} />
               ))}
               <div className='cart-container__info'>
@@ -64,7 +62,7 @@ const CartPage:FC = () => {
               </div>
           </div>
         </div>
-      </>
+      </NavLayout>
     )
 }
 

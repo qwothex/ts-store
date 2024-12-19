@@ -1,0 +1,44 @@
+.ads{
+    height: 100%;
+    background-color: #fff;
+    background-repeat: no-repeat;
+    background-size: contain;
+    margin-left: 25px;
+    display: flex;
+}
+
+.adsImg{
+    width: 100%;
+    height: 100%;
+}
+
+.product-info{
+    width: 100%;
+    height: 100%;
+    padding: 0 20px;
+}
+
+.top-side{
+    height: 50%;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+
+    & h3 {
+        margin-bottom: 0;
+    };
+
+    & h2 {
+        margin-top: 0;
+    };
+}
+
+.bottom-side{
+    height: 50%;
+    width: 100%;
+}
+
+.bottom-side ul {
+    list-style-type: none;
+    padding-left: 0;
+}

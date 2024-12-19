@@ -3,10 +3,10 @@
     position: relative;
     display: flex;
     flex-direction: column;
+    background-color: #fff;
 }
 
 .userPage-container h3 {
-    width: 350px;
     font-size: 30px;
     font-weight: 500;
     margin: 5px 0 10px 0;
@@ -15,12 +15,12 @@
 
 .profile_picture{
     width: 350px;
-    height: 350px;
     border-radius: 50%;
     margin: 5px 5px 0 5px;
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
+    aspect-ratio: 1/1;
 }
 
 .changeLink{
@@ -37,13 +37,27 @@
     display: flex;
 }
 
-.additional-data p {
+.additional-data{
+    margin-left: 10px;
+}
+
+.additional-data ul{
+    list-style-type: none;
+    padding: 5px;
+}
+
+.additional-data ul li {
     font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.additional-data ul li span{
+    color: #1c1c1c45;
 }
 
 .profile-container__rightSide{
     width: 100%;
-    padding: 15px 25px 0 50px;
+    padding: 15px 0 0 25px;
 }
 
 .profile-container__about{
@@ -86,4 +100,50 @@
     border-radius: 8px;
     box-sizing: border-box;
     text-align: center;
+}
+
+@media (max-width: 767px) {
+    .profile-container{
+        flex-direction: column;
+    }
+
+    .additional-data{
+        min-width: 150px;
+        min-height: 150px;
+    }
+
+    .profile-container__rightSide{
+        padding: 0;
+    }
+
+    .profile-container__leftSide{
+        display: flex;
+    }
+}
+
+@media (max-width: 485px) {
+    .userPage-container{
+        padding: 5px;
+    }
+}
+
+@media (max-width: 400px) {
+    .userPage-container{
+        padding: 5px;
+    }
+
+    .profile-container__leftSide{
+        display: flex;
+        flex-direction: column;
+    }
+
+    .profile-container__rightSide{
+        display: none;
+    }
+
+    .profile_picture{
+        width: 250px;
+        height: 250px;
+        align-self: center;
+    }
 }

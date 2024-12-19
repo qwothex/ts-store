@@ -1,7 +1,7 @@
 import React, {FC, useState} from 'react'
 import './changeProductForm.css'
-import { productItem } from '../../store/slices/productSlice'
 import { changeProduct } from '../../API/productsAPI/productsAPI'
+import { productItem } from '../../types/types'
 
 interface changeProductFormProps {
     product: productItem

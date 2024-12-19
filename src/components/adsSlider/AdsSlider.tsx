@@ -1,51 +1,56 @@
-import React, {Children, cloneElement, FC, ReactNode, useEffect, useState} from "react";
+import {ReactNode, useEffect, useRef, useState} from "react";
 import './adsSlider.css'
-import { HiOutlineArrowSmRight, HiOutlineArrowSmLeft } from "react-icons/hi";
-import '../../assets/ads1.jpg'
+import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
+import AdsSliderElement from "../adsSliderElement/AdsSliderElement";
+import { SliderContext } from "./slider-context";
 
-interface AddSliderProps {
-    children: ReactNode
-}
+export const AdsSlider = ({children}: {children: ReactNode[]}) => {
 
-const AddSlider:FC<AddSliderProps> = ({children}) => {
-
-    const ELEMENT_WIDTH = 1050
-
-    const [elements, setElements] = useState([])
     const [offset, setOffset] = useState(0)
+    const [width, setWidth] = useState(450)
+
+    const viewAreaEl = useRef<HTMLDivElement>(null)
 
     useEffect(() => {
-        setElements(
-            Children.map(children, (child: any, index) => {
-              return cloneElement(child, {
-                style: {
-                    height: '100%',
-                    maxWidth: '100%',
-                    minWidth: '100%',
-                },
-                className: `ads ${'ads' + (index + 1)}` // className: 'ads ads1/2/3'
-              })
-            })
-        )
+        const resizeHandler = () => {
+            const _width = viewAreaEl.current?.offsetWidth
+            if(_width){
+                setWidth(_width)
+                setOffset(0)
+            }
+        }
+        resizeHandler()
+        window.addEventListener('resize', resizeHandler)
+
+        return () => {
+            window.removeEventListener('resize', resizeHandler)
+        }
     }, [])
 
-    const rightClickHandler = () => {
-        setOffset(Math.max(offset - ELEMENT_WIDTH, -(ELEMENT_WIDTH * (elements.length - 1))))
+    const leftClickHandler = () => {
+        setOffset((currentOffset) => {
+            const newOffset = currentOffset + width
+            return Math.min(newOffset, 0)
+        })
     }
 
-    const leftClickHandler = () => {
-        setOffset(Math.min(offset + ELEMENT_WIDTH, 0))
+    const rightClickHandler = () => {
+        setOffset((currentOffset) => {
+            return Math.max(currentOffset - width, -(width * (children!.length - 1)))
+        })
     }
 
     return(
-        <div className="slider-container">
-            <HiOutlineArrowSmLeft onClick={leftClickHandler} size={30} style={{position: "absolute", left: -25, zIndex: 10}} cursor={'pointer'}/>
-            <div className="view-area">
-                <div className="all-elements" style={{transform: `translateX(${offset}px)`}}>{elements}</div>
+        <SliderContext.Provider value={width}>
+            <div className="slider-container">
+                <IoIosArrowBack onClick={leftClickHandler} size={30} style={{position: "absolute", left: -25, zIndex: 10}} cursor={'pointer'}/>
+                <div className="view-area" ref={viewAreaEl}>
+                    <div className="all-elements" style={{transform: `translateX(${offset}px)`}}>{children}</div>
+                </div>
+                <IoIosArrowForward onClick={rightClickHandler} size={30} style={{position: "absolute", right: -25}} cursor={'pointer'}/>
             </div>
-            <HiOutlineArrowSmRight onClick={rightClickHandler} size={30} style={{position: "absolute", right: -25}} cursor={'pointer'}/>
-        </div>
+        </SliderContext.Provider>
     )
 }
 
-export default AddSlider
+AdsSlider.Element = AdsSliderElement

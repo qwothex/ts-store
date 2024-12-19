@@ -1,12 +1,12 @@
 .item-card{
     width: 150px;
     height: 225px;
-    /* background-color: rgb(68, 68, 68); */
     background-color: rgb(255, 255, 255);
+    border-bottom: 1px solid #33333325 !important;
+    border-right: 1px solid #33333325 !important;
     cursor: pointer;
     padding: 10px;
     transition: 0.2s;
-    margin: 2px;
 }
 
 .img-div{
@@ -46,4 +46,18 @@
     margin: 5px 5px 5px 0;
     font-size: 18px;
     font-weight: 500;
+}
+
+@media (max-width: 724px) {
+    .item-card{
+        width: auto;
+        min-width: 150px;
+    }
+}
+
+@media (max-width: 350px) {
+    .item-card{
+        min-width: 100px;
+        padding: 5px;
+    }
 }

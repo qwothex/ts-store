@@ -1,7 +1,9 @@
-import React, {FC} from "react";
+import {FC} from "react";
 import './errorPage.css'
 import { Link } from "react-router-dom";
+import NavLayout from "../../components/navLayout/NavLayout";
 import NavBar from "../../components/navBar/NavBar";
+import Footer from "../../components/footer/Footer";
 
 interface ErrorPropsI {
     message: string
@@ -10,12 +12,14 @@ interface ErrorPropsI {
 const ErrorPage:FC<ErrorPropsI> = ({message}) => {
     return(
         <>
-        <NavBar/>
+        <NavBar />
           <div className="error-container">
             <div className="error-image" />
             <h1>{message}</h1>
+            <p>If you think this is an error, please <a href="#contact">contact us</a></p>
             <Link to="/">Home</Link>
           </div>
+        <Footer />
         </>
     )
 }

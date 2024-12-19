@@ -1,7 +1,7 @@
 import { host, authHost } from "..";
 import { CartI, OrderI } from "../../types/types";
 
-export const createOrder = async (orderData: {products : [CartI], total: number, userId: number}) => {
+export const createOrder = async (orderData: {products : CartI[], total: number, userId: number}) => {
     const {data} = await authHost.post('api/order', orderData)
     return data
 }

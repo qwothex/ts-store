@@ -8,7 +8,7 @@ interface UserState {
 
 const initialState: UserState = {
     isUserAuth: false,
-    user: {} as UserI
+    user: {}
 }
 
 export const userSlice = createSlice({
@@ -21,8 +21,14 @@ export const userSlice = createSlice({
         setCurrentUser: (state, action: PayloadAction<UserI>) => {
             state.user = action.payload
         },
-        addProductToLocalCart: (state, action: PayloadAction<CartI>) => {
+        addProductToLocalUserCart: (state, action: PayloadAction<CartI>) => {
             state.user.cart?.push(action.payload)
+        },
+        truncateLocalUserCart: (state) => {
+            state.user.cart = []
+        },
+        changeUserProductAmount: (state, action: PayloadAction<{id: number, amount: number}>) => {
+            state.user.cart![state.user.cart!.findIndex((el) => el.id == action.payload.id)].amount = action.payload.amount
         }
     }
 })

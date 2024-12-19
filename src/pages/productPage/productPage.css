@@ -14,7 +14,7 @@
 
 .productPage-container__leftSide{
     min-width: 400px;
-    min-height: 500px;
+    min-height: 400px;
     margin-right: 25px;
     display: grid;
     place-items: center;
@@ -41,8 +41,7 @@
     border-color: black;
 }
 
-.info {
-    min-width: 500px;
+.mainContent .info {
     max-width: 700px;
 }
 
@@ -109,7 +108,6 @@
 
 .credit-button:hover{
     background-color: #209500;
-    border: none;
     color: white
 }
 
@@ -137,7 +135,6 @@
 }
 
 .discount-button:hover{
-    border: none;
     color: white;
     background-color: #fea622;
 }
@@ -163,28 +160,7 @@
     background-color: #cb0000;
 }
 
-.price{
-    font-size: 20px;
-    margin: 0 15px 0 0;
-}
-
-.price span{
-    font-size: 18px;
-}
-
-.previous-price{
-    text-decoration: line-through;
-    font-size: 14px;
-    color: rgb(52, 52, 52);
-}
-
-.current-price{
-    color: red;
-    font-size: 24px;
-    margin-right: 15px;
-}
-
-details{
+.productPage-container details{
     width: 165px;
     height: 40px;
     margin-left: 10px;
@@ -200,28 +176,33 @@ details{
 }
 
 .detailedDescription{
-    margin-bottom: 50px;
+    margin-bottom: 15px;
+    padding-bottom: 25px;
+    border-bottom: 1px solid var(--border-color);
+    border-top: 1px solid var(--border-color);
 }
 
 .detailedDescription h2{
     font-size: 1.8rem;
-    margin-bottom: 0;
+    margin-bottom: 10px;
 }
 
 .detailedDescription__list{
     list-style: none;
     padding-left: 15px;
     font-size: 1.2rem;
-    margin-top: 5px;
+    margin: 5px 0;
 }
 
 .detailedDescription__list li{
     display: flex;
+    margin-bottom: 10px;
+    color: #5a5a5a;
+    text-overflow: ellipsis;
 }
 
 .detailedDescription__list .characteristic{
-    width: 450px;
-    min-width: 200px;
+    width: 400px;
     position: relative;
     display: flex;
     align-items: center;
@@ -236,6 +217,13 @@ details{
     padding-right: 10px;
 }
 
+.detailedDescription__list .characteristic-value{
+    width: 400px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
 .detailedDescription__list .characteristic::after{
     content: "";
     position: absolute;
@@ -245,27 +233,30 @@ details{
 }
 
 @media (max-width: 1150px) {
+    .buyOptionsButtons{
+        width: 400px;
+    }
+
     .buyOptionsButtons button{
-        width: 33%
+        width: 33.3%;
     }
 }
 
 @media (max-width: 1050px) {
     .productPage-container__leftSide{
         min-height: 250px;
-        min-width: 310px;
     }
-    .info{
-        min-width: 450px;
-    }
+
     .buyOptions{
         flex-direction: column;
         align-items: stretch;
         padding: 15px 20px 20px 20px;
     }
+
     .buyOptionsButtons{
         flex-direction: column;
     }
+
     .buyOptionsButtons button{
         width: 100%;
         margin: 10px 0 0 0;
@@ -278,6 +269,7 @@ details{
         flex-direction: column;
         align-items: center;
     }
+
     .info{
         width: 100%;
     }
@@ -288,15 +280,24 @@ details{
         margin: 0;
         padding: 10px;
     }
+
     .productPage-container__leftSide{
-        max-width: 250px;
+        min-width: 250px;
         margin: 0 0 15px 0;
         padding: 0;
     }
+
     .title{
         font-size: 24px;
     }
+
     .info .description{
         font-size: 1.1rem;
+    }
+}
+
+@media (max-width: 400px) {
+    .buyOptions{
+        padding: 5px 10px;
     }
 }

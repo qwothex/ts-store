@@ -1,11 +1,21 @@
+.back-link{
+    display: flex;
+    align-items: center;
+    margin: 30px 15px 5px;
+    text-decoration: none;
+    color: black;
+    font-size: 20px;
+}
+
 .orderDetails-container{
     background-color: #fff;
     display: flex;
     flex-direction: column;
-    margin: 50px 90px;
+    margin: 10px 90px 75px;
     padding: 15px;
     border-radius: 12px;
-    border: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--border-color);
+    border-top: 1px solid var(--border-color);
 }
 
 .orderDetails-container h2{
@@ -39,27 +49,83 @@
 }
 
 .order-products{
+
+}
+
+.order-product{
+    width: 100%;
+    height: 200px;
+    border-bottom: 1px solid var(--border-color);
+    box-sizing: border-box;
+    padding: 10px;
     display: flex;
-    flex-wrap: wrap;
+}
+
+.order-product img{
+    height: 100%;
+}
+
+.order-product .right-side{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 0 15px;
+
+    & .price{
+        width: fit-content;
+        margin: 0 0 0 auto;
+    };
+
+    & .discount-price-container{
+        width: fit-content;
+        margin-left: auto;
+    }
+}
+
+.order-product .right-side .top-side{
+    width: 80%;
+
+    & h3{
+        margin: 0;
+
+        &:hover{
+            text-decoration: underline;
+            cursor: pointer;
+        }
+    }
+
+    & p {
+        margin: 5px 0;
+        font-size: 14px;
+        color: rgba(59, 59, 59, 0.58);
+    }
+}
+
+.order-product .right-side .bottom-side{
+    margin-left: auto;
 }
 
 .cancel-button{
     width: 200px;
     height: 35px;
-    background-color: #f3f3f3;
+    background-color: #fff;
     margin-left: auto;
     margin-top: 10px;
-    border: 1px solid var(--border-color);
+    border: 1px solid rgba(255, 0, 0, 0.484);
     border-radius: 8px;
     color: black;
     transition: .2s;
 }
 
 .cancel-button:hover{
-    background-color: rgba(255, 0, 0, 0.825);
+    background-color: rgb(255, 0, 0);
     color: #fff;
 }
 
 @media (max-width: 1000px) {
-    
+    .order-product .right-side .top-side{
+        width: 100%;
+    }
 }

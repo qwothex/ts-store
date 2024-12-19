@@ -3,15 +3,14 @@ import { NavLink, useNavigate } from 'react-router-dom'
 import { useActions } from '../../hooks/useActions'
 import { createUser, loginUser } from '../../API/usersAPI/usersApi'
 import './authForm.css'
-import { CartI, UserI } from '../../types/types'
-import NavBar from '../navBar/NavBar'
+import { CartI, productItem, UserI } from '../../types/types'
 import { getOneProduct } from '../../API/productsAPI/productsAPI'
-import { productItem } from '../../store/slices/productSlice'
+import NavLayout from '../navLayout/NavLayout'
 
 
 const AuthForm:FC = () => {
 
-    const { setUserAuth, setCurrentUser, addLastViewProduct } = useActions()
+    const { setUserAuth, setCurrentUser, addLastViewProduct, addProductToLocalCart } = useActions()
 
     const navigate = useNavigate()
 
@@ -33,7 +32,7 @@ const AuthForm:FC = () => {
             setUserAuth(true)
             if(data.cart?.length)
                 data.cart.map((el: CartI) => getOneProduct(el.id)
-               .then((res: productItem) => addProductToCart({...res, amount: 1, price: el.RAMprice, memory: el.RAMvolume})))
+               .then((res: productItem) => addProductToLocalCart({...res, amount: 1, price: el.RAMprice, memory: el.RAMvolume})))
 
             if(data.lastview)data.lastview.map(id => getOneProduct(id)
                 .then((res: productItem) => addLastViewProduct(res)))
@@ -44,12 +43,13 @@ const AuthForm:FC = () => {
     }
 
     return(
+        <NavLayout>
         <div className='authPage-container'>
-            <NavBar />
             <form className='authForm' onSubmit={formSubmitHandler}>
                     <h3 style={{margin: '0 0 15px 0'}}>{isLoginPath ? 'Sign in' : 'Sing up'}</h3>
                     <input required placeholder='login' type={'text'} value={login} onChange={(e) => setLogin(e.target.value)}/>
                     <input required placeholder='password' minLength={6} type={'password'} value={password} onChange={(e) => setPassword(e.target.value)} />
+                    <span className='policy-input'><input type='checkbox' required />I confirm that i agree with site's Terms of Service and Privacy Policy</span>
                 <div>
                     {isLoginPath ? 
                         <div>
@@ -64,11 +64,8 @@ const AuthForm:FC = () => {
                 </div>
             </form>
         </div>
+        </NavLayout>
     )
 }
 
 export default AuthForm
-
-function addProductToCart(res: productItem): any {
-    throw new Error('Function not implemented.')
-}
