@@ -24,21 +24,22 @@ const SliderComponent:FC<SliderComponentI> = ({products, title, slidesToShow}) =
     }, [])
 
     const minElementsAmount = 2
-    const elementsAmount = offsetWidth/170
+    const elementsAmount = Math.floor(offsetWidth/170)
 
     return(
         <div ref={sliderContainerEl} className="SliderComponent-container">
             {title ? <h2 key={title}>{title}</h2> : <></>}
             <Glider
                 slidesToShow={elementsAmount >= minElementsAmount ? elementsAmount : minElementsAmount} //Math.floor(window.innerWidth / 170        //products.length <= slidesToShow ? products.length : slidesToShow
-                hasArrows={offsetWidth >= 680}
-                draggable={offsetWidth >= 680}
+                slidesToScroll={elementsAmount >= minElementsAmount ? elementsAmount : minElementsAmount}
+                hasArrows={elementsAmount < products.length}
+                draggable={elementsAmount < products.length} 
             >
-                {Math.floor(elementsAmount) > 3 
+                {elementsAmount >= 4 
                 ? 
                     products.map(el => el !== null ? <div><ProductItem key={el.id} product={el} /></div> : <></>) 
                 :
-                    products.slice(0, Math.floor(elementsAmount >= minElementsAmount ? elementsAmount : minElementsAmount) * currentRowAmount).map((el: productItem) => el !== null ? <div><ProductItem key={el.id} product={el} /></div> : <></>)
+                    products.slice(0, (elementsAmount >= minElementsAmount ? elementsAmount : minElementsAmount) * currentRowAmount).map((el: productItem) => el !== null ? <div><ProductItem key={el.id} product={el} /></div> : <></>)
                 }
             </Glider>
             <div className="button-container">

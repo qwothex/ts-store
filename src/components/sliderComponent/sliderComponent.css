@@ -12,7 +12,8 @@
 }
 
 .glider-slide{
-    min-width: 170px !important;
+    min-width: 170px;
+    max-width: 175px;
     box-sizing: border-box;
     margin-right: 1px;
 }
@@ -44,10 +45,11 @@
     .glider-slide{
         margin: 0;
         flex-basis: 33.3%;
+        max-width: none;
     }
 }
 
-@media (max-width: 519px) {
+@media (max-width: 554px) {
     .SliderComponent-container .glider-slide{
         flex-basis: 50%;
         min-width: 155px !important;

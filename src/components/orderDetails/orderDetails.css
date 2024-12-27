@@ -26,11 +26,6 @@
     margin: 10px 0;
 }
 
-.order-data{
-    display: flex;
-    justify-content: start;
-}
-
 .order-data ul{
     list-style-type: none;
     padding-left: 0;
@@ -43,13 +38,8 @@
     border: 1px solid var(--border-color);
     display: flex;
     align-items: center;
-    /* background-color: #f3f3f3; */
     border-radius: 8px;
     padding: 5px;
-}
-
-.order-products{
-
 }
 
 .order-product{
@@ -61,17 +51,21 @@
     display: flex;
 }
 
-.order-product img{
+.order-product .image{
+    min-width: 200px;
     height: 100%;
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
 }
 
 .order-product .right-side{
-    width: 100%;
     height: 100%;
+    width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    padding: 0 15px;
+    padding: 0 5px;
 
     & .price{
         width: fit-content;
@@ -89,6 +83,7 @@
 
     & h3{
         margin: 0;
+        max-height: 44px;
 
         &:hover{
             text-decoration: underline;
@@ -127,5 +122,64 @@
 @media (max-width: 1000px) {
     .order-product .right-side .top-side{
         width: 100%;
+    }
+}
+
+@media (max-width: 768px) {
+    .orderDetails-container{
+        margin: 5px 15px;
+    }
+}
+
+@media (max-width: 550px) {
+    .orderDetails-container{
+        margin: 0;
+    }
+
+    .order-data ul {
+        flex-direction: column;
+
+        & li{
+            border: none;
+            border-bottom: 1px solid var(--border-color);
+        }
+    }
+
+    .order-product{
+        height: fit-content;
+        min-height: 350px;
+        flex-direction: column;
+
+        & .image {
+            min-height: 150px;
+            margin-bottom: 10px;
+        }
+
+        & .right-side {
+            width: auto;
+
+            & .top-side h3{
+                max-height: none;
+            }
+        }
+    }
+}
+
+
+
+
+@media (min-width: 2000px) {
+    .orderDetails-container{
+        margin: 10px auto 75px;
+        display: grid;
+        place-items: center;
+    }
+
+    .order-products{
+        width: fit-content;
+    }
+
+    .order-product{
+        max-width: 1250px;
     }
 }

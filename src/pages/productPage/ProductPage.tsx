@@ -17,6 +17,7 @@ import SliderComponent from '../../components/sliderComponent/SliderComponent'
 import USDPrice from '../../components/priceController/USDPrice'
 import UAHPrice from '../../components/priceController/UAHPrice'
 import { productItem } from '../../types/types'
+import BankOption from '../../components/bankOption/BankOption'
 
 const ProductPage:FC = () => {
 
@@ -28,12 +29,13 @@ const ProductPage:FC = () => {
     const [RAMprice, setRAMprice] = useState(0)
     const [RAMvolume, setRAMvolume] = useState('')
     const [loading, setLoading] = useState(true)
-    const [modalState, setModalState] = useState(false)
+    const [adminModalState, setAdminModalState] = useState(false)
+    const [creditModalState, setCreditModalState] = useState(false)
     const [changeState, setChangeState] = useState(false)
     const [popUpStatus, setPopUpStatus] = useState<{show: boolean, success?: boolean, text?: string}>({show: false, success: true, text: ''})
     const [similarOffers, setSimilarOffers] = useState<productItem[]>()
 
-    const Close = () => setModalState(false)
+    const Close = (modal: 'admin' | 'credit') => {modal == 'admin' ? setAdminModalState(false) : setCreditModalState(false)}
 
     const {id} = useParams()
 
@@ -42,12 +44,12 @@ const ProductPage:FC = () => {
     const {currency} = useAppSelector(state => state.productReducer)
 
     const initialFetch = async() => {
+        setLoading(true)
         const productData: productItem = await getOneProduct(Number(id))
         if(productData){
             setProduct({...productData, detailedDescription: typeof productData.detailedDescription === 'string' ? JSON.parse(productData.detailedDescription) : null})
             getAllProducts(productData.type, productData.brand, 16, 1).then((data: productProps) => {
-                const deleted = data.rows.splice(data.rows.findIndex(el => el.id == +id!))
-                setSimilarOffers(data.rows)
+                setSimilarOffers(data.rows.filter(el => el.id !== +id!))
             })
             if(user.id){
                 addLastView(user.id!, productData.id)
@@ -102,26 +104,63 @@ const ProductPage:FC = () => {
        }else{
             alert("Wrong input")
        }
-       Close()
+       Close('admin')
     }
 
     const removeDiscountHandler = () => {
         addDiscount(Number(id), 0)
-        Close()
+        Close('admin')
     }
 
     const deleteProductHandler = () => {
         deleteProduct(Number(id))
         navigate('/', {replace: false})
-        Close()
+        Close('admin')
     }
 
-    const modalBody = <div>
+    const adminModalBody = <div>
         <button className='discount-button' onClick={discountClickHandler}>discount</button>
         { product?.discount ? <button className='delete-button' onClick={removeDiscountHandler}>remove discount</button> : <></>}
         <button className='delete-button' onClick={deleteProductHandler}>delete product</button>
         <button className='discount-button' onClick={() => setChangeState(!changeState)}>change product</button>
         {changeState ? <ChangeProductForm product={product} /> : <></>}
+    </div>
+
+    const discountRAMprice = +((RAMprice - (RAMprice * discount/100)).toFixed())
+    const discountPrice = +((price - (price * discount/100)).toFixed())
+
+    const creditModalBody = <div>
+
+        <BankOption price={
+            RAMprice ?
+                discount ? discountRAMprice : RAMprice 
+                : 
+                discount ? discountPrice : price} 
+
+        logoPath='1'
+        title='Bank 1'
+        onClick={cartButtonHandler}
+        />
+
+        <BankOption price={
+            RAMprice ?
+                discount ? discountRAMprice : RAMprice 
+                : 
+                discount ? discountPrice : price} 
+        logoPath='2'
+        title='Bank 2'
+        onClick={cartButtonHandler}
+        />
+
+        <BankOption price={
+            RAMprice ?
+                discount ? discountRAMprice : RAMprice 
+                : 
+                discount ? discountPrice : price} 
+        logoPath='3'
+        title='Bank 3'
+        onClick={cartButtonHandler}
+        />
     </div>
 
     return(
@@ -153,14 +192,22 @@ const ProductPage:FC = () => {
                     {currency == "USD" ? <USDPrice price={RAMprice || price} discount={discount} /> : <UAHPrice price={RAMprice || price} discount={discount} />}
                     <div className='buyOptionsButtons'>
                         <button className='cart-button' onClick={cartButtonHandler}>Add to cart</button>
-                        <button className='credit-button'>buy in credit</button>
-                        {user.role == 'ADMIN' ? <button onClick={() => setModalState(true)} className='discount-button'>ADMIN</button> : <></>}
+                        <button className='credit-button' onClick={() => setCreditModalState(true)}>buy in credit</button>
+                    <ModalWindow 
+                        visible={creditModalState}
+                        title ='Credit'
+                        body = {creditModalBody}
+                        Close ={() => Close('credit')}
+                        width={900}
+                        height={'fit-content'}
+                    />
+                        {user.role == 'ADMIN' ? <button onClick={() => setAdminModalState(true)} className='discount-button'>ADMIN</button> : <></>}
                     </div>
                     <ModalWindow 
-                        visible={modalState}
+                        visible={adminModalState}
                         title ='ADMIN PANEL'
-                        body = {modalBody}
-                        Close ={Close}
+                        body = {adminModalBody}
+                        Close ={() => Close('admin')}
                     />
                 </div>
                 <DevileryInfo />
@@ -183,7 +230,7 @@ const ProductPage:FC = () => {
                     <></>
                 }
             <div className='similar-offers'>
-                {similarOffers && <SliderComponent title='You might like it' products={similarOffers} slidesToShow={8} />}
+                {similarOffers?.length ? <SliderComponent title='You might like it' products={similarOffers} slidesToShow={8} /> : <></>}
             </div>
           </div>
         </NavLayout>

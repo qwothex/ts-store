@@ -7,8 +7,8 @@ interface modalProps {
     body: React.ReactElement | React.ReactNode | string
     footer?: React.ReactElement | React.ReactNode | string
     Close: () => void
-    width?: number
-    height?: number
+    width?: number | string
+    height?: number | string
 }
 
 const ModalWindow = ({visible, title, body, footer, Close, width, height} : modalProps) => {

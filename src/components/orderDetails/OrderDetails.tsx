@@ -16,26 +16,34 @@ import USDPrice from '../priceController/USDPrice'
 const OrderDetails:FC = () => {
 
     const {id} = useParams()
-    const {setCurrentOrderProducts} = useActions()
+    // const {setCurrentOrderProducts} = useActions()
 
     const navigate = useNavigate()
 
     const [order, setOrder] = useState<OrderI>({} as OrderI)
+    const [currentOrderProducts, setCurrentOrderProducts] = useState<productItem[]>([])
 
     const [loading, setLoading] = useState(true)
 
-    const {currentOrderProducts} = useAppSelector(state => state.orderReducer)
+    // const {currentOrderProducts} = useAppSelector(state => state.orderReducer)
     const {currency} = useAppSelector(state => state.productReducer)
 
     const date = new Date(order.createdAt).toLocaleDateString('en-EN', {day: 'numeric', month: 'long', year: 'numeric'})
 
     useEffect(() => {
-        if(!currentOrderProducts.length){
-            getOneOrder(+id!).then((data: OrderI) => {
+        // if(!currentOrderProducts.length){
+        //     getOneOrder(+id!).then((data: OrderI) => {
+        //         setOrder(data)
+        //         data.products.map((el: CartI) => getOneProduct(el.id).then((data:productItem) => setCurrentOrderProducts({...data, price: el.RAMprice, memory: el.RAMvolume, amount: el.amount})))
+        //     })
+        // }
+            getOneOrder(+id!).then((data:OrderI) => {
                 setOrder(data)
-                data.products.map((el: CartI) => getOneProduct(el.id).then((data:productItem) => setCurrentOrderProducts({...data, price: el.RAMprice, memory: el.RAMvolume, amount: el.amount})))
+                data.products.map((el: CartI) => getOneProduct(el.id)
+                .then((res:productItem) => setCurrentOrderProducts((prevState) => {
+                    return [...prevState, {...res, price: el.RAMprice, memory: el.RAMvolume, amount: el.amount}]
+                })))
             })
-        }
         setLoading(false)
     }, [id])
 
@@ -56,11 +64,10 @@ const OrderDetails:FC = () => {
             </div>
             <h3>Order items</h3>
             <div className='order-products'>
-                {currentOrderProducts.map((el) => {
-                    console.log(el)
+                {currentOrderProducts?.map((el) => {
                     return(
                         <div className='order-product'>
-                            <img src={'http://localhost:5000/' + el.image} />
+                            <div style={{backgroundImage: `url(${'http://localhost:5000/' + el.image})`}} className='image'></div>
                             <div className='right-side'>
                                 <div className="top-side">
                                     <h3 className="title" onClick={() => navigate('/product/' + el.id, {replace: false})}>
@@ -70,14 +77,19 @@ const OrderDetails:FC = () => {
                                 </div>
                                 <div className='bottom-side'>
                                     {currency == 'UAH' ? <UAHPrice price={el.price * el.amount} discount={el.discount}/> : <USDPrice price={el.price * el.amount} discount={el.discount}/>}
-                                    <span>{el.amount + ' for ' + el.price + ' each'}</span>
+                                    <span>{el.amount + ' for ' + el.price + ' each'}{el.discount !== 0 }</span>
                                 </div>
                             </div>
                         </div>
                     )
                 })}
             </div>
-            <button className='cancel-button' onClick={() => changeOrderStatus(order.id, 'canceled')}>Cancel order</button>
+            {order.status == 'canceled' 
+                ? 
+                    <></> 
+                : 
+                <button className='cancel-button' onClick={() => changeOrderStatus(order.id, 'canceled')}>Cancel order</button>
+            }
         </div>
         </NavLayout>
     )

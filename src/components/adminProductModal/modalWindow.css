@@ -24,8 +24,13 @@
 .modal-header{
     display: flex;
     justify-content: space-between;
+    align-items: center;
     border-bottom: 1px solid black;
     padding: 0 5px 5px 5px;
+
+    & .modal-title{
+        font-size: 24px;
+    }
 }
 
 .modal-close{

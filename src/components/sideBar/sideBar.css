@@ -185,7 +185,7 @@
 @media (max-width: 950px) {
     .sidebar-container{
         height: 100%;
-        position: absolute;
+        position: fixed;
         left: -1px;
         z-index: 90;
     }
