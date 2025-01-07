@@ -1,16 +1,13 @@
 import {FC} from 'react'
 import './sideBar.css'
-import { useActions } from '../../hooks/useActions'
-import { useAppSelector } from '../../hooks/useAppSelector'
 import { FaRegQuestionCircle } from "react-icons/fa";
 import { IoChatboxEllipsesOutline } from "react-icons/io5";
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import { TiVendorApple } from "react-icons/ti";
 import { SiSamsung } from "react-icons/si";
 import { IconType } from 'react-icons';
 import { SiAsus } from "react-icons/si";
 import { SiAcer } from "react-icons/si";
-import { SiXiaomi } from "react-icons/si";
 import { IoMdLaptop } from "react-icons/io";
 import { IoIosPhonePortrait } from "react-icons/io";
 import { BsPc } from "react-icons/bs";
@@ -18,7 +15,7 @@ import { IoMdTv } from "react-icons/io";
 
 const SideBar:FC = () => {
 
-    const {setCurrentBrand, setCurrentType} = useActions()
+    const [searchParams, setSearchParams] = useSearchParams()
 
     const types = [
         {"name" : "Laptop", "logo" : IoMdLaptop}, 
@@ -32,11 +29,7 @@ const SideBar:FC = () => {
         {"name" : "Samsung", "logo" : SiSamsung}, 
         {"name" : "Asus", "logo" : SiAsus}, 
         {"name" : "Acer", "logo" : SiAcer}, 
-        {"name" : "Xiaomi", "logo" : SiXiaomi} 
     ]
-
-    const {currentType} = useAppSelector(state => state.productReducer)
-    const {currentBrand} = useAppSelector(state => state.productReducer)
 
     return(
         <div className='sidebar-container'>
@@ -48,7 +41,8 @@ const SideBar:FC = () => {
         <ul className='list'>
                 {types.map((el : {name: string, logo: IconType}) => 
                     <li key={el.name} onClick={(e) => {
-                        currentType == el.name ? setCurrentType("") : setCurrentType(el.name)
+                        searchParams.set('type', el.name)
+                        setSearchParams(searchParams)
                         }} >
                             <el.logo size={19}></el.logo>{el.name}
                     </li>
@@ -58,7 +52,8 @@ const SideBar:FC = () => {
             <ul className='list'>
                 {brands.map((el: {name: string, logo: IconType}) => 
                     <li key={el.name} onClick={(e) => {
-                        currentBrand == el.name ? setCurrentBrand("") : setCurrentBrand(el.name)
+                        searchParams.set('brand', el.name)
+                        setSearchParams(searchParams)
                         }} >
                             <el.logo size={21}></el.logo>{el.name}
                     </li>

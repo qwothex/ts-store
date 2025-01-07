@@ -17,12 +17,14 @@ const Router:FC = () => {
             {privateRoutes.map(({path, Component}) => 
                 <Route key={path} path={path} element={<Component/>} errorElement={<ErrorPage message="404. Not Found" />}/>
             )}
+            <Route key={'*'} path="*" element={<ErrorPage message='404 not found' />} />
         </Routes>
             : 
         <Routes>
             {publicRoutes.map(({path, Component}) => 
                 <Route key={path} path={path} element={<Component/>} errorElement={<ErrorPage message="404. Not Found" />}/>
             )}
+            <Route key={'*'} path="*" element={<ErrorPage message='404 not found' />} />
         </Routes>
         }
         </>

@@ -13,7 +13,7 @@ import { OrderI } from '../../types/types'
 
 const OrdersPage:FC = () => {
 
-    const {setOrders, truncateCurrentOrderProducts} = useActions()
+    const {setOrders} = useActions()
 
     const {orders} = useAppSelector(state => state.orderReducer)
     const {id} = useAppSelector(state => state.userReducer.user)
@@ -24,7 +24,6 @@ const OrdersPage:FC = () => {
 
     useEffect(() => {
         getOrders(id!).then((data) => setOrders(data)).finally(() => setLoading(false))
-        truncateCurrentOrderProducts()
     }, [])
 
     if(loading) return <Loading />

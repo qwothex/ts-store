@@ -1,4 +1,5 @@
-import { authHost, cacheHost, host } from ".."
+import { authHost, host } from ".."
+import { responseValidate } from "../../utils/responseValidate"
 
 export const createProduct = async (product: FormData) => {
     const {data} = await authHost.post('api/product', product)
@@ -13,8 +14,16 @@ export const getAllProducts = async(type: string | null, brand: string | null, l
 }
 
 export const getOneProduct = async(id:number) => {
-    const {data} = await cacheHost.get('api/product/' + id)
-    return data
+    const data = async() => {
+        try{
+            const res = await host.get('api/product/' + id)
+            return res
+        }catch(e: any){
+            return e.response?.data.message;
+        }
+    }
+    const response = await data()
+    return responseValidate(response!)
 }
 
 export const deleteProduct = async(id: number) => {

@@ -7,7 +7,7 @@ import { RotateLoader } from 'react-spinners'
 import { addCartProduct, addLastView } from '../../API/usersAPI/usersApi'
 import { useAppSelector } from '../../hooks/useAppSelector'
 import { useActions } from '../../hooks/useActions'
-import ModalWindow from '../../components/adminProductModal/ModalWindow'
+import ModalWindow from '../../components/modalWindow/ModalWindow'
 import ErrorPage from '../errorPage/ErrorPage'
 import PopUp from '../../components/pop-upWindow/PopUp'
 import ChangeProductForm from '../../components/changeProductForm/ChangeProductForm'
@@ -18,6 +18,8 @@ import USDPrice from '../../components/priceController/USDPrice'
 import UAHPrice from '../../components/priceController/UAHPrice'
 import { productItem } from '../../types/types'
 import BankOption from '../../components/bankOption/BankOption'
+import { AxiosError } from 'axios'
+import isError from '../../utils/isError'
 
 const ProductPage:FC = () => {
 
@@ -34,6 +36,7 @@ const ProductPage:FC = () => {
     const [changeState, setChangeState] = useState(false)
     const [popUpStatus, setPopUpStatus] = useState<{show: boolean, success?: boolean, text?: string}>({show: false, success: true, text: ''})
     const [similarOffers, setSimilarOffers] = useState<productItem[]>()
+    const [errorMessage, setErrorMessage] = useState<string>('')
 
     const Close = (modal: 'admin' | 'credit') => {modal == 'admin' ? setAdminModalState(false) : setCreditModalState(false)}
 
@@ -45,8 +48,9 @@ const ProductPage:FC = () => {
 
     const initialFetch = async() => {
         setLoading(true)
-        const productData: productItem = await getOneProduct(Number(id))
-        if(productData){
+        const productData: productItem | AxiosError = await getOneProduct(Number(id))
+        console.log(productData)
+        if(!isError(productData)){
             setProduct({...productData, detailedDescription: typeof productData.detailedDescription === 'string' ? JSON.parse(productData.detailedDescription) : null})
             getAllProducts(productData.type, productData.brand, 16, 1).then((data: productProps) => {
                 setSimilarOffers(data.rows.filter(el => el.id !== +id!))
@@ -55,6 +59,9 @@ const ProductPage:FC = () => {
                 addLastView(user.id!, productData.id)
                 addLastViewProduct(productData)
             }
+        }else{
+            setErrorMessage(productData.message)
+            setLoading(false)
         }
         setLoading(false)
     }
@@ -70,7 +77,7 @@ const ProductPage:FC = () => {
     }
 
     if(!product){
-        return <ErrorPage message="Product does not exist" />
+        return <ErrorPage message={errorMessage} />
     }
 
     if(popUpStatus.show){
@@ -118,18 +125,18 @@ const ProductPage:FC = () => {
         Close('admin')
     }
 
-    const adminModalBody = <div>
+    const adminModalBody = <>
         <button className='discount-button' onClick={discountClickHandler}>discount</button>
         { product?.discount ? <button className='delete-button' onClick={removeDiscountHandler}>remove discount</button> : <></>}
         <button className='delete-button' onClick={deleteProductHandler}>delete product</button>
         <button className='discount-button' onClick={() => setChangeState(!changeState)}>change product</button>
         {changeState ? <ChangeProductForm product={product} /> : <></>}
-    </div>
+    </>
 
     const discountRAMprice = +((RAMprice - (RAMprice * discount/100)).toFixed())
     const discountPrice = +((price - (price * discount/100)).toFixed())
 
-    const creditModalBody = <div>
+    const creditModalBody = <>
 
         <BankOption price={
             RAMprice ?
@@ -161,7 +168,7 @@ const ProductPage:FC = () => {
         title='Bank 3'
         onClick={cartButtonHandler}
         />
-    </div>
+    </>
 
     return(
         <NavLayout>
@@ -230,7 +237,7 @@ const ProductPage:FC = () => {
                     <></>
                 }
             <div className='similar-offers'>
-                {similarOffers?.length ? <SliderComponent title='You might like it' products={similarOffers} slidesToShow={8} /> : <></>}
+                {similarOffers?.length ? <SliderComponent title='You might like it' products={similarOffers} /> : <></>}
             </div>
           </div>
         </NavLayout>

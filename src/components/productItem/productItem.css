@@ -57,7 +57,6 @@
 
     .items-div .item-card {
             box-sizing: border-box;
-            /* min-width: 171px; */
             flex-basis: 33%;
             height: 236px;
     }

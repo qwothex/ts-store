@@ -8,12 +8,12 @@
 }
 
 .changeProduct-form input{
-    height: 30px;
+    min-height: 30px; 
     margin: 5px 0;
 }
 
 .changeProduct-form button{
-    height: 35px;
+    min-height: 35px;
     margin-top: 10px;
     border: 1px solid green;
     border-radius: 10px;
@@ -29,5 +29,25 @@
 
 .change-detailedDescription{
     display: flex;
+    flex-wrap: wrap;
     gap: 5px;
+}
+
+@media (max-width: 724px) {
+    .changeProduct-form{
+        width: 100%;
+        margin: 0;
+    }
+}
+
+@media (max-width: 463px) {
+    .change-detailedDescription{
+
+        & input{
+            height: 40px;
+            box-sizing: border-box;
+            min-width: 150px;
+            flex-basis: 49%;
+        }
+    }
 }

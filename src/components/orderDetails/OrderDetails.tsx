@@ -5,7 +5,6 @@ import { changeOrderStatus, getOneOrder } from '../../API/ordersAPI/ordersAPI'
 import { CartI, OrderI, productItem } from '../../types/types'
 import Loading from '../loading/Loading'
 import { getOneProduct } from '../../API/productsAPI/productsAPI'
-import { useActions } from '../../hooks/useActions'
 import { useAppSelector } from '../../hooks/useAppSelector'
 import NavLayout from '../navLayout/NavLayout'
 import { HiArrowSmLeft } from "react-icons/hi";
@@ -16,7 +15,6 @@ import USDPrice from '../priceController/USDPrice'
 const OrderDetails:FC = () => {
 
     const {id} = useParams()
-    // const {setCurrentOrderProducts} = useActions()
 
     const navigate = useNavigate()
 
@@ -25,18 +23,11 @@ const OrderDetails:FC = () => {
 
     const [loading, setLoading] = useState(true)
 
-    // const {currentOrderProducts} = useAppSelector(state => state.orderReducer)
     const {currency} = useAppSelector(state => state.productReducer)
 
     const date = new Date(order.createdAt).toLocaleDateString('en-EN', {day: 'numeric', month: 'long', year: 'numeric'})
 
     useEffect(() => {
-        // if(!currentOrderProducts.length){
-        //     getOneOrder(+id!).then((data: OrderI) => {
-        //         setOrder(data)
-        //         data.products.map((el: CartI) => getOneProduct(el.id).then((data:productItem) => setCurrentOrderProducts({...data, price: el.RAMprice, memory: el.RAMvolume, amount: el.amount})))
-        //     })
-        // }
             getOneOrder(+id!).then((data:OrderI) => {
                 setOrder(data)
                 data.products.map((el: CartI) => getOneProduct(el.id)

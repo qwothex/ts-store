@@ -6,6 +6,8 @@ import './authForm.css'
 import { CartI, productItem, UserI } from '../../types/types'
 import { getOneProduct } from '../../API/productsAPI/productsAPI'
 import NavLayout from '../navLayout/NavLayout'
+import PopUp from '../pop-upWindow/PopUp'
+import { AxiosError } from 'axios'
 
 
 const AuthForm:FC = () => {
@@ -18,6 +20,8 @@ const AuthForm:FC = () => {
 
     const [login, setLogin] = useState('')
     const [password, setPassword] = useState('')
+    const [popUpStatus, setPopUpStatus] = useState<{show: boolean, success?: boolean, text?: string}>({show: false, success: true, text: 'Something went wrong!'})
+
     
     const formSubmitHandler = async(e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
@@ -30,20 +34,28 @@ const AuthForm:FC = () => {
             }
             setCurrentUser(data)
             setUserAuth(true)
+
             if(data.cart?.length)
                 data.cart.map((el: CartI) => getOneProduct(el.id)
                .then((res: productItem) => addProductToLocalCart({...res, amount: 1, price: el.RAMprice, memory: el.RAMvolume})))
 
             if(data.lastview)data.lastview.map(id => getOneProduct(id)
                 .then((res: productItem) => addLastViewProduct(res)))
+
             navigate('/', {replace: false})
         }catch(error: any){
-            alert(error?.message)
+            console.log(error)
+            setPopUpStatus({show: true, text: error.response.status == 500 ? 'Wrong username or password' : 'Something went wrong'})
         }
+    }
+
+    if(popUpStatus.show){
+        setTimeout(() => setPopUpStatus({show: false}), 4000)
     }
 
     return(
         <NavLayout>
+        {popUpStatus.show ? <PopUp text={popUpStatus.text!} isSucces={false} /> : <></>}
         <div className='authPage-container'>
             <form className='authForm' onSubmit={formSubmitHandler}>
                     <h3 style={{margin: '0 0 15px 0'}}>{isLoginPath ? 'Sign in' : 'Sing up'}</h3>

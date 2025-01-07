@@ -29,7 +29,7 @@ const App:FC = () => {
           }).finally(() => setLoading(false))
   }, [])
 
-  if(loading) return <Loading />
+  // if(loading) return <Loading />
 
   return (
       <Router />

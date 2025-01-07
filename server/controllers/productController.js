@@ -40,10 +40,22 @@ class ProductController {
     }
 
     async getOne(req, res) {
-        const {id} = req.params
-        const device = await Product.findOne({where: {id}})
-
-        return res.json(device)
+        let {id} = req.params
+        id = Number(id)
+        if(typeof id == 'number' && id % 1 == 0){
+            try{
+                const device = await Product.findOne({where: {id}})
+                if(device){
+                    return res.json(device)
+                }else{
+                    return res.status(404).json({message:'The product does not exist'})
+                }
+            }catch{
+                return res.status(404).json({message: 'Unexpected error occurred.'})
+            }
+        }else{
+            return res.status(404).json({message: 'Invalid product id.'})
+        }
     }
 
     async remove(req, _res){

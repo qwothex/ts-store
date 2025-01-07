@@ -1,5 +1,4 @@
 import AuthForm from "./components/authForm/AuthForm";
-import ContactForm from "./components/contactForm/ContactForm";
 import OrderDetails from "./components/orderDetails/OrderDetails";
 import AdminPage from "./pages/adminPage/AdminPage";
 import CartPage from "./pages/cartPage/CartPage";

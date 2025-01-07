@@ -26,6 +26,7 @@ const Admin:FC = () => {
     const [manufacturer, setManufacturer] = useState('')
 
     const formSubmitHandler = (e: React.FormEvent<HTMLFormElement>) => {
+      e.preventDefault()
         const formData = new FormData()
         formData.append('title', title)
         formData.append('description', description)

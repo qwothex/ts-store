@@ -6,7 +6,7 @@ import CartPropductItem from '../../components/cartProductItem/CartProductItem'
 import { createOrder } from '../../API/ordersAPI/ordersAPI'
 import { useActions } from '../../hooks/useActions'
 import { truncateUserCart } from '../../API/usersAPI/usersApi'
-import ModalWindow from '../../components/adminProductModal/ModalWindow'
+import ModalWindow from '../../components/modalWindow/ModalWindow'
 import NavLayout from '../../components/navLayout/NavLayout'
 import { productItem } from '../../types/types'
 

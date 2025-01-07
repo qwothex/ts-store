@@ -9,26 +9,34 @@ import ProductItem from '../../components/productItem/ProductItem'
 import SliderComponent from '../../components/sliderComponent/SliderComponent'
 import {AdsSlider} from '../../components/adsSlider/AdsSlider'
 import NavLayout from '../../components/navLayout/NavLayout'
-import Loading from '../../components/loading/Loading'
-import AdsSliderContent from '../../components/adsSlider-content/AdsSliderContent'
+import { useSearchParams } from 'react-router-dom'
+import CardsLoaderContainer from '../../components/cardsLoaderContainer/CardsLoaderContainer'
 
 const MainPage:FC = () => {
 
-    const {currentBrand, currentType, products} = useAppSelector(state => state.productReducer)
+    const {products} = useAppSelector(state => state.productReducer)
     const {lastview} = useAppSelector(state => state.productReducer) 
 
-    const { setProducts, setCurrentBrand, setCurrentType, sortProducts } = useActions()
+    const { setProducts, sortProducts } = useActions()
 
     const [loading, setLoading] = useState(true)
 
-    useEffect(() => {
-        setLoading(true)
-        getAllProducts(currentType, currentBrand, 30, 1)
-        .then(data => setProducts(data))
-        .then(() => setLoading(false))
-    }, [currentBrand, currentType])
+    const [currentType, setCurrentType] = useState('')
+    const [currentBrand, setCurrentBrand] = useState('')
 
-    if(loading) return <Loading />
+
+    const [searchParams, setSearchParams] = useSearchParams()
+
+    useEffect(() => {
+        const brand = searchParams.get('brand')
+        const type = searchParams.get('type')
+        if(brand) setCurrentBrand(brand)
+        if(type) setCurrentType(type)
+        setLoading(true)
+        getAllProducts(type, brand, 30, 1)
+            .then(data => setProducts(data))
+            .then(() => setLoading(false))
+    }, [searchParams])
 
     const changeSort = (e: React.ChangeEvent<HTMLSelectElement>) => {
         e.preventDefault()
@@ -43,39 +51,65 @@ const MainPage:FC = () => {
                 <div className='main-content'>
                     <AdsSlider>
                         <AdsSlider.Element>
-                            {/* <AdsSliderContent imageUrl='http://localhost:3000/static/media/iphone16-advertising-2.34949fb7c7bbdf62f33e.jpg'/> */}
-                            <div className='ads ads3'></div>
+                            <div className='ads ads1'></div>
                         </AdsSlider.Element>
 
                         <AdsSlider.Element>
-                            {/* <AdsSliderContent imageUrl='http://localhost:3000/static/media/flip-advertising.de816cdfc1fdfc36b07d.png'/> */}
                             <div className='ads ads2'></div>
                         </AdsSlider.Element>
 
                         <AdsSlider.Element>
-                            {/* <AdsSliderContent imageUrl='http://localhost:3000/static/media/iphone16-advertising.e997b6c2be6bafeaeb1e.jpg'/> */}
-                            <div className='ads ads1'></div>
+                            <div className='ads ads3'></div>
                         </AdsSlider.Element>
                     </AdsSlider>
-                    {lastview.length > 0 ? <SliderComponent title='Recenly viewed' products={lastview} slidesToShow={6} /> : <></>}
-                    <SliderComponent title='Discounts' products={products.rows.filter(el => typeof el.discount == "number" && el.discount !== 0)} slidesToShow={6} />
-                    <SliderComponent title='Laptops' products={products.rows.filter(el => el.type === 'Laptop')} slidesToShow={6} />
-                    <SliderComponent title='Phones' products={products.rows.filter(el => el.type === 'Phone')} slidesToShow={6} />
+                    {lastview.length ?  <SliderComponent title='Recenly viewed' products={lastview} /> : <></>}
+                    {loading ? 
+                        <>
+                            <CardsLoaderContainer cardsQuantity={3} /> 
+                            <CardsLoaderContainer cardsQuantity={3} /> 
+                            <CardsLoaderContainer cardsQuantity={3} /> 
+                        </>
+                    :
+                        <>
+                            <SliderComponent title='Discounts' products={products.rows.filter(el => typeof el.discount == "number" && el.discount !== 0)} />
+                            <SliderComponent title='Laptops' products={products.rows.filter(el => el.type === 'Laptop')} />
+                            <SliderComponent title='Phones' products={products.rows.filter(el => el.type === 'Phone')} />
+                        </>
+                    }
                 </div>
             :
             <div>
                  <div className='active-filters'> 
                     { currentBrand && currentType ?
                         <div>
-                            <button className='active-filters__button' onClick={() => setCurrentBrand('')}>{currentBrand}</button> 
-                            <button className='active-filters__button' onClick={() => setCurrentType('')}>{currentType}</button> 
+                            <button className='active-filters__button' onClick={() => {
+                                setCurrentBrand('')
+                                    searchParams.delete('brand')
+                                    setSearchParams(searchParams)
+                                    
+                                }}>{currentBrand}</button> 
+                            <button className='active-filters__button' onClick={() => {
+                                setCurrentType('')
+                                    searchParams.delete('type')
+                                    setSearchParams(searchParams)
+                                    
+                                }}>{currentType}</button> 
                         </div>
                     :
                     currentBrand ? 
-                            <button className='active-filters__button' onClick={() => setCurrentBrand('')}>{currentBrand}</button> 
+                            <button className='active-filters__button' onClick={() => {
+                                setCurrentBrand('')
+                                searchParams.delete('brand')
+                                setSearchParams(searchParams)
+                            }}>{currentBrand}</button> 
                     :
                     //currentType
-                    <button className='active-filters__button' onClick={() => setCurrentType('')}>{currentType}</button> 
+                    <button className='active-filters__button' onClick={() => {
+                        setCurrentType('')
+                        searchParams.delete('type')
+                        setSearchParams(searchParams)
+                        
+                    }}>{currentType}</button> 
                     }
                     <form>
                         <select onChange={changeSort} name='select'>
@@ -85,10 +119,9 @@ const MainPage:FC = () => {
                         </select>
                     </form>
                 </div>
+                <h4>{products.count} products found</h4>
                 <div className='items-div'>
-                    {
-                        products.rows.length > 0 ? products.rows.map(el => <ProductItem key={el.id} product={el} />) : "No products founded"
-                    }
+                    {loading ? <CardsLoaderContainer cardsQuantity={3} /> : products.rows.length > 0 ? products.rows.map(el => <ProductItem key={el.id} product={el} />) : "No products founded"}
                 </div>
             </div>
             }

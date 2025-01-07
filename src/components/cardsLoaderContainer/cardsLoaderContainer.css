@@ -1,0 +1,5 @@
+.cardsLoader-container{
+    display: flex;
+    margin-bottom: 50px;
+    flex-wrap: wrap;
+}

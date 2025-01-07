@@ -13,14 +13,12 @@ export interface DetailedDescription {
 
 export interface productProps {
     count: number, 
-    rows: [productItem]
+    rows: productItem[]
 }
 
 interface initialStateProps {
     products: productProps,
     currentFilter: string,
-    currentBrand: string,
-    currentType: string,
     currency: 'UAH' | 'USD',
     cart: productItem[],
     lastview: productItem[]
@@ -32,8 +30,6 @@ const initialState: initialStateProps = {
         rows: [<productItem>{}]
     },
     currentFilter: '',
-    currentBrand: '',
-    currentType: '',
     currency: 'USD',
     cart: [],
     lastview: []
@@ -45,12 +41,6 @@ const productSlice = createSlice({
     reducers: {
         setProducts: (state, action: PayloadAction<productProps>) => {
             state.products = action.payload
-        },
-        setCurrentBrand: (state, action: PayloadAction<string>) => {
-            state.currentBrand = action.payload
-        },
-        setCurrentType: (state, action: PayloadAction<string>) => {
-            state.currentType = action.payload
         },
         setCurrency: (state, action: PayloadAction<'USD' | 'UAH'>) => {
             state.currency = action.payload

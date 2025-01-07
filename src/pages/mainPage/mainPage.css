@@ -18,7 +18,6 @@
     padding-right: 50px;
 }
 
-
 .active-filters form {
     display: flex;
     align-items: center;
@@ -27,7 +26,6 @@
 .active-filters form select {
     height: 35px;
     border-radius: 8px;
-    /* height: 100%; */
 }
 
 .active-filters form .select-button{
@@ -60,7 +58,7 @@
     text-align: start;
     position: relative;
     cursor: pointer;
-    margin: 0 10px 5px 0;
+    margin: 0 10px 0px 0;
     transition: 0.2s;
     box-sizing: border-box;
 }
@@ -95,20 +93,20 @@
     width: 100%;
     height: 100%;
     background-position: center;
-    background-size: contain;
+    background-size: cover;
     background-repeat: no-repeat;
 }
 
 .ads1{
-    background-image: url(../../assets/flip-advertising.png);
+    background-image: url(../../assets/iphone-ads-2-new.png);
 }
 
 .ads2{
-    background-image: url(../../assets/iphone16-advertising-2-cut1.jpg);
+    background-image: url(../../assets/macbook-pro-ads.png);
 }
 
 .ads3{
-    background-image: url(../../assets/iphone16-advertising.jpg);
+    background-image: url(../../assets/flip-advertising.png);
 }
 
 
@@ -137,28 +135,19 @@
     }
 }
 
-/* @media (max-width: 519px) {
+@media (max-width: 519px) { /* 533 */
     .mainPage-container{
         padding: 5px;
     }
 
     .active-filters{
         padding: 0 0 0 20px;
-    }
+        display: block;
 
-    .main-content{
-        padding: 0;
-        margin: 0;
-    }
-} */
-
-@media (max-width: 533px) {
-    .mainPage-container{
-        padding: 5px;
-    }
-
-    .active-filters{
-        padding: 0 0 0 20px;
+        & form select{
+            margin-top: 5px;
+            width: 210px;
+        }
     }
 
     .main-content{
