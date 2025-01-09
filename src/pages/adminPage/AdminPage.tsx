@@ -1,7 +1,10 @@
-import React, {FC, useEffect, useState} from 'react'
+import React, {ChangeEvent, FC, useState} from 'react'
 import { createProduct } from '../../API/productsAPI/productsAPI'
 import './adminPage.css'
 import NavBar from '../../components/navBar/NavBar'
+import { brands } from '../../utils/types & brands/brands'
+import { IconType } from 'react-icons'
+import { types } from '../../utils/types & brands/types'
 
 
 const Admin:FC = () => {
@@ -33,7 +36,7 @@ const Admin:FC = () => {
         formData.append('brand', brand)
         formData.append('type', type)
         formData.append('image', image!)
-        formData.append('price', `${price}`)
+        formData.append('price', '' + price)
         formData.append('memory', JSON.stringify(memory))
         formData.append('detailedDescription', JSON.stringify(Object.defineProperties({}, {
           "display":{
@@ -76,12 +79,48 @@ const Admin:FC = () => {
         setDescription(e.target.value)
     }
 
-    const brandHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setBrand(e.target.value)
+    const brandHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
+      let value: string;
+      switch(e.target.selectedIndex){
+        case 1: 
+          value = brands[0].name
+          break;
+
+        case 2:
+          value = brands[1].name
+          break;
+
+        case 3: 
+          value = brands[2].name
+          break;
+
+        case 4:
+          value = brands[3].name
+          break;
+      }
+        setBrand(value!)
     }
 
-    const typeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setType(e.target.value)
+    const typeHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
+      let value: string;
+      switch(e.target.selectedIndex){
+        case 1: 
+          value = types[0].name
+          break;
+
+        case 2:
+          value = types[1].name
+          break;
+
+        case 3: 
+          value = types[2].name
+          break;
+
+        case 4:
+          value = types[3].name
+          break;
+        }
+      setType(value!)
     }
 
     const priceHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -130,8 +169,23 @@ const Admin:FC = () => {
                 :
                 <></>
                 }
-                <input className='formInput' type={'text'} placeholder='brand (Apple, Samsung, etc.)' onChange={brandHandler} />
-                <input className='formInput' type={'text'} placeholder='type (Phone, Laptop, etc.)' onChange={typeHandler} />
+                {/* <input className='formInput' type={'text'} placeholder='brand (Apple, Samsung, etc.)' onChange={brandHandler} /> */}
+                <select required onChange={brandHandler}>
+                  <option value="">Select brand</option>
+                  {brands.map((el: {name: string, logo: IconType}) => {
+                    return <option value={el.name} key={el.name}>{el.name}</option>
+                  })}
+                </select>
+                {/* <input className='formInput' type={'text'} placeholder='type (Phone, Laptop, etc.)' onChange={typeHandler} /> */}
+                <select required onChange={typeHandler}>
+                  <option value="">Select type</option>
+                  {types.map((el: {name: string, logo: IconType}) => {
+                    return <option value={el.name} key={el.name}>{el.name}</option>
+                  })}
+                </select>
+
+
+
                 <input className='formInput' type={'number'} placeholder='price $' onChange={priceHandler} min={1}/>
 
                 <input style={{display: 'none'}} type={'file'} id='file_input' placeholder='image' onChange={imageHandler} />
@@ -143,13 +197,34 @@ const Admin:FC = () => {
               </form>
               <form className='detailed-description'>
                 <h2>Detailed description</h2>
-                <input className='formInput' type='text' placeholder='Display' value={display} onChange={(e) => setDisplay(e.target.value)} />
-                <input className='formInput' type='text' placeholder='Camera' value={camera} onChange={(e) => setCamera(e.target.value)} />
-                <input className='formInput' type='text' placeholder='OS' value={os} onChange={(e) => setOs(e.target.value)} />
-                <input className='formInput' type='text' placeholder='Processor' value={processor} onChange={(e) => setProcessor(e.target.value)} />
-                <input className='formInput' type='text' placeholder='Size' value={size} onChange={(e) => setSize(e.target.value)} />
-                <input className='formInput' type='text' placeholder='Materials' value={materials} onChange={(e) => setMaterials(e.target.value)} />
-                <input className='formInput' type='text' placeholder='Country of origin of the product' value={manufacturer} onChange={(e) => setManufacturer(e.target.value)} />
+                  {type == 'Laptop' ? 
+                  <>
+                    <input className='formInput' type='text' placeholder='Display' value={display} onChange={(e) => setDisplay(e.target.value)} />
+                    <input className='formInput' type='text' placeholder='Camera' value={camera} onChange={(e) => setCamera(e.target.value)} />
+                    <input className='formInput' type='text' placeholder='OS' value={os} onChange={(e) => setOs(e.target.value)} />
+                    <input className='formInput' type='text' placeholder='Processor' value={processor} onChange={(e) => setProcessor(e.target.value)} />
+                    <input className='formInput' type='text' placeholder='Size' value={size} onChange={(e) => setSize(e.target.value)} />
+                    <input className='formInput' type='text' placeholder='Materials' value={materials} onChange={(e) => setMaterials(e.target.value)} />
+                    <input className='formInput' type='text' placeholder='Country of origin of the product' value={manufacturer} onChange={(e) => setManufacturer(e.target.value)} />
+                  </>
+                    :
+                  type == 'Phone' ?
+                  <>
+                    <input className='formInput' type='text' placeholder='Display' value={display} onChange={(e) => setDisplay(e.target.value)} />
+                    <input className='formInput' type='text' placeholder='Camera' value={camera} onChange={(e) => setCamera(e.target.value)} />
+                    <input className='formInput' type='text' placeholder='Size' value={size} onChange={(e) => setSize(e.target.value)} />
+                    <input className='formInput' type='text' placeholder='Materials' value={materials} onChange={(e) => setMaterials(e.target.value)} />
+                    <input className='formInput' type='text' placeholder='Country of origin of the product' value={manufacturer} onChange={(e) => setManufacturer(e.target.value)} />
+                  </>
+                    :
+                  <>
+                    <input className='formInput' type='text' placeholder='Display' value={display} onChange={(e) => setDisplay(e.target.value)} />
+                    <input className='formInput' type='text' placeholder='OS' value={os} onChange={(e) => setOs(e.target.value)} />
+                    <input className='formInput' type='text' placeholder='Size' value={size} onChange={(e) => setSize(e.target.value)} />
+                    <input className='formInput' type='text' placeholder='Materials' value={materials} onChange={(e) => setMaterials(e.target.value)} />
+                    <input className='formInput' type='text' placeholder='Country of origin of the product' value={manufacturer} onChange={(e) => setManufacturer(e.target.value)} />
+                  </>
+                }
               </form>
             </div>
         </>

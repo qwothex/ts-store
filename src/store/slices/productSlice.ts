@@ -74,8 +74,12 @@ const productSlice = createSlice({
                     state.lastview.push(action.payload)
                 }else{
                     let isExist = false;
+                    const length = state.lastview.length
                     state.lastview.forEach((el) => { if(el.id == action.payload.id) isExist = true })
-                    if(!isExist){state.lastview.unshift(action.payload)}
+                    if(!isExist) {
+                        state.lastview.unshift(action.payload)
+                        if(length >= 15) state.lastview.pop()
+                    }
                 }
             }catch(e){
                 console.log(e)

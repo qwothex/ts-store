@@ -119,7 +119,7 @@ const MainPage:FC = () => {
                         </select>
                     </form>
                 </div>
-                <h4>{products.count} products found</h4>
+                <h4>{loading ? 'Loading...' : products.count + ' products found'}</h4>
                 <div className='items-div'>
                     {loading ? <CardsLoaderContainer cardsQuantity={3} /> : products.rows.length > 0 ? products.rows.map(el => <ProductItem key={el.id} product={el} />) : "No products founded"}
                 </div>

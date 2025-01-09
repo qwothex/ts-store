@@ -116,6 +116,15 @@
     margin-top: 0;
 }
 
+.adminContainer select{
+    height: 34px;
+    margin-bottom: 25px;
+    border: 1px solid var(--border-color);
+    padding: 1px 10px;
+    border-radius: 10px;
+    font-size: 1.02rem;
+}
+
 @media (max-width: 950px) {
     .adminContainer {
         flex-direction: column;

@@ -78,8 +78,12 @@ class UserController {
         const {id, productId} = req.body
         const user = await User.findOne({where:{id}})
         let isExist = false;
+        const length = user.lastview.length
         user.lastview.forEach((el) => { if(el == productId) isExist = true })
-        if(!isExist){user.lastview.push(productId)}
+        if(!isExist) {
+            user.lastview.push(productId)
+            if(length >= 15) user.lastview.pop()
+        }
         user.changed('lastview', true)
         await user.save()
         const token = generateJwt(user.id, user.username, user.role, user.additional, user.lastview, user.cart)

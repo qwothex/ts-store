@@ -3,33 +3,13 @@ import './sideBar.css'
 import { FaRegQuestionCircle } from "react-icons/fa";
 import { IoChatboxEllipsesOutline } from "react-icons/io5";
 import { Link, useSearchParams } from 'react-router-dom';
-import { TiVendorApple } from "react-icons/ti";
-import { SiSamsung } from "react-icons/si";
 import { IconType } from 'react-icons';
-import { SiAsus } from "react-icons/si";
-import { SiAcer } from "react-icons/si";
-import { IoMdLaptop } from "react-icons/io";
-import { IoIosPhonePortrait } from "react-icons/io";
-import { BsPc } from "react-icons/bs";
-import { IoMdTv } from "react-icons/io";
+import { types } from '../../utils/types & brands/types';
+import { brands } from '../../utils/types & brands/brands';
 
 const SideBar:FC = () => {
 
     const [searchParams, setSearchParams] = useSearchParams()
-
-    const types = [
-        {"name" : "Laptop", "logo" : IoMdLaptop}, 
-        {"name" : "Phone", "logo" : IoIosPhonePortrait},  
-        {"name" : "PC", "logo" : BsPc},
-        {"name" : "TV", "logo" : IoMdTv},
-    ]
-
-    const brands = [ 
-        {"name" : "Apple", "logo" : TiVendorApple}, 
-        {"name" : "Samsung", "logo" : SiSamsung}, 
-        {"name" : "Asus", "logo" : SiAsus}, 
-        {"name" : "Acer", "logo" : SiAcer}, 
-    ]
 
     return(
         <div className='sidebar-container'>
