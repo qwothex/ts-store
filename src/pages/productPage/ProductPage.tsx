@@ -49,7 +49,6 @@ const ProductPage:FC = () => {
     const initialFetch = async() => {
         setLoading(true)
         const productData: productItem | AxiosError = await getOneProduct(Number(id))
-        console.log(productData)
         if(!isError(productData)){
             setProduct({...productData, detailedDescription: typeof productData.detailedDescription === 'string' ? JSON.parse(productData.detailedDescription) : null})
             getAllProducts(productData.type, productData.brand, 16, 1).then((data: productProps) => {

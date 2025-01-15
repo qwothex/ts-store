@@ -1,10 +1,11 @@
-import React, {ChangeEvent, FC, useState} from 'react'
+import React, {FC, useState} from 'react'
 import { createProduct } from '../../API/productsAPI/productsAPI'
 import './adminPage.css'
 import NavBar from '../../components/navBar/NavBar'
 import { brands } from '../../utils/types & brands/brands'
 import { IconType } from 'react-icons'
 import { types } from '../../utils/types & brands/types'
+import { FORM_FIELDS } from '../../utils/formFields/formFields'
 
 
 const Admin:FC = () => {
@@ -20,13 +21,12 @@ const Admin:FC = () => {
     const [currentMemoryPrice, setcurrentMemoryPrice] = useState("")
     const [isMemoryOption, setIsMemoryOption] = useState<boolean>(false)
 
-    const [display, setDisplay] = useState('')
-    const [camera, setCamera] = useState('')
-    const [os, setOs] = useState('')
-    const [processor, setProcessor] = useState('')
-    const [size, setSize] = useState('')
-    const [materials, setMaterials] = useState('')
-    const [manufacturer, setManufacturer] = useState('')
+    const [productFormData, setProductFormData] = useState<FormField>({});
+
+    type FormField = {
+      [key: string]: string;
+    };
+    
 
     const formSubmitHandler = (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault()
@@ -40,31 +40,31 @@ const Admin:FC = () => {
         formData.append('memory', JSON.stringify(memory))
         formData.append('detailedDescription', JSON.stringify(Object.defineProperties({}, {
           "display":{
-            value: display,
+            value: productFormData['display'],
             enumerable: true
           },
           "camera":{
-            value: camera,
+            value: productFormData['camera'],
             enumerable: true
           },
           "os":{
-            value: os,
+            value: productFormData['os'],
             enumerable: true
           },
           "processor":{
-            value: processor,
+            value: productFormData['processor'],
             enumerable: true
           },
           "size":{
-            value: size,
+            value: productFormData['size'],
             enumerable: true
           },
           "materials":{
-            value: materials,
+            value: productFormData['materials'],
             enumerable: true
           },
           "manufacturer":{
-            value: manufacturer,
+            value: productFormData['manufacturer'],
             enumerable: true
           }
         })))
@@ -146,6 +146,28 @@ const Admin:FC = () => {
         setcurrentMemoryPrice("")
     }
 
+    const handleInputChange = (name: string, value: string) => {
+      setProductFormData(prevData => ({
+        ...prevData,
+        [name]: value
+      }));
+    };
+  
+
+    const renderFields = (fields: typeof FORM_FIELDS.common) => {
+      return fields.map(field => (
+        <input
+          key={field.name}
+          className='formInput'
+          type='text'
+          placeholder={field.placeholder}
+          value={productFormData[field.name] || ''}
+          onChange={(e) => handleInputChange(field.name, e.target.value)}
+        />
+      ));
+  
+    }
+
     return(
         <>
         <NavBar/>
@@ -169,21 +191,18 @@ const Admin:FC = () => {
                 :
                 <></>
                 }
-                {/* <input className='formInput' type={'text'} placeholder='brand (Apple, Samsung, etc.)' onChange={brandHandler} /> */}
                 <select required onChange={brandHandler}>
                   <option value="">Select brand</option>
                   {brands.map((el: {name: string, logo: IconType}) => {
                     return <option value={el.name} key={el.name}>{el.name}</option>
                   })}
                 </select>
-                {/* <input className='formInput' type={'text'} placeholder='type (Phone, Laptop, etc.)' onChange={typeHandler} /> */}
                 <select required onChange={typeHandler}>
                   <option value="">Select type</option>
                   {types.map((el: {name: string, logo: IconType}) => {
                     return <option value={el.name} key={el.name}>{el.name}</option>
                   })}
                 </select>
-
 
 
                 <input className='formInput' type={'number'} placeholder='price $' onChange={priceHandler} min={1}/>
@@ -197,34 +216,8 @@ const Admin:FC = () => {
               </form>
               <form className='detailed-description'>
                 <h2>Detailed description</h2>
-                  {type == 'Laptop' ? 
-                  <>
-                    <input className='formInput' type='text' placeholder='Display' value={display} onChange={(e) => setDisplay(e.target.value)} />
-                    <input className='formInput' type='text' placeholder='Camera' value={camera} onChange={(e) => setCamera(e.target.value)} />
-                    <input className='formInput' type='text' placeholder='OS' value={os} onChange={(e) => setOs(e.target.value)} />
-                    <input className='formInput' type='text' placeholder='Processor' value={processor} onChange={(e) => setProcessor(e.target.value)} />
-                    <input className='formInput' type='text' placeholder='Size' value={size} onChange={(e) => setSize(e.target.value)} />
-                    <input className='formInput' type='text' placeholder='Materials' value={materials} onChange={(e) => setMaterials(e.target.value)} />
-                    <input className='formInput' type='text' placeholder='Country of origin of the product' value={manufacturer} onChange={(e) => setManufacturer(e.target.value)} />
-                  </>
-                    :
-                  type == 'Phone' ?
-                  <>
-                    <input className='formInput' type='text' placeholder='Display' value={display} onChange={(e) => setDisplay(e.target.value)} />
-                    <input className='formInput' type='text' placeholder='Camera' value={camera} onChange={(e) => setCamera(e.target.value)} />
-                    <input className='formInput' type='text' placeholder='Size' value={size} onChange={(e) => setSize(e.target.value)} />
-                    <input className='formInput' type='text' placeholder='Materials' value={materials} onChange={(e) => setMaterials(e.target.value)} />
-                    <input className='formInput' type='text' placeholder='Country of origin of the product' value={manufacturer} onChange={(e) => setManufacturer(e.target.value)} />
-                  </>
-                    :
-                  <>
-                    <input className='formInput' type='text' placeholder='Display' value={display} onChange={(e) => setDisplay(e.target.value)} />
-                    <input className='formInput' type='text' placeholder='OS' value={os} onChange={(e) => setOs(e.target.value)} />
-                    <input className='formInput' type='text' placeholder='Size' value={size} onChange={(e) => setSize(e.target.value)} />
-                    <input className='formInput' type='text' placeholder='Materials' value={materials} onChange={(e) => setMaterials(e.target.value)} />
-                    <input className='formInput' type='text' placeholder='Country of origin of the product' value={manufacturer} onChange={(e) => setManufacturer(e.target.value)} />
-                  </>
-                }
+                {renderFields(FORM_FIELDS.common)}
+                {type && renderFields(FORM_FIELDS[type as keyof typeof FORM_FIELDS] || [])}
               </form>
             </div>
         </>

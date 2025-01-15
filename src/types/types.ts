@@ -50,4 +50,19 @@ interface OrderI {
     updatedAt: Date,
 }
 
-export type {UserI, OrderI, CartI, DetailedDescription, productItem}
+interface productDataI{
+    title: string,
+    description: string,
+    brand: string,
+    type: string
+    image: File | null,
+    price: number,
+    memory: {}[],
+    productDetailedData: FormField
+  }
+
+  type FormField = {
+    [key: string]: string;
+  };
+
+export type {UserI, OrderI, CartI, DetailedDescription, productItem, productDataI, FormField}

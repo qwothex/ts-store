@@ -10,11 +10,12 @@ class ProductController {
             const {image} = req.files
             let fileName = uuid.v4() + '.jpg'
             image.mv(path.resolve(__dirname, '..', 'static', fileName))
-
+            
         const product = await Product.create({title, description, price, brand, type, memory, image: fileName, detailedDescription})
         res.json(product)
         }catch(e){
             next(ApiError.badRequest(e.message))
+            console.log(e)
         }
     }
     

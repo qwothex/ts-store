@@ -121,8 +121,7 @@
 
 @media (max-width: 950px) {
     .mainPage-container{
-        justify-content: center;
-        padding-left: 20px;
+        padding-left: 25px;
     }
     .items-div{
         max-width: 700px;

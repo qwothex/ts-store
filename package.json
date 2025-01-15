@@ -49,6 +49,7 @@
     "workbox-streams": "^6.6.0"
   },
   "scripts": {
+    "dev": "npx serve -p 3050 -s build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
@@ -73,7 +74,10 @@
     ]
   },
   "options": {
-    "allowedHosts": ["localhost", ".localhost"],
+    "allowedHosts": [
+      "localhost",
+      ".localhost"
+    ],
     "proxy": "https://localhost:5000/"
   }
 }
